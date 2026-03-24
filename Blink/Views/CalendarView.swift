@@ -8,6 +8,13 @@ struct CalendarView: View {
     @State private var showMonthBrowser = false
     @State private var showJumpToMonth = false
     @State private var showOnThisDay = false
+    @State private var showSearch = false
+    @State private var showExportOptions = false
+    @State private var isExporting = false
+    @State private var exportProgress: Double = 0
+    @State private var exportError: String?
+    @State private var exportedVideoURL: URL?
+    @State private var showExportedAlert = false
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     private let dayLabels = ["S", "M", "T", "W", "T", "F", "S"]
@@ -69,6 +76,14 @@ struct CalendarView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         HStack(spacing: 4) {
                             Button {
+                                showSearch = true
+                            } label: {
+                                Image(systemName: "magnifyingglass")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .foregroundColor(Color(hex: "8a8a8a"))
+                            }
+
+                            Button {
                                 showMonthBrowser = true
                             } label: {
                                 Image(systemName: "rectangle.stack")
@@ -77,11 +92,11 @@ struct CalendarView: View {
                             }
 
                             Button {
-                                showYearInReview = true
+                                showExportOptions = true
                             } label: {
-                                Image(systemName: "sparkles")
+                                Image(systemName: "square.and.arrow.up")
                                     .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(Color(hex: "ff3b30"))
+                                    .foregroundColor(Color(hex: "8a8a8a"))
                             }
                         }
                     }
@@ -113,6 +128,20 @@ struct CalendarView: View {
                     showOnThisDay = false
                 }
             )
+        }
+        .fullScreenCover(isPresented: $showSearch) {
+            SearchView()
+        }
+        .confirmationDialog("Export", isPresented: $showExportOptions, titleVisibility: .visible) {
+            if clipsThisYear > 0 {
+                Button("Export \(selectedYear) Year as Video") {
+                    showYearInReview = true
+                }
+            }
+            Button("Export This Month's Clips") {
+                exportThisMonth()
+            }
+            Button("Cancel", role: .cancel) {}
         }
     }
 
@@ -258,6 +287,51 @@ struct CalendarView: View {
                         selectedEntry = entry
                     }
                 )
+            }
+        }
+    }
+
+    // MARK: - Export This Month
+
+    private func exportThisMonth() {
+        let calendar = Calendar.current
+        let now = Date()
+        let currentMonth = calendar.component(.month, from: now)
+        let currentYear = calendar.component(.year, from: now)
+
+        guard clipsThisYear > 0 else { return }
+
+        isExporting = true
+        exportProgress = 0
+
+        Task {
+            do {
+                let outputURL = try await ExportService.shared.exportMonthClips(
+                    month: currentMonth,
+                    year: currentYear,
+                    onProgress: { progress in
+                        Task { @MainActor in
+                            exportProgress = progress
+                        }
+                    }
+                )
+
+                // Save to camera roll
+                try await ExportService.shared.saveToCameraRoll(url: outputURL)
+
+                await MainActor.run {
+                    isExporting = false
+                    showExportedAlert = true
+                    exportedVideoURL = outputURL
+                }
+
+                // Clean up temp file
+                try? FileManager.default.removeItem(at: outputURL)
+            } catch {
+                await MainActor.run {
+                    isExporting = false
+                    exportError = error.localizedDescription
+                }
             }
         }
     }

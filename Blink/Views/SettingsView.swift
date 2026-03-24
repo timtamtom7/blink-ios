@@ -6,12 +6,18 @@ struct SettingsView: View {
     @AppStorage("reminderHour") private var reminderHour = 20
     @AppStorage("reminderMinute") private var reminderMinute = 0
     @AppStorage("videoQuality") private var videoQuality = "high"
+    @AppStorage("iCloudBackupEnabled") private var iCloudBackupEnabled = false
 
     @ObservedObject private var privacy = PrivacyService.shared
+    @ObservedObject private var cloudBackup = CloudBackupService.shared
     @State private var showAbout = false
     @State private var showPricing = false
     @State private var showPasscodeSetup = false
     @State private var showPasscodeRemoveConfirm = false
+    @State private var showRestoreConfirm = false
+    @State private var showBackupProgress = false
+    @State private var showRestoreProgress = false
+    @State private var backupError: String?
 
     var body: some View {
         NavigationStack {
@@ -127,13 +133,98 @@ struct SettingsView: View {
                     }
                     .listRowBackground(Color(hex: "141414"))
 
+                    // iCloud Backup Section
+                    Section {
+                        if !cloudBackup.iCloudAvailable {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Label("iCloud not available", systemImage: "icloud.slash")
+                                    .foregroundColor(Color(hex: "8a8a8a"))
+                                Text("Sign in to iCloud in Settings to enable backup")
+                                    .font(.system(size: 11))
+                                    .foregroundColor(Color(hex: "555555"))
+                            }
+                            .padding(.vertical, 4)
+                        } else {
+                            Toggle(isOn: $iCloudBackupEnabled) {
+                                Label("iCloud Backup", systemImage: "icloud.fill")
+                                    .foregroundColor(Color(hex: "f5f5f5"))
+                            }
+                            .tint(Color(hex: "ff3b30"))
+                            .onChange(of: iCloudBackupEnabled) { _, newValue in
+                                if newValue {
+                                    startBackup()
+                                }
+                            }
+
+                            if iCloudBackupEnabled {
+                                if cloudBackup.isBackingUp {
+                                    HStack {
+                                        Text("Backing up…")
+                                            .font(.system(size: 13))
+                                            .foregroundColor(Color(hex: "8a8a8a"))
+                                        Spacer()
+                                        ProgressView()
+                                            .tint(Color(hex: "ff3b30"))
+                                            .progressViewStyle(CircularProgressViewStyle())
+                                    }
+                                } else if let lastBackup = cloudBackup.lastBackupDate {
+                                    HStack {
+                                        Text("Last backup:")
+                                            .font(.system(size: 12))
+                                            .foregroundColor(Color(hex: "555555"))
+                                        Text(lastBackup, style: .relative)
+                                            .font(.system(size: 12))
+                                            .foregroundColor(Color(hex: "8a8a8a"))
+                                        Spacer()
+                                        Button("Backup Now") {
+                                            startBackup()
+                                        }
+                                        .font(.system(size: 12, weight: .medium))
+                                        .foregroundColor(Color(hex: "ff3b30"))
+                                    }
+                                } else {
+                                    Button {
+                                        startBackup()
+                                    } label: {
+                                        HStack {
+                                            Text("Back up now")
+                                                .font(.system(size: 14, weight: .medium))
+                                            Spacer()
+                                            Image(systemName: "arrow.up.circle")
+                                                .foregroundColor(Color(hex: "ff3b30"))
+                                        }
+                                        .foregroundColor(Color(hex: "f5f5f5"))
+                                    }
+                                }
+
+                                Button {
+                                    showRestoreConfirm = true
+                                } label: {
+                                    HStack {
+                                        Text("Restore from iCloud")
+                                            .font(.system(size: 14, weight: .medium))
+                                        Spacer()
+                                        Image(systemName: "arrow.down.circle")
+                                            .foregroundColor(Color(hex: "8a8a8a"))
+                                    }
+                                    .foregroundColor(Color(hex: "f5f5f5"))
+                                }
+                                .disabled(cloudBackup.isRestoring)
+                            }
+                        }
+                    } header: {
+                        Text("Backup")
+                            .foregroundColor(Color(hex: "8a8a8a"))
+                    }
+                    .listRowBackground(Color(hex: "141414"))
+
                     Section {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Your videos are stored locally on this device only.")
+                            Text("Your videos are stored locally on this device. iCloud backup is optional.")
                                 .font(.system(size: 13))
                                 .foregroundColor(Color(hex: "8a8a8a"))
 
-                            Text("No cloud. No accounts. No sharing.")
+                            Text("No accounts. No sharing. No social.")
                                 .font(.system(size: 13, weight: .medium))
                                 .foregroundColor(Color(hex: "f5f5f5"))
                         }
@@ -170,6 +261,14 @@ struct SettingsView: View {
                 Button("Cancel", role: .cancel) {}
             } message: {
                 Text("You will no longer need to enter a passcode to open Blink.")
+            }
+            .confirmationDialog("Restore from iCloud?", isPresented: $showRestoreConfirm, titleVisibility: .visible) {
+                Button("Restore", role: .destructive) {
+                    startRestore()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("This will download your clips from iCloud. Existing clips will not be affected.")
             }
         }
     }
@@ -269,6 +368,27 @@ struct SettingsView: View {
 
     private func cancelReminder() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["dailyBlink"])
+    }
+
+    private func startBackup() {
+        guard cloudBackup.iCloudAvailable else { return }
+        Task {
+            do {
+                try await cloudBackup.backupAllClips()
+            } catch {
+                backupError = error.localizedDescription
+            }
+        }
+    }
+
+    private func startRestore() {
+        Task {
+            do {
+                try await cloudBackup.restoreClips()
+            } catch {
+                backupError = error.localizedDescription
+            }
+        }
     }
 }
 

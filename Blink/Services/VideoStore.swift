@@ -262,6 +262,15 @@ final class VideoStore: ObservableObject {
         saveEntries()
     }
 
+    /// Add a restored entry from iCloud backup.
+    @MainActor
+    func restoreEntry(_ entry: VideoEntry) {
+        // Don't add if already exists
+        guard !entries.contains(where: { $0.id == entry.id }) else { return }
+        entries.append(entry)
+        saveEntries()
+    }
+
     // MARK: - Months
 
     func monthsWithEntries(for year: Int) -> [Int] {
