@@ -7,14 +7,16 @@ struct VideoEntry: Identifiable, Codable, Equatable {
     let duration: TimeInterval
     var thumbnailFilename: String?
     var title: String?
+    var isLocked: Bool = false
 
-    init(id: UUID = UUID(), date: Date, filename: String, duration: TimeInterval, thumbnailFilename: String? = nil, title: String? = nil) {
+    init(id: UUID = UUID(), date: Date, filename: String, duration: TimeInterval, thumbnailFilename: String? = nil, title: String? = nil, isLocked: Bool = false) {
         self.id = id
         self.date = date
         self.filename = filename
         self.duration = duration
         self.thumbnailFilename = thumbnailFilename
         self.title = title
+        self.isLocked = isLocked
     }
 
     var videoURL: URL {

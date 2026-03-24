@@ -7,6 +7,9 @@ struct ContentView: View {
     @State private var selectedTab: Tab = .record
     @State private var selectedPlaybackEntry: VideoEntry?
     @ObservedObject private var videoStore = VideoStore.shared
+    @ObservedObject private var privacy = PrivacyService.shared
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var wasInBackground = false
 
     enum Tab {
         case record
@@ -31,9 +34,37 @@ struct ContentView: View {
                     hasSeenPricing = true
                 }
             }
+            // Check if app should be locked on launch
+            if privacy.isPasscodeEnabled {
+                privacy.lockApp(reason: .appOpen)
+            }
+        }
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            // Lock app when going to background
+            if newPhase == .background && oldPhase == .active {
+                wasInBackground = true
+                if privacy.isPasscodeEnabled && privacy.lockOnBackground {
+                    privacy.lockApp(reason: .backgroundReturn)
+                }
+            }
+            // Try biometric on return from background
+            if newPhase == .active && wasInBackground {
+                wasInBackground = false
+                if privacy.isPasscodeEnabled && privacy.isAppLocked {
+                    Task {
+                        await privacy.unlockWithBiometrics()
+                    }
+                }
+            }
         }
         .sheet(isPresented: $showPricing) {
             PricingView()
+        }
+        .overlay {
+            if privacy.isAppLocked && privacy.isPasscodeEnabled {
+                PrivacyLockView()
+                    .transition(.opacity)
+            }
         }
     }
 

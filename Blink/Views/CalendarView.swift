@@ -7,6 +7,7 @@ struct CalendarView: View {
     @State private var showYearInReview = false
     @State private var showMonthBrowser = false
     @State private var showJumpToMonth = false
+    @State private var showOnThisDay = false
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     private let dayLabels = ["S", "M", "T", "W", "T", "F", "S"]
@@ -43,6 +44,12 @@ struct CalendarView: View {
                             // Year summary card
                             yearSummaryCard
                                 .padding(.horizontal, 16)
+
+                            // On This Day card
+                            if videoStore.onThisDayCount > 0 {
+                                onThisDayCard
+                                    .padding(.horizontal, 16)
+                            }
 
                             monthGrid
                                 .padding(.horizontal, 16)
@@ -98,6 +105,55 @@ struct CalendarView: View {
         }
         .fullScreenCover(isPresented: $showMonthBrowser) {
             MonthBrowserView(selectedEntry: $selectedEntry)
+        }
+        .fullScreenCover(isPresented: $showOnThisDay) {
+            OnThisDayView(
+                entries: videoStore.onThisDayEntries(),
+                onDismiss: {
+                    showOnThisDay = false
+                }
+            )
+        }
+    }
+
+    private var onThisDayCard: some View {
+        Button {
+            showOnThisDay = true
+        } label: {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(Color(hex: "ff3b30").opacity(0.15))
+                        .frame(width: 48, height: 48)
+
+                    Image(systemName: "clock.arrow.circlepath")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color(hex: "ff3b30"))
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("On This Day")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(Color(hex: "f5f5f5"))
+
+                    Text("\(videoStore.onThisDayCount) moment\(videoStore.onThisDayCount == 1 ? "" : "s") from this date")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(hex: "8a8a8a"))
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+            }
+            .padding(14)
+            .background(Color(hex: "141414"))
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
+            )
         }
     }
 

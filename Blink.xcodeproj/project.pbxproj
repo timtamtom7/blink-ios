@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2D013752908F4A1A36608FB8 /* TrimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66359CF756E5E49D9531FF4 /* TrimView.swift */; };
 		322C0AD60DF9326FBEBEE69D /* CustomGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479C4B35F9FA46FD0DDCD899 /* CustomGraphics.swift */; };
+		37084CF2A15BCB116C755E24 /* PasscodeSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 624004AAB910D2FFA2EAD28B /* PasscodeSetupView.swift */; };
 		44A45038B0F961D173826104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3611BA1F7A16AA6199641486 /* Assets.xcassets */; };
 		4554894DB716480CE2C6301A /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE22E372387EAE1F747F9CE /* CameraService.swift */; };
 		66BCA5CA5A0E4FAE716E0287 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A909F79393C52C43CF8FC2 /* RecordView.swift */; };
@@ -16,10 +17,13 @@
 		77DD495EA9773E6966D56BDD /* ErrorStatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1A833551CBE055DFE4BC55 /* ErrorStatesView.swift */; };
 		83B1B9F320351854C37E4187 /* PlaybackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB041C204990DCC8AC8004D /* PlaybackView.swift */; };
 		8B5A9AEEEBDE1F54BB3099A6 /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F280A07DE5E392640960F16F /* PricingView.swift */; };
+		96012A8618798CD74E1F77A4 /* OnThisDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ACBAF38268F0BB0652919 /* OnThisDayView.swift */; };
+		983D69517CE6107EEF5611FC /* PrivacyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C608A4090204A1D53010AFD1 /* PrivacyService.swift */; };
 		9C02B65E03CCA667D05410B2 /* VideoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E8620C7EFF755DD5BAC678 /* VideoStore.swift */; };
 		9D3B37F33955F75317BB3A1F /* VideoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA078AEF55DF0BCC69386DEA /* VideoEntry.swift */; };
 		C64D380C0DD88FCA755E02DA /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB682CC8E9DE4398AEBED51D /* CalendarView.swift */; };
 		D753C5F98E2716FBAF6ADC1C /* ThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DF45CD2964213E2C02CE06 /* ThumbnailGenerator.swift */; };
+		D890CED588DBEABC05F38CF2 /* PrivacyLockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A4D9EF2CA1E7C5F75860F29 /* PrivacyLockView.swift */; };
 		DB4B706A1F3E34BD61B14EE3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B31CDA126203664640FFF96 /* SettingsView.swift */; };
 		DECEE4B66C0B2BA2223FD296 /* MonthBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2383902961CA4FD8F4F01CA5 /* MonthBrowserView.swift */; };
 		F6D5ADCC1C92DFB776B5A660 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0A8FB8FFCCA764D5F39F /* OnboardingView.swift */; };
@@ -31,17 +35,21 @@
 		03DF45CD2964213E2C02CE06 /* ThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailGenerator.swift; sourceTree = "<group>"; };
 		042F0A8FB8FFCCA764D5F39F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		0B47EB8B7273BB95141192DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1A4D9EF2CA1E7C5F75860F29 /* PrivacyLockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyLockView.swift; sourceTree = "<group>"; };
 		2383902961CA4FD8F4F01CA5 /* MonthBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthBrowserView.swift; sourceTree = "<group>"; };
+		266ACBAF38268F0BB0652919 /* OnThisDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnThisDayView.swift; sourceTree = "<group>"; };
 		3611BA1F7A16AA6199641486 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3BE22E372387EAE1F747F9CE /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		479C4B35F9FA46FD0DDCD899 /* CustomGraphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGraphics.swift; sourceTree = "<group>"; };
 		48431B2C296BDB92BF0BB93C /* Blink.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Blink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B31CDA126203664640FFF96 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		624004AAB910D2FFA2EAD28B /* PasscodeSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupView.swift; sourceTree = "<group>"; };
 		921048E625CA0054C6C63E15 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 		95A909F79393C52C43CF8FC2 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		A5821711897F7223DD586479 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A66359CF756E5E49D9531FF4 /* TrimView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimView.swift; sourceTree = "<group>"; };
 		B0E8620C7EFF755DD5BAC678 /* VideoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStore.swift; sourceTree = "<group>"; };
+		C608A4090204A1D53010AFD1 /* PrivacyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyService.swift; sourceTree = "<group>"; };
 		CA078AEF55DF0BCC69386DEA /* VideoEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEntry.swift; sourceTree = "<group>"; };
 		CB682CC8E9DE4398AEBED51D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		D1686F23B320D9A398147B26 /* BlinkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkApp.swift; sourceTree = "<group>"; };
@@ -55,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				3BE22E372387EAE1F747F9CE /* CameraService.swift */,
+				C608A4090204A1D53010AFD1 /* PrivacyService.swift */,
 				03DF45CD2964213E2C02CE06 /* ThumbnailGenerator.swift */,
 				B0E8620C7EFF755DD5BAC678 /* VideoStore.swift */,
 			);
@@ -124,8 +133,11 @@
 				EC1A833551CBE055DFE4BC55 /* ErrorStatesView.swift */,
 				2383902961CA4FD8F4F01CA5 /* MonthBrowserView.swift */,
 				042F0A8FB8FFCCA764D5F39F /* OnboardingView.swift */,
+				266ACBAF38268F0BB0652919 /* OnThisDayView.swift */,
+				624004AAB910D2FFA2EAD28B /* PasscodeSetupView.swift */,
 				FEB041C204990DCC8AC8004D /* PlaybackView.swift */,
 				F280A07DE5E392640960F16F /* PricingView.swift */,
+				1A4D9EF2CA1E7C5F75860F29 /* PrivacyLockView.swift */,
 				95A909F79393C52C43CF8FC2 /* RecordView.swift */,
 				4B31CDA126203664640FFF96 /* SettingsView.swift */,
 				A66359CF756E5E49D9531FF4 /* TrimView.swift */,
@@ -208,9 +220,13 @@
 				322C0AD60DF9326FBEBEE69D /* CustomGraphics.swift in Sources */,
 				77DD495EA9773E6966D56BDD /* ErrorStatesView.swift in Sources */,
 				DECEE4B66C0B2BA2223FD296 /* MonthBrowserView.swift in Sources */,
+				96012A8618798CD74E1F77A4 /* OnThisDayView.swift in Sources */,
 				F6D5ADCC1C92DFB776B5A660 /* OnboardingView.swift in Sources */,
+				37084CF2A15BCB116C755E24 /* PasscodeSetupView.swift in Sources */,
 				83B1B9F320351854C37E4187 /* PlaybackView.swift in Sources */,
 				8B5A9AEEEBDE1F54BB3099A6 /* PricingView.swift in Sources */,
+				D890CED588DBEABC05F38CF2 /* PrivacyLockView.swift in Sources */,
+				983D69517CE6107EEF5611FC /* PrivacyService.swift in Sources */,
 				66BCA5CA5A0E4FAE716E0287 /* RecordView.swift in Sources */,
 				DB4B706A1F3E34BD61B14EE3 /* SettingsView.swift in Sources */,
 				D753C5F98E2716FBAF6ADC1C /* ThumbnailGenerator.swift in Sources */,

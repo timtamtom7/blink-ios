@@ -7,8 +7,11 @@ struct SettingsView: View {
     @AppStorage("reminderMinute") private var reminderMinute = 0
     @AppStorage("videoQuality") private var videoQuality = "high"
 
+    @ObservedObject private var privacy = PrivacyService.shared
     @State private var showAbout = false
     @State private var showPricing = false
+    @State private var showPasscodeSetup = false
+    @State private var showPasscodeRemoveConfirm = false
 
     var body: some View {
         NavigationStack {
@@ -17,6 +20,10 @@ struct SettingsView: View {
                     .ignoresSafeArea()
 
                 List {
+                    // Privacy & Security Section
+                    privacySection
+                        .listRowBackground(Color(hex: "141414"))
+
                     Section {
                         Toggle(isOn: $dailyReminderEnabled) {
                             Label("Daily Reminder", systemImage: "bell.fill")
@@ -151,6 +158,90 @@ struct SettingsView: View {
             .sheet(isPresented: $showPricing) {
                 PricingView()
             }
+            .sheet(isPresented: $showPasscodeSetup) {
+                PasscodeSetupView(onComplete: {
+                    showPasscodeSetup = false
+                })
+            }
+            .confirmationDialog("Remove App Lock?", isPresented: $showPasscodeRemoveConfirm, titleVisibility: .visible) {
+                Button("Remove App Lock", role: .destructive) {
+                    privacy.removePasscode()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("You will no longer need to enter a passcode to open Blink.")
+            }
+        }
+    }
+
+    private var privacySection: some View {
+        Section {
+            if privacy.isPasscodeEnabled {
+                // Biometric toggle
+                if privacy.biometricType != .none {
+                    Toggle(isOn: Binding(
+                        get: { privacy.isBiometricEnabled },
+                        set: { privacy.isBiometricEnabled = $0 }
+                    )) {
+                        Label(privacy.biometricType.displayName, systemImage: privacy.biometricType.iconName)
+                            .foregroundColor(Color(hex: "f5f5f5"))
+                    }
+                    .tint(Color(hex: "ff3b30"))
+                }
+
+                // Lock on background toggle
+                Toggle(isOn: Binding(
+                    get: { privacy.lockOnBackground },
+                    set: { privacy.lockOnBackground = $0 }
+                )) {
+                    Label("Lock when leaving app", systemImage: "lock.rotation")
+                        .foregroundColor(Color(hex: "f5f5f5"))
+                }
+                .tint(Color(hex: "ff3b30"))
+
+                // Change passcode
+                Button {
+                    showPasscodeSetup = true
+                } label: {
+                    HStack {
+                        Label("Change Passcode", systemImage: "key.fill")
+                            .foregroundColor(Color(hex: "f5f5f5"))
+
+                        Spacer()
+                    }
+                }
+
+                // Remove app lock
+                Button(role: .destructive) {
+                    showPasscodeRemoveConfirm = true
+                } label: {
+                    HStack {
+                        Label("Remove App Lock", systemImage: "lock.open.fill")
+                            .foregroundColor(Color(hex: "ff3b30"))
+
+                        Spacer()
+                    }
+                }
+            } else {
+                // No passcode set - show enable button
+                Button {
+                    showPasscodeSetup = true
+                } label: {
+                    HStack {
+                        Label("Enable App Lock", systemImage: "lock.fill")
+                            .foregroundColor(Color(hex: "ff3b30"))
+
+                        Spacer()
+
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(Color(hex: "8a8a8a"))
+                    }
+                }
+            }
+        } header: {
+            Text("Privacy & Security")
+                .foregroundColor(Color(hex: "8a8a8a"))
         }
     }
 

@@ -281,4 +281,44 @@ final class VideoStore: ObservableObject {
             calendar.component(.year, from: $0.date) == year
         }.count
     }
+
+    // MARK: - On This Day
+
+    /// Returns entries from the same month and day in previous years (excluding today).
+    func onThisDayEntries(excludingToday: Bool = true) -> [VideoEntry] {
+        let calendar = Calendar.current
+        let today = Date()
+        let todayMonth = calendar.component(.month, from: today)
+        let todayDay = calendar.component(.day, from: today)
+        let todayYear = calendar.component(.year, from: today)
+
+        return entries.filter { entry in
+            let entryMonth = calendar.component(.month, from: entry.date)
+            let entryDay = calendar.component(.day, from: entry.date)
+            let entryYear = calendar.component(.year, from: entry.date)
+
+            let sameDate = entryMonth == todayMonth && entryDay == todayDay
+            let notToday = entryYear != todayYear
+
+            if excludingToday {
+                return sameDate && notToday && !entry.isLocked
+            } else {
+                return sameDate && !entry.isLocked
+            }
+        }.sorted { $0.date < $1.date }
+    }
+
+    /// Count of On This Day entries.
+    var onThisDayCount: Int {
+        onThisDayEntries().count
+    }
+
+    // MARK: - Lock / Unlock
+
+    @MainActor
+    func toggleLock(for entry: VideoEntry) {
+        guard let index = entries.firstIndex(where: { $0.id == entry.id }) else { return }
+        entries[index].isLocked.toggle()
+        saveEntries()
+    }
 }
