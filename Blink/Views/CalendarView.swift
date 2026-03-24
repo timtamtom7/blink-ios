@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CalendarView: View {
     @ObservedObject private var videoStore = VideoStore.shared
+    @StateObject private var subscription = SubscriptionService.shared
     @State private var selectedYear: Int
     @State private var selectedEntry: VideoEntry?
     @State private var showYearInReview = false
@@ -10,11 +11,15 @@ struct CalendarView: View {
     @State private var showOnThisDay = false
     @State private var showSearch = false
     @State private var showExportOptions = false
+    @State private var showAIHighlights = false
+    @State private var showPublicFeed = false
+    @State private var showYearCompilation = false
     @State private var isExporting = false
     @State private var exportProgress: Double = 0
     @State private var exportError: String?
     @State private var exportedVideoURL: URL?
     @State private var showExportedAlert = false
+    @State private var showPricing = false
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     private let dayLabels = ["S", "M", "T", "W", "T", "F", "S"]
@@ -48,6 +53,17 @@ struct CalendarView: View {
                             yearSelector
                                 .padding(.top, 16)
 
+                            // R5: Freemium nudge for free users
+                            if subscription.isFree {
+                                FreePlanNudgeView(
+                                    clipCount: subscription.clipsRecordedToday,
+                                    onUpgrade: {
+                                        showPricing = true
+                                    }
+                                )
+                                .padding(.horizontal, 16)
+                            }
+
                             // Year summary card
                             yearSummaryCard
                                 .padding(.horizontal, 16)
@@ -75,6 +91,22 @@ struct CalendarView: View {
                 if clipsThisYear > 0 {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         HStack(spacing: 4) {
+                            Button {
+                                showAIHighlights = true
+                            } label: {
+                                Image(systemName: "sparkles")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .foregroundColor(Color(hex: "8a8a8a"))
+                            }
+
+                            Button {
+                                showPublicFeed = true
+                            } label: {
+                                Image(systemName: "globe")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .foregroundColor(Color(hex: "8a8a8a"))
+                            }
+
                             Button {
                                 showSearch = true
                             } label: {
@@ -112,6 +144,21 @@ struct CalendarView: View {
                 selectedEntry = updatedEntry
             })
         }
+        .fullScreenCover(isPresented: $showAIHighlights) {
+            AIHighlightsView()
+        }
+        .fullScreenCover(isPresented: $showPublicFeed) {
+            PublicFeedView()
+        }
+        .fullScreenCover(isPresented: $showYearCompilation) {
+            YearInReviewCompilationView(
+                year: selectedYear,
+                entries: videoStore.entriesForYear(selectedYear),
+                onDismiss: {
+                    showYearCompilation = false
+                }
+            )
+        }
         .sheet(isPresented: $showYearInReview) {
             YearInReviewView(
                 clipsThisYear: clipsThisYear,
@@ -135,13 +182,16 @@ struct CalendarView: View {
         .confirmationDialog("Export", isPresented: $showExportOptions, titleVisibility: .visible) {
             if clipsThisYear > 0 {
                 Button("Export \(selectedYear) Year as Video") {
-                    showYearInReview = true
+                    showYearCompilation = true
                 }
             }
             Button("Export This Month's Clips") {
                 exportThisMonth()
             }
             Button("Cancel", role: .cancel) {}
+        }
+        .sheet(isPresented: $showPricing) {
+            PricingView()
         }
     }
 
@@ -255,7 +305,7 @@ struct CalendarView: View {
 
             if clipsThisYear > 0 {
                 Button {
-                    showYearInReview = true
+                    showYearCompilation = true
                 } label: {
                     HStack(spacing: 4) {
                         Text("Review")

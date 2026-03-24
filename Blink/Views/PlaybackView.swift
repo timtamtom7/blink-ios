@@ -11,6 +11,7 @@ struct PlaybackView: View {
     @State private var showDeleteConfirm = false
     @State private var showTrim = false
     @State private var showShareSheet = false
+    @State private var showSocialSheet = false
     @State private var showTitleEdit = false
     @State private var editedTitle = ""
     @State private var isExporting = false
@@ -85,6 +86,11 @@ struct PlaybackView: View {
                     showTrim = false
                 }
             )
+        }
+        .sheet(isPresented: $showSocialSheet) {
+            SocialShareSheet(entry: currentEntry) {
+                showSocialSheet = false
+            }
         }
         .sheet(isPresented: $showTitleEdit) {
             TitleEditSheet(
@@ -164,6 +170,16 @@ struct PlaybackView: View {
                     showDeleteConfirm = true
                 } label: {
                     Image(systemName: "trash")
+                        .font(.system(size: 18, weight: .medium))
+                        .foregroundColor(.white)
+                        .frame(width: 44, height: 44)
+                }
+
+                // Social Share (R5)
+                Button {
+                    showSocialSheet = true
+                } label: {
+                    Image(systemName: "person.2.fill")
                         .font(.system(size: 18, weight: .medium))
                         .foregroundColor(.white)
                         .frame(width: 44, height: 44)

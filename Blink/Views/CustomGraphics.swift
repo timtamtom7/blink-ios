@@ -609,6 +609,225 @@ struct MonthStripView: View {
     }
 }
 
+// MARK: - macOS App Mockup
+
+/// Mockup of the macOS Blink app — browse and export clips on desktop.
+struct macOSAppMockup: View {
+    var body: some View {
+        ZStack {
+            // Window chrome
+            VStack(spacing: 0) {
+                // Title bar
+                HStack(spacing: 8) {
+                    // Traffic lights
+                    HStack(spacing: 6) {
+                        Circle().fill(Color(hex: "ff5f57")).frame(width: 12, height: 12)
+                        Circle().fill(Color(hex: "ffbd2e")).frame(width: 12, height: 12)
+                        Circle().fill(Color(hex: "28c840")).frame(width: 12, height: 12)
+                    }
+                    Spacer()
+                    Text("Blink")
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundColor(Color(hex: "8a8a8a"))
+                    Spacer()
+                    Spacer().frame(width: 52)
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(Color(hex: "1e1e1e"))
+
+                // Main content area
+                HStack(spacing: 0) {
+                    // Sidebar
+                    VStack(alignment: .leading, spacing: 4) {
+                        ForEach(["Recordings", "Calendar", "On This Day", "Highlights", "Settings"], id: \.self) { item in
+                            HStack(spacing: 8) {
+                                Image(systemName: sidebarIcon(for: item))
+                                    .font(.system(size: 12))
+                                    .frame(width: 16)
+                                Text(item)
+                                    .font(.system(size: 13))
+                                Spacer()
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(item == "Recordings" ? Color(hex: "ff3b30").opacity(0.15) : Color.clear)
+                            .foregroundColor(item == "Recordings" ? Color(hex: "ff3b30") : Color(hex: "c0c0c0"))
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                        }
+                    }
+                    .padding(12)
+                    .frame(width: 160)
+                    .background(Color(hex: "141414"))
+
+                    Divider()
+                        .background(Color(hex: "2a2a2a"))
+
+                    // Main content
+                    VStack(spacing: 12) {
+                        // Header
+                        HStack {
+                            Text("2025")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(Color(hex: "f5f5f5"))
+                            Spacer()
+                            Button {
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "square.and.arrow.up")
+                                        .font(.system(size: 12))
+                                    Text("Export Year")
+                                        .font(.system(size: 12, weight: .medium))
+                                }
+                                .foregroundColor(Color(hex: "ff3b30"))
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 6)
+                                .background(Color(hex: "ff3b30").opacity(0.15))
+                                .clipShape(Capsule())
+                            }
+                        }
+
+                        // Clips grid
+                        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
+                            ForEach(0..<6, id: \.self) { i in
+                                VStack(spacing: 4) {
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .fill(
+                                            LinearGradient(
+                                                colors: [Color(hex: "1e1e1e"), Color(hex: "2a2a2a")],
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                        )
+                                        .aspectRatio(16/9, contentMode: .fit)
+                                        .overlay(
+                                            VStack {
+                                                Spacer()
+                                                HStack {
+                                                    Text("Dec \(1 + i)")
+                                                        .font(.system(size: 10, weight: .medium))
+                                                        .foregroundColor(.white)
+                                                    Spacer()
+                                                    Text("14s")
+                                                        .font(.system(size: 9))
+                                                        .foregroundColor(.white.opacity(0.7))
+                                                }
+                                                .padding(6)
+                                            }
+                                        )
+                                }
+                            }
+                        }
+
+                        Spacer()
+                    }
+                    .padding(16)
+                    .background(Color(hex: "0a0a0a"))
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color(hex: "2a2a2a"), lineWidth: 1)
+            )
+        }
+        .frame(width: 480, height: 320)
+    }
+
+    private func sidebarIcon(for item: String) -> String {
+        switch item {
+        case "Recordings": return "video.fill"
+        case "Calendar": return "calendar"
+        case "On This Day": return "clock.arrow.circlepath"
+        case "Highlights": return "sparkles"
+        case "Settings": return "gearshape.fill"
+        default: return "video"
+        }
+    }
+}
+
+// MARK: - Year in Review Compilation Mockup (for R5 custom graphics)
+
+struct YearInReviewCompilationMockup: View {
+    @State private var progress: CGFloat = 0
+
+    var body: some View {
+        ZStack {
+            // Dark background with radial gradient
+            RadialGradient(
+                colors: [Color(hex: "1a0a0a"), Color(hex: "0a0a0a")],
+                center: .center,
+                startRadius: 50,
+                endRadius: 200
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+
+            VStack(spacing: 24) {
+                // Animated rings
+                ZStack {
+                    ForEach(0..<4, id: \.self) { ring in
+                        Circle()
+                            .stroke(
+                                Color(hex: "ff3b30").opacity(0.1 + Double(ring) * 0.05),
+                                lineWidth: 1
+                            )
+                            .frame(width: CGFloat(60 + ring * 40), height: CGFloat(60 + ring * 40))
+                    }
+
+                    Circle()
+                        .trim(from: 0, to: progress)
+                        .stroke(
+                            Color(hex: "ff3b30"),
+                            style: StrokeStyle(lineWidth: 3, lineCap: .round)
+                        )
+                        .frame(width: 180, height: 180)
+                        .rotationEffect(.degrees(-90))
+
+                    VStack(spacing: 4) {
+                        Text("83")
+                            .font(.system(size: 48, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(hex: "f5f5f5"))
+                        Text("clips")
+                            .font(.system(size: 13))
+                            .foregroundColor(Color(hex: "8a8a8a"))
+                    }
+                }
+
+                // Year
+                Text("2025")
+                    .font(.system(size: 22, weight: .bold))
+                    .foregroundColor(Color(hex: "f5f5f5"))
+
+                // Clips strip
+                HStack(spacing: 6) {
+                    ForEach(0..<7, id: \.self) { i in
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color(hex: "ff3b30").opacity(0.6), Color(hex: "ff6b60").opacity(0.4)],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                            .frame(width: 32, height: 44)
+                    }
+                }
+
+                Text("Your year, compiled.")
+                    .font(.system(size: 14))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+            }
+            .padding(24)
+        }
+        .frame(width: 300, height: 380)
+        .onAppear {
+            withAnimation(.easeOut(duration: 2)) {
+                progress = 0.23
+            }
+        }
+    }
+}
+
 #Preview("Graphics") {
     VStack(spacing: 40) {
         ViewfinderGraphic()

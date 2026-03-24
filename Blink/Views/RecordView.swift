@@ -4,6 +4,7 @@ import AVFoundation
 struct RecordView: View {
     @StateObject private var cameraService = CameraService()
     @ObservedObject private var videoStore = VideoStore.shared
+    @StateObject private var subscription = SubscriptionService.shared
 
     @State private var showCountdown = false
     @State private var countdownValue = 3
@@ -15,8 +16,13 @@ struct RecordView: View {
     @State private var showStorageFullError = false
     @State private var showClipSaveFailedError = false
     @State private var selectedPlaybackEntry: VideoEntry?
+    @State private var showFreemiumEnforcement = false
+    @State private var freemiumBlockReason = ""
+    @State private var showPricing = false
 
-    private let maxDuration: TimeInterval = 30
+    private var maxDuration: TimeInterval {
+        subscription.maxRecordingDuration
+    }
     private let recordButtonSize: CGFloat = 80
 
     var body: some View {
@@ -54,6 +60,20 @@ struct RecordView: View {
                 if showSaved {
                     savedOverlay
                 }
+
+                if showFreemiumEnforcement {
+                    FreemiumEnforcementView(
+                        reason: freemiumBlockReason,
+                        onUpgrade: {
+                            showFreemiumEnforcement = false
+                            showPricing = true
+                        },
+                        onDismiss: {
+                            showFreemiumEnforcement = false
+                        }
+                    )
+                    .transition(.opacity)
+                }
             }
             .navigationTitle("Blink")
             .navigationBarTitleDisplayMode(.inline)
@@ -74,6 +94,9 @@ struct RecordView: View {
                 videoStore.deleteEntry(entry)
                 selectedPlaybackEntry = nil
             })
+        }
+        .sheet(isPresented: $showPricing) {
+            PricingView()
         }
     }
 
@@ -128,6 +151,7 @@ struct RecordView: View {
         }
         .aspectRatio(9/16, contentMode: .fit)
         .onAppear {
+            cameraService.maxRecordingDuration = subscription.maxRecordingDuration
             cameraService.setupSession()
             cameraService.startSession()
         }
@@ -236,6 +260,14 @@ struct RecordView: View {
             cameraService.stopRecording()
             showSavedAnimation()
         } else {
+            // R5 Freemium: check daily limit before recording
+            if let reason = subscription.blockReasonForRecording() {
+                freemiumBlockReason = reason
+                withAnimation {
+                    showFreemiumEnforcement = true
+                }
+                return
+            }
             startCountdown()
         }
     }

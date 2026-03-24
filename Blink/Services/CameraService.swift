@@ -17,6 +17,9 @@ final class CameraService: NSObject, ObservableObject {
 
     private let sessionQueue = DispatchQueue(label: "com.blink.camera.session")
 
+    /// Maximum recording duration allowed (set from SubscriptionService).
+    var maxRecordingDuration: TimeInterval = 30
+
     enum CameraError: LocalizedError {
         case cameraUnavailable
         case microphoneUnavailable
@@ -106,7 +109,7 @@ final class CameraService: NSObject, ObservableObject {
 
         // Movie output
         let movieOutput = AVCaptureMovieFileOutput()
-        movieOutput.maxRecordedDuration = CMTime(seconds: 30, preferredTimescale: 600)
+        movieOutput.maxRecordedDuration = CMTime(seconds: maxRecordingDuration, preferredTimescale: 600)
         if session.canAddOutput(movieOutput) {
             session.addOutput(movieOutput)
             self.movieOutput = movieOutput
@@ -166,7 +169,7 @@ final class CameraService: NSObject, ObservableObject {
         durationTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             self.recordedDuration += 0.1
-            if self.recordedDuration >= 30 {
+            if self.recordedDuration >= self.maxRecordingDuration {
                 self.stopRecording()
             }
         }
@@ -218,7 +221,12 @@ extension CameraService: AVCaptureFileOutputRecordingDelegate {
         // Save the video
         Task {
             let success = await VideoStore.shared.addVideo(at: outputFileURL)
-            if !success {
+            if success {
+                // R5: Record clip for freemium daily count
+                await MainActor.run {
+                    SubscriptionService.shared.recordClipRecorded()
+                }
+            } else {
                 await MainActor.run {
                     self.error = .clipSaveFailed
                 }
