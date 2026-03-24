@@ -24,6 +24,8 @@
 	<string>Blink needs camera access to record your daily video diary.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Blink needs microphone access to record audio with your video diary.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Blink needs permission to save clips to your Camera Roll.</string>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>

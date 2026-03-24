@@ -5,6 +5,8 @@ struct CalendarView: View {
     @State private var selectedYear: Int
     @State private var selectedEntry: VideoEntry?
     @State private var showYearInReview = false
+    @State private var showMonthBrowser = false
+    @State private var showJumpToMonth = false
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     private let dayLabels = ["S", "M", "T", "W", "T", "F", "S"]
@@ -58,12 +60,22 @@ struct CalendarView: View {
             .toolbar {
                 if clipsThisYear > 0 {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            showYearInReview = true
-                        } label: {
-                            Image(systemName: "sparkles")
-                                .font(.system(size: 14, weight: .medium))
-                                .foregroundColor(Color(hex: "ff3b30"))
+                        HStack(spacing: 4) {
+                            Button {
+                                showMonthBrowser = true
+                            } label: {
+                                Image(systemName: "rectangle.stack")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .foregroundColor(Color(hex: "8a8a8a"))
+                            }
+
+                            Button {
+                                showYearInReview = true
+                            } label: {
+                                Image(systemName: "sparkles")
+                                    .font(.system(size: 14, weight: .medium))
+                                    .foregroundColor(Color(hex: "ff3b30"))
+                            }
                         }
                     }
                 }
@@ -73,6 +85,9 @@ struct CalendarView: View {
             PlaybackView(entry: entry, onDelete: {
                 videoStore.deleteEntry(entry)
                 selectedEntry = nil
+            }, onTrim: { updatedEntry in
+                videoStore.updateEntry(updatedEntry)
+                selectedEntry = updatedEntry
             })
         }
         .sheet(isPresented: $showYearInReview) {
@@ -80,6 +95,9 @@ struct CalendarView: View {
                 clipsThisYear: clipsThisYear,
                 totalDaysElapsed: daysElapsedThisYear
             )
+        }
+        .fullScreenCover(isPresented: $showMonthBrowser) {
+            MonthBrowserView(selectedEntry: $selectedEntry)
         }
     }
 
@@ -237,10 +255,6 @@ struct MonthCard: View {
     }
 
     private var clipsThisMonth: Int {
-        var components = DateComponents()
-        components.month = month
-        components.year = year
-        guard let date = Calendar.current.date(from: components) else { return 0 }
         let calendar = Calendar.current
         return entries.filter { calendar.component(.month, from: $0.date) == month }.count
     }
@@ -322,6 +336,22 @@ struct DayCell: View {
                         Color(hex: "333333")
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 4))
+
+                    // Title overlay at bottom
+                    if let title = entry.title, !title.isEmpty {
+                        VStack {
+                            Spacer()
+                            Text(title)
+                                .font(.system(size: 6, weight: .medium))
+                                .foregroundColor(.white)
+                                .lineLimit(1)
+                                .padding(.horizontal, 2)
+                                .padding(.vertical, 1)
+                                .frame(maxWidth: .infinity)
+                                .background(Color.black.opacity(0.5))
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                    }
                 } else {
                     Circle()
                         .stroke(Color(hex: "2a2a2a"), lineWidth: 1)

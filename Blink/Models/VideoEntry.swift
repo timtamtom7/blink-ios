@@ -6,13 +6,15 @@ struct VideoEntry: Identifiable, Codable, Equatable {
     let filename: String
     let duration: TimeInterval
     var thumbnailFilename: String?
+    var title: String?
 
-    init(id: UUID = UUID(), date: Date, filename: String, duration: TimeInterval, thumbnailFilename: String? = nil) {
+    init(id: UUID = UUID(), date: Date, filename: String, duration: TimeInterval, thumbnailFilename: String? = nil, title: String? = nil) {
         self.id = id
         self.date = date
         self.filename = filename
         self.duration = duration
         self.thumbnailFilename = thumbnailFilename
+        self.title = title
     }
 
     var videoURL: URL {
@@ -28,6 +30,16 @@ struct VideoEntry: Identifiable, Codable, Equatable {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d, h:mm a"
         return formatter.string(from: date)
+    }
+
+    var defaultTitle: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy • h:mm a"
+        return formatter.string(from: date)
+    }
+
+    var displayTitle: String {
+        title ?? defaultTitle
     }
 
     var dayOfYear: Int {

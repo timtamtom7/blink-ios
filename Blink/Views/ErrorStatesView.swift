@@ -222,6 +222,193 @@ struct ClipSaveFailedView: View {
     }
 }
 
+// MARK: - Trim Save Failed View
+
+struct TrimSaveFailedView: View {
+    let onRetry: () -> Void
+    let onDiscard: () -> Void
+
+    var body: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            Image(systemName: "scissors")
+                .font(.system(size: 56))
+                .foregroundColor(Color(hex: "ff3b30").opacity(0.8))
+
+            VStack(spacing: 12) {
+                Text("Trim failed")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(Color(hex: "f5f5f5"))
+
+                Text("Something went wrong saving your trimmed clip. Try again — your original clip is safe until you confirm the save.")
+                    .font(.system(size: 15))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+                    .padding(.horizontal, 32)
+            }
+
+            VStack(spacing: 12) {
+                Button {
+                    onRetry()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.system(size: 14, weight: .medium))
+                        Text("Try Again")
+                            .font(.system(size: 16, weight: .semibold))
+                    }
+                    .foregroundColor(.white)
+                    .frame(width: 200, height: 48)
+                    .background(Color(hex: "ff3b30"))
+                    .clipShape(Capsule())
+                }
+
+                Button {
+                    onDiscard()
+                } label: {
+                    Text("Go back")
+                        .font(.system(size: 14))
+                        .foregroundColor(Color(hex: "8a8a8a"))
+                }
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color(hex: "0a0a0a"))
+    }
+}
+
+// MARK: - Trim Storage Full View
+
+struct TrimStorageFullView: View {
+    let onDismiss: () -> Void
+
+    var body: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            ZStack {
+                Circle()
+                    .stroke(Color(hex: "333333"), lineWidth: 3)
+                    .frame(width: 80, height: 80)
+
+                Circle()
+                    .trim(from: 0, to: 1.0)
+                    .stroke(Color(hex: "ff3b30"), style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                    .frame(width: 80, height: 80)
+                    .rotationEffect(.degrees(-90))
+
+                Image(systemName: "scissors")
+                    .font(.system(size: 28))
+                    .foregroundColor(Color(hex: "ff3b30"))
+            }
+
+            VStack(spacing: 12) {
+                Text("Not enough space")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(Color(hex: "f5f5f5"))
+
+                Text("Your device is running out of space. Free up storage to save your trimmed clip.")
+                    .font(.system(size: 15))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+                    .padding(.horizontal, 32)
+            }
+
+            VStack(spacing: 8) {
+                HStack(spacing: 8) {
+                    Image(systemName: "lightbulb.fill")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(hex: "ff3b30"))
+                    Text("Tip: Export clips to Camera Roll to free space")
+                        .font(.system(size: 13))
+                        .foregroundColor(Color(hex: "8a8a8a"))
+                }
+            }
+
+            Button {
+                onDismiss()
+            } label: {
+                Text("OK")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.white)
+                    .frame(width: 120, height: 44)
+                    .background(Color(hex: "333333"))
+                    .clipShape(Capsule())
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color(hex: "0a0a0a"))
+    }
+}
+
+// MARK: - Export to Camera Roll Failed View
+
+struct ExportFailedView: View {
+    let onRetry: () -> Void
+    let onDismiss: () -> Void
+
+    var body: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            Image(systemName: "square.and.arrow.down.trianglebadge.exclamationmark")
+                .font(.system(size: 56))
+                .foregroundColor(Color(hex: "ff3b30").opacity(0.8))
+
+            VStack(spacing: 12) {
+                Text("Couldn't save to Camera Roll")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(Color(hex: "f5f5f5"))
+
+                Text("Blink needs permission to save photos to your Camera Roll. Go to Settings > Blink > Photos and select \"All Photos\" or \"Selected.\"")
+                    .font(.system(size: 15))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+                    .padding(.horizontal, 32)
+            }
+
+            VStack(spacing: 12) {
+                Button {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "gear")
+                            .font(.system(size: 14, weight: .medium))
+                        Text("Open Settings")
+                            .font(.system(size: 16, weight: .semibold))
+                    }
+                    .foregroundColor(.white)
+                    .frame(width: 200, height: 48)
+                    .background(Color(hex: "ff3b30"))
+                    .clipShape(Capsule())
+                }
+
+                Button {
+                    onDismiss()
+                } label: {
+                    Text("Cancel")
+                        .font(.system(size: 14))
+                        .foregroundColor(Color(hex: "8a8a8a"))
+                }
+            }
+
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .background(Color(hex: "0a0a0a"))
+    }
+}
+
 // MARK: - Empty Calendar State View
 
 struct EmptyCalendarView: View {
@@ -334,6 +521,9 @@ enum BlinkError: Equatable {
     case microphonePermission
     case storageFull
     case clipSaveFailed
+    case trimSaveFailed
+    case trimStorageFull
+    case exportFailed
     case emptyCalendar(year: Int)
 
     @ViewBuilder
@@ -347,6 +537,12 @@ enum BlinkError: Equatable {
             StorageFullView(onDismiss: {})
         case .clipSaveFailed:
             ClipSaveFailedView(onRetry: {}, onDiscard: {})
+        case .trimSaveFailed:
+            TrimSaveFailedView(onRetry: {}, onDiscard: {})
+        case .trimStorageFull:
+            TrimStorageFullView(onDismiss: {})
+        case .exportFailed:
+            ExportFailedView(onRetry: {}, onDismiss: {})
         case .emptyCalendar(let year):
             EmptyCalendarView(year: year, onRecordFirst: {})
         }

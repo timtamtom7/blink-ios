@@ -51,4 +51,5 @@ targets:
           - UIInterfaceOrientationLandscapeRight
         NSCameraUsageDescription: "Blink needs camera access to record your daily video diary."
         NSMicrophoneUsageDescription: "Blink needs microphone access to record audio with your video diary."
+        NSPhotoLibraryAddUsageDescription: "Blink needs permission to save clips to your Camera Roll."
         UIUserInterfaceStyle: Dark

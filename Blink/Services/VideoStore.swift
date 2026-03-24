@@ -1,6 +1,7 @@
 import Foundation
 import AVFoundation
 import UIKit
+import Photos
 
 final class VideoStore: ObservableObject {
     static let shared = VideoStore()
@@ -111,5 +112,173 @@ final class VideoStore: ObservableObject {
     func clipCountThisYear() -> Int {
         let year = Calendar.current.component(.year, from: Date())
         return entriesForYear(year).count
+    }
+
+    // MARK: - Trim
+
+    enum TrimError: Error, LocalizedError {
+        case exportFailed
+        case storageFull
+        case sourceNotFound
+
+        var errorDescription: String? {
+            switch self {
+            case .exportFailed: return "Failed to export trimmed clip."
+            case .storageFull: return "Not enough storage to save the trimmed clip."
+            case .sourceNotFound: return "Original clip not found."
+            }
+        }
+    }
+
+    /// Trim a clip and save as a new entry.
+    /// - Parameters:
+    ///   - entry: The original clip entry
+    ///   - startTime: Trim start time in seconds
+    ///   - endTime: Trim end time in seconds
+    ///   - saveAsNew: If true, keeps original and creates a new clip; if false, overwrites original
+    /// - Returns: The new VideoEntry if successful
+    @MainActor
+    func trimClip(_ entry: VideoEntry, startTime: Double, endTime: Double, saveAsNew: Bool) async throws -> VideoEntry {
+        let sourceURL = entry.videoURL
+
+        guard fileManager.fileExists(atPath: sourceURL.path) else {
+            throw TrimError.sourceNotFound
+        }
+
+        let asset = AVURLAsset(url: sourceURL)
+        let duration = try await asset.load(.duration).seconds
+        let clampedStart = max(0, min(startTime, duration))
+        let clampedEnd = max(clampedStart, min(endTime, duration))
+
+        let outputFilename = "blink_trimmed_\(ISO8601DateFormatter().string(from: Date())).mov"
+        let outputURL = videosDirectory.appendingPathComponent(outputFilename)
+
+        // Use AVAssetExportSession to cut the clip
+        guard let exportSession = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality) else {
+            throw TrimError.exportFailed
+        }
+
+        exportSession.outputURL = outputURL
+        exportSession.outputFileType = .mov
+
+        let startCMTime = CMTime(seconds: clampedStart, preferredTimescale: 600)
+        let endCMTime = CMTime(seconds: clampedEnd, preferredTimescale: 600)
+        exportSession.timeRange = CMTimeRange(start: startCMTime, end: endCMTime)
+
+        await exportSession.export()
+
+        guard exportSession.status == .completed else {
+            if let nsError = exportSession.error as? NSError, nsError.code == NSFileWriteOutOfSpaceError {
+                throw TrimError.storageFull
+            }
+            throw TrimError.exportFailed
+        }
+
+        let trimmedDuration = clampedEnd - clampedStart
+        let thumbnailFilename = await ThumbnailGenerator.shared.generateThumbnail(for: outputURL, videoFilename: outputFilename)
+
+        let newEntry = VideoEntry(
+            date: entry.date,
+            filename: outputFilename,
+            duration: trimmedDuration,
+            thumbnailFilename: thumbnailFilename,
+            title: entry.title
+        )
+
+        if saveAsNew {
+            entries.append(newEntry)
+        } else {
+            // Overwrite: delete old video, keep same entry ID but update fields
+            let oldIndex = entries.firstIndex { $0.id == entry.id }
+            var updatedEntry = entry
+            updatedEntry.thumbnailFilename = thumbnailFilename
+            // Remove old video file
+            try? fileManager.removeItem(at: sourceURL)
+            if let idx = oldIndex {
+                entries[idx] = newEntry
+            }
+        }
+
+        saveEntries()
+        return newEntry
+    }
+
+    // MARK: - Export to Camera Roll
+
+    enum ExportError: Error, LocalizedError {
+        case copyFailed
+        case saveFailed
+
+        var errorDescription: String? {
+            switch self {
+            case .copyFailed: return "Failed to read the clip file."
+            case .saveFailed: return "Failed to save clip to Camera Roll. Check Settings > Blink > Photos."
+            }
+        }
+    }
+
+    /// Export a single clip to the Camera Roll.
+    @MainActor
+    func exportToCameraRoll(_ entry: VideoEntry) async throws {
+        let sourceURL = entry.videoURL
+
+        guard fileManager.fileExists(atPath: sourceURL.path) else {
+            throw ExportError.copyFailed
+        }
+
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
+                guard status == .authorized || status == .limited else {
+                    continuation.resume(throwing: ExportError.saveFailed)
+                    return
+                }
+
+                PHPhotoLibrary.shared().performChanges {
+                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: sourceURL)
+                } completionHandler: { success, error in
+                    if success {
+                        continuation.resume()
+                    } else {
+                        continuation.resume(throwing: ExportError.saveFailed)
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Update Title
+
+    @MainActor
+    func updateTitle(for entry: VideoEntry, title: String) {
+        guard let index = entries.firstIndex(where: { $0.id == entry.id }) else { return }
+        entries[index].title = title.isEmpty ? nil : title
+        saveEntries()
+    }
+
+    @MainActor
+    func updateEntry(_ entry: VideoEntry) {
+        guard let index = entries.firstIndex(where: { $0.id == entry.id }) else { return }
+        entries[index] = entry
+        saveEntries()
+    }
+
+    // MARK: - Months
+
+    func monthsWithEntries(for year: Int) -> [Int] {
+        let calendar = Calendar.current
+        let yearEntries = entriesForYear(year)
+        var months = Set<Int>()
+        for entry in yearEntries {
+            months.insert(calendar.component(.month, from: entry.date))
+        }
+        return months.sorted()
+    }
+
+    func clipCount(for month: Int, year: Int) -> Int {
+        let calendar = Calendar.current
+        return entries.filter {
+            calendar.component(.month, from: $0.date) == month &&
+            calendar.component(.year, from: $0.date) == year
+        }.count
     }
 }

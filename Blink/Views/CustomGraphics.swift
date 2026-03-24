@@ -1,5 +1,239 @@
 import SwiftUI
 
+// MARK: - Trim Scrubber Graphic
+
+struct TrimScrubberGraphic: View {
+    @State private var startHandleOffset: CGFloat = 0
+    @State private var endHandleOffset: CGFloat = 0
+    @State private var playheadOffset: CGFloat = 0
+
+    var body: some View {
+        VStack(spacing: 16) {
+            // Static preview of the scrubber
+            ZStack(alignment: .leading) {
+                // Track
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(Color(hex: "1e1e1e"))
+                    .frame(height: 56)
+
+                // Selected range
+                RoundedRectangle(cornerRadius: 6)
+                    .fill(Color(hex: "ff3b30").opacity(0.25))
+                    .frame(width: 200, height: 56)
+                    .offset(x: 40)
+
+                // Waveform bars
+                HStack(spacing: 2) {
+                    ForEach(0..<30, id: \.self) { i in
+                        let height = barHeight(i)
+                        RoundedRectangle(cornerRadius: 1)
+                            .fill(i < 15 ? Color(hex: "ff3b30") : Color(hex: "444444"))
+                            .frame(width: 4, height: height)
+                    }
+                }
+                .padding(.horizontal, 8)
+
+                // Start handle
+                TrimHandlePreview(isStart: true)
+                    .offset(x: startHandleOffset)
+
+                // End handle
+                TrimHandlePreview(isStart: false)
+                    .offset(x: endHandleOffset + 240)
+
+                // Playhead
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(width: 2, height: 64)
+                    .offset(x: playheadOffset + 60)
+            }
+            .frame(width: 280, height: 64)
+
+            // Time labels
+            HStack {
+                Text("0:00")
+                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .foregroundColor(Color(hex: "ff3b30"))
+                Spacer()
+                Text("0:30")
+                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+                Spacer()
+                Text("0:45")
+                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .foregroundColor(Color(hex: "ff3b30"))
+            }
+            .frame(width: 280)
+        }
+    }
+
+    private func barHeight(_ index: Int) -> CGFloat {
+        let seed = sin(Double(index) * 0.7) * 0.5 + 0.5
+        return CGFloat(8 + seed * 32)
+    }
+}
+
+struct TrimHandlePreview: View {
+    let isStart: Bool
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 6)
+                .fill(Color(hex: "ff3b30"))
+                .frame(width: 20, height: 56)
+
+            VStack(spacing: 3) {
+                ForEach(0..<3, id: \.self) { _ in
+                    Capsule()
+                        .fill(Color.white.opacity(0.5))
+                        .frame(width: 8, height: 2)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Clip Title Input Graphic
+
+struct TitleInputGraphic: View {
+    @State private var text = "Morning coffee ritual"
+    @FocusState private var isFocused: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Clip Title")
+                .font(.system(size: 12, weight: .medium))
+                .foregroundColor(Color(hex: "8a8a8a"))
+
+            HStack {
+                TextField("Add a title…", text: $text)
+                    .font(.system(size: 16))
+                    .foregroundColor(.white)
+                    .padding(12)
+                    .background(Color(hex: "1e1e1e"))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color(hex: "ff3b30"), lineWidth: 1)
+                    )
+
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 22))
+                    .foregroundColor(Color(hex: "ff3b30"))
+            }
+        }
+        .frame(width: 300)
+    }
+}
+
+// MARK: - Month Browser Graphic
+
+struct MonthBrowserGraphic: View {
+    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+    var body: some View {
+        VStack(spacing: 12) {
+            // Month cards grid
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
+                ForEach(Array(months.enumerated()), id: \.offset) { idx, month in
+                    VStack(spacing: 4) {
+                        Text(month)
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(idx == 2 ? .white : Color(hex: "8a8a8a"))
+
+                        if idx == 2 || idx == 5 {
+                            HStack(spacing: 2) {
+                                Circle()
+                                    .fill(Color(hex: "ff3b30"))
+                                    .frame(width: 4, height: 4)
+                                Text("\(idx == 2 ? 7 : 12)")
+                                    .font(.system(size: 9, weight: .bold))
+                                    .foregroundColor(Color(hex: "8a8a8a"))
+                            }
+                        } else {
+                            Text("—")
+                                .font(.system(size: 9))
+                                .foregroundColor(Color(hex: "333333"))
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(idx == 2 ? Color(hex: "ff3b30").opacity(0.15) : Color(hex: "141414"))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(idx == 2 ? Color(hex: "ff3b30") : Color(hex: "2a2a2a"), lineWidth: 1)
+                    )
+                }
+            }
+        }
+        .frame(width: 280)
+    }
+}
+
+// MARK: - Export Share Button Graphic
+
+struct ExportShareButtonGraphic: View {
+    var body: some View {
+        HStack(spacing: 12) {
+            // Export to Camera Roll button
+            VStack(spacing: 8) {
+                ZStack {
+                    Circle()
+                        .fill(Color(hex: "ff3b30").opacity(0.15))
+                        .frame(width: 52, height: 52)
+
+                    Image(systemName: "square.and.arrow.down.fill")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color(hex: "ff3b30"))
+                }
+
+                Text("Save to\nCamera Roll")
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+                    .multilineTextAlignment(.center)
+            }
+            .frame(width: 80)
+
+            // Share button
+            VStack(spacing: 8) {
+                ZStack {
+                    Circle()
+                        .fill(Color(hex: "1e1e1e"))
+                        .frame(width: 52, height: 52)
+
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
+                }
+
+                Text("Share")
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+            }
+            .frame(width: 80)
+
+            // Trim button
+            VStack(spacing: 8) {
+                ZStack {
+                    Circle()
+                        .fill(Color(hex: "1e1e1e"))
+                        .frame(width: 52, height: 52)
+
+                    Image(systemName: "scissors")
+                        .font(.system(size: 20))
+                        .foregroundColor(.white)
+                }
+
+                Text("Trim")
+                    .font(.system(size: 10, weight: .medium))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+            }
+            .frame(width: 80)
+        }
+    }
+}
+
 // MARK: - Camera Viewfinder Graphic
 
 struct ViewfinderGraphic: View {
