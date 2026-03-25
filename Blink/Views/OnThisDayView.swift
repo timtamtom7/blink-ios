@@ -7,6 +7,12 @@ struct OnThisDayView: View {
     let entries: [VideoEntry]
     let onDismiss: () -> Void
     @State private var selectedEntry: VideoEntry?
+    @State private var selectedTab: OnThisDayTab = .sameDate
+
+    enum OnThisDayTab {
+        case sameDate
+        case similarMood
+    }
 
     var body: some View {
         ZStack {
@@ -18,14 +24,34 @@ struct OnThisDayView: View {
                 header
                     .padding(.top, 8)
 
-                if entries.isEmpty {
+                // Tab selector
+                tabSelector
+
+                if entries.isEmpty && similarMoodEntries.isEmpty {
                     emptyState
                 } else {
                     ScrollView {
                         VStack(spacing: 20) {
-                            ForEach(groupedByYear, id: \.year) { group in
-                                YearSection(year: group.year, entries: group.entries) { entry in
-                                    selectedEntry = entry
+                            if selectedTab == .sameDate {
+                                if groupedByYear.isEmpty {
+                                    noSameDateState
+                                } else {
+                                    ForEach(groupedByYear, id: \.year) { group in
+                                        YearSection(year: group.year, entries: group.entries) { entry in
+                                            selectedEntry = entry
+                                        }
+                                    }
+                                }
+                            } else {
+                                // Similar Mood tab
+                                if similarMoodEntries.isEmpty {
+                                    noSimilarMoodState
+                                } else {
+                                    ForEach(similarMoodGroups, id: \.sceneType) { group in
+                                        SimilarMoodSection(sceneType: group.sceneType, entries: group.entries) { entry in
+                                            selectedEntry = entry
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -39,6 +65,34 @@ struct OnThisDayView: View {
         .fullScreenCover(item: $selectedEntry) { entry in
             PlaybackView(entry: entry, onDelete: {}, onTrim: nil)
         }
+    }
+
+    private var tabSelector: some View {
+        HStack(spacing: 0) {
+            tabButton("Same Date", tab: .sameDate)
+            tabButton("Similar Mood", tab: .similarMood)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+    }
+
+    private func tabButton(_ title: String, tab: OnThisDayTab) -> some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                selectedTab = tab
+            }
+        } label: {
+            VStack(spacing: 4) {
+                Text(title)
+                    .font(.system(size: 14, weight: selectedTab == tab ? .semibold : .medium))
+                    .foregroundColor(selectedTab == tab ? Color(hex: "f5f5f5") : Color(hex: "8a8a8a"))
+
+                Rectangle()
+                    .fill(selectedTab == tab ? Color(hex: "ff3b30") : Color.clear)
+                    .frame(height: 2)
+            }
+        }
+        .frame(maxWidth: .infinity)
     }
 
     private var header: some View {
@@ -102,6 +156,36 @@ struct OnThisDayView: View {
         }
     }
 
+    private var noSameDateState: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "calendar")
+                .font(.system(size: 40))
+                .foregroundColor(Color(hex: "333333"))
+
+            Text("No clips on this date in past years")
+                .font(.system(size: 15))
+                .foregroundColor(Color(hex: "8a8a8a"))
+        }
+        .padding(.vertical, 40)
+    }
+
+    private var noSimilarMoodState: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "sparkles")
+                .font(.system(size: 40))
+                .foregroundColor(Color(hex: "333333"))
+
+            Text("Analyze clips to discover similar moments")
+                .font(.system(size: 15))
+                .foregroundColor(Color(hex: "8a8a8a"))
+
+            Text("Go to AI Highlights to analyze your clips")
+                .font(.system(size: 13))
+                .foregroundColor(Color(hex: "555555"))
+        }
+        .padding(.vertical, 40)
+    }
+
     private var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d"
@@ -128,6 +212,101 @@ struct OnThisDayView: View {
         return yearGroups
             .map { YearGroup(year: $0.key, entries: $0.value.sorted { $0.date < $1.date }) }
             .sorted { $0.year > $1.year }
+    }
+
+    // R11: Similar mood entries — group entries by AI-detected scene type
+    private var similarMoodEntries: [VideoEntry] {
+        let analysis = DeepAnalysisService.shared
+        // Return entries that have been analyzed with at least one non-unknown scene
+        return entries.filter { entry in
+            guard let entryAnalysis = analysis.analysis(for: entry) else { return false }
+            return entryAnalysis.scenes.contains { $0.type != .unknown }
+        }
+    }
+
+    // Group similar mood entries by scene type
+    private var similarMoodGroups: [SimilarMoodGroup] {
+        let analysis = DeepAnalysisService.shared
+        var groups: [DeepAnalysisService.SceneType: [VideoEntry]] = [:]
+
+        for entry in similarMoodEntries {
+            guard let entryAnalysis = analysis.analysis(for: entry),
+                  let firstScene = entryAnalysis.scenes.first(where: { $0.type != .unknown }) else {
+                continue
+            }
+            groups[firstScene.type, default: []].append(entry)
+        }
+
+        return groups
+            .filter { $0.value.count >= 2 } // Only show groups with 2+ entries
+            .map { SimilarMoodGroup(sceneType: $0.key, entries: $0.value.sorted { $0.date > $1.date }) }
+            .sorted { $0.entries.count > $1.entries.count }
+    }
+}
+
+struct SimilarMoodGroup {
+    let sceneType: DeepAnalysisService.SceneType
+    let entries: [VideoEntry]
+}
+
+struct SimilarMoodSection: View {
+    let sceneType: DeepAnalysisService.SceneType
+    let entries: [VideoEntry]
+    let onTapEntry: (VideoEntry) -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: sceneIcon)
+                    .font(.system(size: 14))
+                    .foregroundColor(Color(hex: "ff3b30"))
+
+                Text("\(sceneType.rawValue) Moments")
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundColor(Color(hex: "f5f5f5"))
+
+                Spacer()
+
+                Text("\(entries.count) clips")
+                    .font(.system(size: 12))
+                    .foregroundColor(Color(hex: "8a8a8a"))
+            }
+
+            // Show first 3 as preview cards
+            ForEach(entries.prefix(3)) { entry in
+                OnThisDayCard(entry: entry)
+                    .onTapGesture {
+                        onTapEntry(entry)
+                    }
+            }
+
+            if entries.count > 3 {
+                Text("+ \(entries.count - 3) more")
+                    .font(.system(size: 13))
+                    .foregroundColor(Color(hex: "ff3b30"))
+                    .padding(.top, 4)
+            }
+        }
+        .padding(12)
+        .background(Color(hex: "141414"))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private var sceneIcon: String {
+        switch sceneType {
+        case .outdoor: return "sun.max"
+        case .indoor: return "house"
+        case .travel: return "airplane"
+        case .family: return "figure.2"
+        case .friends: return "person.3"
+        case .food: return "fork.knife"
+        case .nature: return "leaf"
+        case .urban: return "building.2"
+        case .celebration: return "party.popper"
+        case .quiet: return "moon"
+        case .activity: return "figure.run"
+        case .unknown: return "sparkles"
+        }
     }
 }
 

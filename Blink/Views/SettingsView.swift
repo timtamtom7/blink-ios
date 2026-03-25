@@ -12,6 +12,7 @@ struct SettingsView: View {
     @ObservedObject private var cloudBackup = CloudBackupService.shared
     @State private var showAbout = false
     @State private var showPricing = false
+    @State private var showStorageDashboard = false
     @State private var showPasscodeSetup = false
     @State private var showPasscodeRemoveConfirm = false
     @State private var showRestoreConfirm = false
@@ -109,6 +110,19 @@ struct SettingsView: View {
                                 .foregroundColor(Color(hex: "f5f5f5"))
                         }
                         .tint(Color(hex: "ff3b30"))
+
+                        Button {
+                            showStorageDashboard = true
+                        } label: {
+                            HStack {
+                                Label("Storage Dashboard", systemImage: "externaldrive.fill")
+                                    .foregroundColor(Color(hex: "f5f5f5"))
+                                Spacer()
+                                Image(systemName: "arrow.up.right")
+                                    .font(.system(size: 12, weight: .medium))
+                                    .foregroundColor(Color(hex: "ff3b30"))
+                            }
+                        }
                     } header: {
                         Text("Recording")
                             .foregroundColor(Color(hex: "8a8a8a"))
@@ -248,6 +262,9 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showPricing) {
                 PricingView()
+            }
+            .sheet(isPresented: $showStorageDashboard) {
+                StorageDashboardView()
             }
             .sheet(isPresented: $showPasscodeSetup) {
                 PasscodeSetupView(onComplete: {
