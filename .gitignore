@@ -1,0 +1,23 @@
+# Build
+build/
+DerivedData/
+
+# Xcode
+*.xcuserstate
+*.xcuserdatad
+xcuserdata/
+*.mode1v3
+*.mode2v3
+*.pbxuser
+!*.pbxuser
+
+# macOS
+.DS_Store
+
+# IDE
+*.xcworkspace
+!.xcworkspace/contents.xcworkspacedata
+
+# Swift Package Manager
+Packages/
+*.xcodeproj/project.xcworkspace/

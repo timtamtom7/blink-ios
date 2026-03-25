@@ -1,2 +1,0 @@
-Target dependency graph (1 target)
-Target 'Blink' in project 'Blink' (no dependencies)
