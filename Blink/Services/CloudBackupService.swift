@@ -42,18 +42,21 @@ final class CloudBackupService: ObservableObject {
     @Published var isRestoring = false
     @Published var restoreProgress: Double = 0
 
-    private let container: CKContainer
-    private let privateDatabase: CKDatabase
+    // NOTE: container and privateDatabase are lazy vars, not let constants.
+    // CKContainer crashes with EXC_BREAKPOINT (not a catchable Swift error) if the
+    // CloudKit entitlement isn't configured. By making these lazy, we defer the call
+    // until actual use — the app can still launch and show a clean "iCloud unavailable" error.
+    private lazy var container: CKContainer = CKContainer.default()
+    private lazy var privateDatabase: CKDatabase = container.privateCloudDatabase
     private let recordType = "BlinkBackup"
     private let fileManager = FileManager.default
 
+    /// Checks if iCloud is available. Safe to call at any time — does not trigger CloudKit.
     var iCloudAvailable: Bool {
-        FileManager.default.ubiquityIdentityToken != nil
+        fileManager.ubiquityIdentityToken != nil
     }
 
     private init() {
-        container = CKContainer.default()
-        privateDatabase = container.privateCloudDatabase
         lastBackupDate = UserDefaults.standard.object(forKey: "lastBackupDate") as? Date
     }
 
