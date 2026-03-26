@@ -28,6 +28,7 @@
 		3F0815710E83A3861F97DDA4 /* CrossDeviceSyncView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74214AD362DA70FD7D133D55 /* CrossDeviceSyncView.swift */; };
 		44A45038B0F961D173826104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3611BA1F7A16AA6199641486 /* Assets.xcassets */; };
 		4554894DB716480CE2C6301A /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE22E372387EAE1F747F9CE /* CameraService.swift */; };
+		d462b1095d9b47b3800e243bb5b5e6ac /* HapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555628fac2fa4d609ece82f9b5e16cac /* HapticService.swift */; };
 		46CF493E094C40225BF8C23A /* SubscriptionBusiness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FDA0BD0DC13AAEA143BAD9 /* SubscriptionBusiness.swift */; };
 		54B0FFA1F9870E36D3830823 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE60BEF7DE992AB801282D /* ExportService.swift */; };
 		59021CE901CD117CEE0863A1 /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FA7877F854456A362FBAB1 /* CommunityView.swift */; };
@@ -92,6 +93,7 @@
 		33C30688C640132BCA730E88 /* WebPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPlatform.swift; sourceTree = "<group>"; };
 		3611BA1F7A16AA6199641486 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3786EA84862953171B2F1DD4 /* CloudBackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudBackupService.swift; sourceTree = "<group>"; };
+		555628fac2fa4d609ece82f9b5e16cac /* HapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticService.swift; sourceTree = "<group>"; };
 		3BE22E372387EAE1F747F9CE /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		479C4B35F9FA46FD0DDCD899 /* CustomGraphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGraphics.swift; sourceTree = "<group>"; };
 		48431B2C296BDB92BF0BB93C /* Blink.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Blink.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,6 +159,7 @@
 				75FC7CB31A6C0994A449CB75 /* DeduplicationService.swift */,
 				0EF5C269A788EB088117C43D /* DeepAnalysisService.swift */,
 				7FDE60BEF7DE992AB801282D /* ExportService.swift */,
+				555628fac2fa4d609ece82f9b5e16cac /* HapticService.swift */,
 				C608A4090204A1D53010AFD1 /* PrivacyService.swift */,
 				CB3616C28B7201CA1AB2D056 /* SharedAlbumService.swift */,
 				0DCF957BFB9EF93A77C8C439 /* SmartSkipService.swift */,
@@ -363,6 +366,7 @@
 				D6DAFEFFA491E7E0A112DE31 /* DeepAnalysisView.swift in Sources */,
 				77DD495EA9773E6966D56BDD /* ErrorStatesView.swift in Sources */,
 				54B0FFA1F9870E36D3830823 /* ExportService.swift in Sources */,
+				d462b1095d9b47b3800e243bb5b5e6ac /* HapticService.swift in Sources */,
 				88EABF3F5E115E71F12184B2 /* FreemiumEnforcementView.swift in Sources */,
 				25FD458CB554768EF35E8353 /* InternationalExpansion.swift in Sources */,
 				DECEE4B66C0B2BA2223FD296 /* MonthBrowserView.swift in Sources */,

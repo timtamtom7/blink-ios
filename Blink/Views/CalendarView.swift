@@ -92,44 +92,54 @@ struct CalendarView: View {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         HStack(spacing: 4) {
                             Button {
+                                HapticService.shared.buttonTap()
                                 showAIHighlights = true
                             } label: {
                                 Image(systemName: "sparkles")
                                     .font(.system(size: 14, weight: .medium))
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
+                            .accessibilityLabel("AI Highlights")
 
                             Button {
+                                HapticService.shared.buttonTap()
                                 showPublicFeed = true
                             } label: {
                                 Image(systemName: "globe")
                                     .font(.system(size: 14, weight: .medium))
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
+                            .accessibilityLabel("Public feed")
 
                             Button {
+                                HapticService.shared.buttonTap()
                                 showSearch = true
                             } label: {
                                 Image(systemName: "magnifyingglass")
                                     .font(.system(size: 14, weight: .medium))
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
+                            .accessibilityLabel("Search clips")
 
                             Button {
+                                HapticService.shared.buttonTap()
                                 showMonthBrowser = true
                             } label: {
                                 Image(systemName: "rectangle.stack")
                                     .font(.system(size: 14, weight: .medium))
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
+                            .accessibilityLabel("Browse by month")
 
                             Button {
+                                HapticService.shared.buttonTap()
                                 showExportOptions = true
                             } label: {
                                 Image(systemName: "square.and.arrow.up")
                                     .font(.system(size: 14, weight: .medium))
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
+                            .accessibilityLabel("Export options")
                         }
                     }
                 }
@@ -242,18 +252,22 @@ struct CalendarView: View {
                 withAnimation {
                     selectedYear -= 1
                 }
+                HapticService.shared.selectionChanged()
             } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 18, weight: .medium))
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .frame(width: 44, height: 44)
             }
+            .accessibilityLabel("Previous year")
+            .accessibilityHint("Shows the calendar for \(selectedYear - 1)")
 
             Spacer()
 
             Text(String(selectedYear))
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(Color(hex: "f5f5f5"))
+                .accessibilityLabel("\(selectedYear)")
 
             Spacer()
 
@@ -261,6 +275,7 @@ struct CalendarView: View {
                 withAnimation {
                     selectedYear += 1
                 }
+                HapticService.shared.selectionChanged()
             } label: {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 18, weight: .medium))
@@ -268,6 +283,8 @@ struct CalendarView: View {
                     .frame(width: 44, height: 44)
             }
             .disabled(selectedYear >= Calendar.current.component(.year, from: Date()))
+            .accessibilityLabel("Next year")
+            .accessibilityHint(selectedYear >= Calendar.current.component(.year, from: Date()) ? "No year after \(selectedYear)" : "Shows the calendar for \(selectedYear + 1)")
         }
         .padding(.horizontal, 16)
     }
@@ -502,8 +519,17 @@ struct DayCell: View {
     let isCurrentMonth: Bool
     let onTap: (VideoEntry?) -> Void
 
+    private var accessibilityLabel: String {
+        if let entry = entry {
+            return "Day \(day), clip recorded: \(entry.displayTitle)"
+        } else {
+            return "Day \(day), no clip"
+        }
+    }
+
     var body: some View {
         Button {
+            HapticService.shared.buttonTap()
             onTap(entry)
         } label: {
             ZStack {
@@ -546,6 +572,8 @@ struct DayCell: View {
             .frame(width: 36, height: 36)
         }
         .disabled(entry == nil)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityHint(entry != nil ? "Double tap to view this clip." : "No clip recorded on this day.")
     }
 }
 

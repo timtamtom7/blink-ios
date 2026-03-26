@@ -75,21 +75,25 @@ struct ContentView: View {
                     Label("Record", systemImage: "video.fill")
                 }
                 .tag(Tab.record)
+                .accessibilityLabel("Record tab")
 
             CalendarView()
                 .tabItem {
                     Label("Calendar", systemImage: "calendar")
                 }
                 .tag(Tab.calendar)
+                .accessibilityLabel("Calendar tab")
 
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape.fill")
                 }
                 .tag(Tab.settings)
+                .accessibilityLabel("Settings tab")
         }
         .tint(Color("AccentColor"))
         .onChange(of: selectedTab) { _, newTab in
+            HapticService.shared.selectionChanged()
             // Show pricing when navigating to calendar if they haven't used the app much
             if newTab == .calendar {
                 let clipCount = videoStore.clipCountThisYear()

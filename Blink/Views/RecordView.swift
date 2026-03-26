@@ -19,6 +19,7 @@ struct RecordView: View {
     @State private var showFreemiumEnforcement = false
     @State private var freemiumBlockReason = ""
     @State private var showPricing = false
+    @State private var hasWarnedDuration = false
 
     private var maxDuration: TimeInterval {
         subscription.maxRecordingDuration
@@ -192,6 +193,18 @@ struct RecordView: View {
             }
         }
         .disabled(showCountdown)
+        .accessibilityLabel(cameraService.isRecording ? "Stop recording. Tap to stop." : "Start recording. Tap to begin.")
+        .accessibilityHint(cameraService.isRecording ? "Stops recording and saves the clip." : "Starts a countdown, then begins recording.")
+        .onChange(of: cameraService.recordedDuration) { oldValue, newValue in
+            // Warn when 5 seconds remain
+            if cameraService.isRecording {
+                let remaining = maxDuration - newValue
+                if remaining > 0 && remaining <= 5 && !hasWarnedDuration {
+                    hasWarnedDuration = true
+                    HapticService.shared.durationWarning()
+                }
+            }
+        }
     }
 
     private var timerText: String {
@@ -257,6 +270,7 @@ struct RecordView: View {
 
     private func handleRecordTap() {
         if cameraService.isRecording {
+            HapticService.shared.recordingStopped()
             cameraService.stopRecording()
             showSavedAnimation()
         } else {
@@ -266,6 +280,7 @@ struct RecordView: View {
                 withAnimation {
                     showFreemiumEnforcement = true
                 }
+                HapticService.shared.error()
                 return
             }
             startCountdown()
@@ -273,16 +288,21 @@ struct RecordView: View {
     }
 
     private func startCountdown() {
+        HapticService.shared.recordButtonTap()
         showCountdown = true
         countdownValue = 3
+        hasWarnedDuration = false
 
         Task {
             for i in [3, 2, 1] {
                 countdownValue = i
+                HapticService.shared.countdownTick()
                 try? await Task.sleep(nanoseconds: 1_000_000_000)
             }
             showCountdown = false
+            HapticService.shared.countdownComplete()
             _ = cameraService.startRecording()
+            HapticService.shared.recordingStarted()
         }
     }
 
@@ -290,6 +310,7 @@ struct RecordView: View {
         withAnimation {
             showSaved = true
         }
+        HapticService.shared.clipSaved()
 
         Task {
             try? await Task.sleep(nanoseconds: 1_500_000_000)

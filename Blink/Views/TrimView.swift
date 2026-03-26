@@ -120,12 +120,14 @@ struct TrimView: View {
     private var topBar: some View {
         HStack {
             Button {
+                HapticService.shared.buttonTap()
                 onCancel()
             } label: {
                 Text("Cancel")
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
+            .accessibilityLabel("Cancel trim")
 
             Spacer()
 
@@ -136,6 +138,7 @@ struct TrimView: View {
             Spacer()
 
             Button {
+                HapticService.shared.actionTap()
                 saveTrimmed()
             } label: {
                 if isSaving {
@@ -148,6 +151,7 @@ struct TrimView: View {
                 }
             }
             .disabled(isSaving)
+            .accessibilityLabel("Save trimmed clip")
         }
         .padding(.horizontal, 16)
     }
@@ -200,11 +204,14 @@ struct TrimView: View {
                                 let newTime = timeForX(value.location.x, width: width, handleWidth: handleWidth)
                                 startTime = max(0, min(newTime, endTime - 1))
                                 player?.seek(to: CMTime(seconds: currentTime, preferredTimescale: 600))
+                                HapticService.shared.trimHandleMoved()
                             }
                             .onEnded { _ in
                                 isDraggingStart = false
                             }
                     )
+                    .accessibilityLabel("Trim start handle")
+                    .accessibilityValue("Currently at \(formatTime(startTime))")
 
                 // End handle
                 TrimHandle(isStart: false)
@@ -217,11 +224,14 @@ struct TrimView: View {
                                 let newTime = timeForX(value.location.x, width: width, handleWidth: handleWidth)
                                 endTime = max(startTime + 1, min(newTime, duration))
                                 player?.seek(to: CMTime(seconds: currentTime, preferredTimescale: 600))
+                                HapticService.shared.trimHandleMoved()
                             }
                             .onEnded { _ in
                                 isDraggingEnd = false
                             }
                     )
+                    .accessibilityLabel("Trim end handle")
+                    .accessibilityValue("Currently at \(formatTime(endTime))")
 
                 // Playhead
                 Rectangle()
@@ -266,35 +276,42 @@ struct TrimView: View {
                     startTime = newTime
                     endTime = min(newTime + 30, duration)
                     seekToStart()
+                    HapticService.shared.buttonTap()
                 } label: {
                     Image(systemName: "gobackward.5")
                         .font(.system(size: 22))
                         .foregroundColor(.white)
                 }
+                .accessibilityLabel("Skip back 5 seconds")
 
                 Button {
+                    HapticService.shared.buttonTap()
                     togglePlayback()
                 } label: {
                     Image(systemName: player?.timeControlStatus == .playing ? "pause.fill" : "play.fill")
                         .font(.system(size: 28))
                         .foregroundColor(.white)
                 }
+                .accessibilityLabel(player?.timeControlStatus == .playing ? "Pause" : "Play")
 
                 Button {
                     let newTime = min(duration, endTime + 5)
                     endTime = newTime
                     startTime = max(0, newTime - 30)
                     seekToEnd()
+                    HapticService.shared.buttonTap()
                 } label: {
                     Image(systemName: "goforward.5")
                         .font(.system(size: 22))
                         .foregroundColor(.white)
                 }
+                .accessibilityLabel("Skip forward 5 seconds")
             }
 
             // Save mode picker
             HStack(spacing: 12) {
                 Button {
+                    HapticService.shared.selectionChanged()
                     saveMode = .new
                 } label: {
                     HStack(spacing: 6) {
@@ -309,8 +326,10 @@ struct TrimView: View {
                     .background(saveMode == .new ? Color(hex: "ff3b30").opacity(0.15) : Color(hex: "1e1e1e"))
                     .clipShape(Capsule())
                 }
+                .accessibilityAddTraits(saveMode == .new ? .isSelected : [])
 
                 Button {
+                    HapticService.shared.selectionChanged()
                     saveMode = .overwrite
                 } label: {
                     HStack(spacing: 6) {
@@ -325,6 +344,7 @@ struct TrimView: View {
                     .background(saveMode == .overwrite ? Color(hex: "ff3b30").opacity(0.15) : Color(hex: "1e1e1e"))
                     .clipShape(Capsule())
                 }
+                .accessibilityAddTraits(saveMode == .overwrite ? .isSelected : [])
             }
         }
     }
@@ -407,21 +427,25 @@ struct TrimView: View {
                 )
                 await MainActor.run {
                     isSaving = false
+                    HapticService.shared.trimSaved()
                     onSave(newEntry)
                 }
             } catch VideoStore.TrimError.storageFull {
                 await MainActor.run {
                     isSaving = false
+                    HapticService.shared.error()
                     showError = .storageFull
                 }
             } catch VideoStore.TrimError.sourceNotFound {
                 await MainActor.run {
                     isSaving = false
+                    HapticService.shared.error()
                     showError = .sourceNotFound
                 }
             } catch {
                 await MainActor.run {
                     isSaving = false
+                    HapticService.shared.error()
                     showError = .exportFailed
                 }
             }

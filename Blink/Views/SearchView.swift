@@ -254,6 +254,8 @@ struct SearchResultRow: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }
         .padding(.horizontal, 16)
+        .accessibilityLabel("\(entry.displayTitle), \(entry.formattedDate), duration \(formatDuration(entry.duration))")
+        .accessibilityHint("Double tap to play this clip.")
     }
 
     private func formatDuration(_ seconds: TimeInterval) -> String {

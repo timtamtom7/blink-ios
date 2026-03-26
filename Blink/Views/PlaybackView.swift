@@ -16,7 +16,11 @@ struct PlaybackView: View {
     @State private var editedTitle = ""
     @State private var isExporting = false
     @State private var showExportError: ExportErrorState?
+    @State private var playbackSpeed: Float = 1.0
+    @State private var showSpeedPicker = false
     @ObservedObject private var videoStore = VideoStore.shared
+
+    private let playbackSpeeds: [Float] = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
 
     enum ExportErrorState: Identifiable {
         case failed
@@ -27,6 +31,16 @@ struct PlaybackView: View {
             case .failed: return "failed"
             case .storageFull: return "storageFull"
             }
+        }
+    }
+
+    private var speedLabel: String {
+        if playbackSpeed == 1.0 {
+            return "1×"
+        } else if playbackSpeed == floor(playbackSpeed) {
+            return "\(Int(playbackSpeed))×"
+        } else {
+            return String(format: "%.2g×", playbackSpeed)
         }
     }
 
@@ -53,6 +67,9 @@ struct PlaybackView: View {
                 ProgressView()
                     .tint(.white)
             }
+
+            // Speed control overlay
+            speedControlOverlay
         }
         .overlay(alignment: .top) {
             topBar
@@ -70,6 +87,7 @@ struct PlaybackView: View {
         }
         .confirmationDialog("Delete this clip?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
             Button("Delete", role: .destructive) {
+                HapticService.shared.deleteAction()
                 onDelete()
                 dismiss()
             }
@@ -127,6 +145,7 @@ struct PlaybackView: View {
     private var topBar: some View {
         HStack {
             Button {
+                HapticService.shared.buttonTap()
                 dismiss()
             } label: {
                 Image(systemName: "xmark")
@@ -134,6 +153,8 @@ struct PlaybackView: View {
                     .foregroundColor(.white)
                     .frame(width: 44, height: 44)
             }
+            .accessibilityLabel("Close")
+            .accessibilityHint("Closes the video player and returns to the calendar.")
 
             Spacer()
 
@@ -141,6 +162,7 @@ struct PlaybackView: View {
             HStack(spacing: 0) {
                 // Share / Export
                 Button {
+                    HapticService.shared.actionTap()
                     exportClip()
                 } label: {
                     if isExporting {
@@ -154,9 +176,11 @@ struct PlaybackView: View {
                             .frame(width: 44, height: 44)
                     }
                 }
+                .accessibilityLabel("Export to Camera Roll")
 
                 // Trim
                 Button {
+                    HapticService.shared.actionTap()
                     showTrim = true
                 } label: {
                     Image(systemName: "scissors")
@@ -164,9 +188,11 @@ struct PlaybackView: View {
                         .foregroundColor(.white)
                         .frame(width: 44, height: 44)
                 }
+                .accessibilityLabel("Trim clip")
 
                 // Delete
                 Button {
+                    HapticService.shared.actionTap()
                     showDeleteConfirm = true
                 } label: {
                     Image(systemName: "trash")
@@ -174,9 +200,11 @@ struct PlaybackView: View {
                         .foregroundColor(.white)
                         .frame(width: 44, height: 44)
                 }
+                .accessibilityLabel("Delete clip")
 
                 // Social Share (R5)
                 Button {
+                    HapticService.shared.actionTap()
                     showSocialSheet = true
                 } label: {
                     Image(systemName: "person.2.fill")
@@ -184,6 +212,7 @@ struct PlaybackView: View {
                         .foregroundColor(.white)
                         .frame(width: 44, height: 44)
                 }
+                .accessibilityLabel("Share with friends")
             }
         }
         .padding(.horizontal, 8)
@@ -249,6 +278,7 @@ struct PlaybackView: View {
     private func setupPlayer() {
         let player = AVPlayer(url: currentEntry.videoURL)
         self.player = player
+        player.rate = playbackSpeed
         player.play()
 
         NotificationCenter.default.addObserver(
@@ -261,6 +291,109 @@ struct PlaybackView: View {
         }
     }
 
+    private func applyPlaybackSpeed(_ speed: Float) {
+        playbackSpeed = speed
+        player?.rate = speed
+        HapticService.shared.speedChanged()
+    }
+
+    private var speedControlOverlay: some View {
+        VStack {
+            Spacer()
+
+            HStack {
+                Spacer()
+
+                // Speed picker button
+                Button {
+                    showSpeedPicker.toggle()
+                    HapticService.shared.selectionChanged()
+                } label: {
+                    Text(speedLabel)
+                        .font(.system(size: 14, weight: .bold, design: .monospaced))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Color.black.opacity(0.6))
+                        .clipShape(Capsule())
+                        .overlay(
+                            Capsule()
+                                .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                        )
+                }
+                .accessibilityLabel("Playback speed: \(speedLabel)")
+                .accessibilityHint("Double tap to change playback speed")
+                .padding(.trailing, 16)
+                .padding(.bottom, 140)
+            }
+
+            // Speed picker popover
+            if showSpeedPicker {
+                speedPicker
+                    .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .bottomTrailing)))
+            }
+        }
+    }
+
+    private var speedPicker: some View {
+        VStack(alignment: .trailing, spacing: 4) {
+            Text("Speed")
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundColor(Color(hex: "8a8a8a"))
+                .padding(.trailing, 4)
+                .padding(.bottom, 2)
+
+            ForEach(playbackSpeeds, id: \.self) { speed in
+                Button {
+                    applyPlaybackSpeed(speed)
+                    showSpeedPicker = false
+                } label: {
+                    HStack(spacing: 8) {
+                        Text(speedLabelText(for: speed))
+                            .font(.system(size: 14, weight: playbackSpeed == speed ? .bold : .medium))
+                            .foregroundColor(playbackSpeed == speed ? Color(hex: "ff3b30") : .white)
+
+                        if playbackSpeed == speed {
+                            Image(systemName: "checkmark")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundColor(Color(hex: "ff3b30"))
+                        }
+                    }
+                    .frame(width: 90, alignment: .trailing)
+                    .padding(.vertical, 6)
+                    .padding(.horizontal, 12)
+                    .background(playbackSpeed == speed ? Color(hex: "ff3b30").opacity(0.15) : Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+                .accessibilityLabel("\(speedLabelText(for: speed)) playback speed")
+                .accessibilityAddTraits(playbackSpeed == speed ? .isSelected : [])
+            }
+        }
+        .padding(12)
+        .background(Color.black.opacity(0.85))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color.white.opacity(0.1), lineWidth: 1)
+        )
+        .padding(.trailing, 12)
+        .padding(.bottom, 180)
+    }
+
+    private func speedLabelText(for speed: Float) -> String {
+        if speed == 1.0 {
+            return "Normal"
+        } else if speed == 0.5 {
+            return "0.5×"
+        } else if speed == 0.75 {
+            return "0.75×"
+        } else if speed == floor(speed) {
+            return "\(Int(speed))×"
+        } else {
+            return String(format: "%.2g×", speed)
+        }
+    }
+
     private func exportClip() {
         isExporting = true
         Task {
@@ -268,16 +401,19 @@ struct PlaybackView: View {
                 try await videoStore.exportToCameraRoll(currentEntry)
                 await MainActor.run {
                     isExporting = false
+                    HapticService.shared.clipSaved()
                 }
             } catch VideoStore.ExportError.saveFailed {
                 await MainActor.run {
                     isExporting = false
                     showExportError = .failed
+                    HapticService.shared.error()
                 }
             } catch {
                 await MainActor.run {
                     isExporting = false
                     showExportError = .failed
+                    HapticService.shared.error()
                 }
             }
         }
