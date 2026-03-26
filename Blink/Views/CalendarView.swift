@@ -35,7 +35,9 @@ struct CalendarView: View {
     private var daysElapsedThisYear: Int {
         let now = Date()
         let calendar = Calendar.current
-        let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1))!
+        guard let startOfYear = calendar.date(from: DateComponents(year: selectedYear, month: 1, day: 1)) else {
+            return 1
+        }
         return max(1, calendar.dateComponents([.day], from: startOfYear, to: now).day ?? 1)
     }
 

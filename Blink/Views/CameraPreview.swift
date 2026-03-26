@@ -17,12 +17,14 @@ final class CameraPreviewView: UIView {
     var session: AVCaptureSession? {
         didSet {
             guard let session = session else { return }
-            previewLayer.session = session
+            if let previewLayer = layer as? AVCaptureVideoPreviewLayer {
+                previewLayer.session = session
+            }
         }
     }
 
-    private var previewLayer: AVCaptureVideoPreviewLayer {
-        layer as! AVCaptureVideoPreviewLayer
+    private var previewLayer: AVCaptureVideoPreviewLayer? {
+        layer as? AVCaptureVideoPreviewLayer
     }
 
     override class var layerClass: AnyClass {
@@ -40,12 +42,12 @@ final class CameraPreviewView: UIView {
     }
 
     private func setup() {
-        previewLayer.videoGravity = .resizeAspectFill
+        previewLayer?.videoGravity = .resizeAspectFill
         backgroundColor = .black
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        previewLayer.frame = bounds
+        previewLayer?.frame = bounds
     }
 }

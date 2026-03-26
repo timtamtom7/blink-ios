@@ -37,6 +37,7 @@ struct SettingsView: View {
                                 .foregroundColor(Color(hex: "f5f5f5"))
                         }
                         .tint(Color(hex: "ff3b30"))
+                        .accessibilityLabel("Daily reminder toggle. Currently \(dailyReminderEnabled ? "enabled" : "disabled").")
                         .onChange(of: dailyReminderEnabled) { _, newValue in
                             if newValue {
                                 scheduleReminder()
@@ -49,6 +50,7 @@ struct SettingsView: View {
                             HStack {
                                 Label("Time", systemImage: "clock.fill")
                                     .foregroundColor(Color(hex: "f5f5f5"))
+                                    .accessibilityLabel("Reminder time")
 
                                 Spacer()
 

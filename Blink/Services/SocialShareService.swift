@@ -13,6 +13,9 @@ final class SocialShareService: ObservableObject {
 
     private let linksFile: URL
     private let fileManager = FileManager.default
+    /// Fallback URL for when URLComponents fails to build a share URL.
+    /// This is a constant string literal, so it will never return nil.
+    private static let fallbackShareURL = URL(string: "blink://share")!
 
     private init() {
         let docsDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -46,7 +49,11 @@ final class SocialShareService: ObservableObject {
                 URLQueryItem(name: "id", value: id.uuidString),
                 URLQueryItem(name: "clip", value: entryId.uuidString)
             ]
-            return components.url ?? URL(string: "blink://share")!
+            guard let url = components.url else {
+                // Fallback constant — string literal is always valid
+                return SocialShareService.fallbackShareURL
+            }
+            return url
         }
     }
 

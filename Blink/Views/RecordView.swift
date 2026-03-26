@@ -224,15 +224,18 @@ struct RecordView: View {
                         .font(.system(size: 13))
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
+                .accessibilityLabel("Last clip from \(todayEntry.formattedDate). Tap to view.")
             } else {
                 Text("No clip recorded today")
                     .font(.system(size: 13))
                     .foregroundColor(Color(hex: "8a8a8a"))
+                    .accessibilityLabel("No clip recorded today")
             }
 
             Text("This year: \(videoStore.clipCountThisYear()) clips")
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(Color(hex: "f5f5f5"))
+                .accessibilityLabel("This year: \(videoStore.clipCountThisYear()) clips recorded")
         }
     }
 
@@ -240,6 +243,8 @@ struct RecordView: View {
         ZStack {
             Color.black.opacity(0.7)
                 .ignoresSafeArea()
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Recording starting in \(countdownValue)")
 
             Text("\(countdownValue)")
                 .font(.system(size: 120, weight: .bold, design: .rounded))
@@ -266,6 +271,8 @@ struct RecordView: View {
             }
         }
         .transition(.opacity)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Clip saved successfully")
     }
 
     private func handleRecordTap() {
