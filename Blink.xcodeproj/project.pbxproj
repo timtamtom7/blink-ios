@@ -10,8 +10,11 @@
 		020267DD1EBED7639E304481 /* AIHighlightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1D3267C2F269D24EF8D5E /* AIHighlightsView.swift */; };
 		0ACE16954A2D5D9C2B2BE0BF /* PublicFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64E3AB012A4C155D6E134F3 /* PublicFeedView.swift */; };
 		0DAE7A42AAF05AFC66D2B69A /* CrossDeviceSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8D8A8F30B6BC23B0BEF9C6 /* CrossDeviceSyncService.swift */; };
+		1063B8FFF446B2C8B49DB181 /* PrivacySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845227BDAC2B678E3C645CD /* PrivacySettingsView.swift */; };
 		13A2E5D03EF466F6A1ED9BA4 /* SubscriptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF3CCF2E87AE05C96A9268D3 /* SubscriptionsView.swift */; };
 		18BB3B9475F1D071BDC5BCEB /* CommunityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F598BA0C8E0F119034B475B /* CommunityService.swift */; };
+		1B8F00CE2BD44D6465794506 /* SharedAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD929C78229837900978C661 /* SharedAlbum.swift */; };
+		1E481D8D961745BE6CC94C9D /* CollaborativeAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559F847110F28B2919000925 /* CollaborativeAlbumView.swift */; };
 		2035123724EE5CA333C6AC27 /* SocialShareService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D515561395A64FF132CEE4AF /* SocialShareService.swift */; };
 		240341EBDB78FB70479FDCC5 /* SmartSkipService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DCF957BFB9EF93A77C8C439 /* SmartSkipService.swift */; };
 		2D013752908F4A1A36608FB8 /* TrimView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A66359CF756E5E49D9531FF4 /* TrimView.swift */; };
@@ -34,6 +37,7 @@
 		88EABF3F5E115E71F12184B2 /* FreemiumEnforcementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263080A98CB337A20C795FA2 /* FreemiumEnforcementView.swift */; };
 		8B5A9AEEEBDE1F54BB3099A6 /* PricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F280A07DE5E392640960F16F /* PricingView.swift */; };
 		96012A8618798CD74E1F77A4 /* OnThisDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266ACBAF38268F0BB0652919 /* OnThisDayView.swift */; };
+		96B7938F799ABE54A4296351 /* CloseCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFEF09040719F5304FA4C9B /* CloseCircleView.swift */; };
 		983D69517CE6107EEF5611FC /* PrivacyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C608A4090204A1D53010AFD1 /* PrivacyService.swift */; };
 		9C02B65E03CCA667D05410B2 /* VideoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E8620C7EFF755DD5BAC678 /* VideoStore.swift */; };
 		9D3B37F33955F75317BB3A1F /* VideoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA078AEF55DF0BCC69386DEA /* VideoEntry.swift */; };
@@ -48,6 +52,7 @@
 		DB4B706A1F3E34BD61B14EE3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B31CDA126203664640FFF96 /* SettingsView.swift */; };
 		DECEE4B66C0B2BA2223FD296 /* MonthBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2383902961CA4FD8F4F01CA5 /* MonthBrowserView.swift */; };
 		E34BE7B6AB79B40FC7DF69EB /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F832BA7296AD6FF81A1148 /* SubscriptionService.swift */; };
+		EF95E9067D1EFF63051F9821 /* SharedAlbumService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3616C28B7201CA1AB2D056 /* SharedAlbumService.swift */; };
 		F4357079D72F0E4AC368A7F2 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AA3EF2D76A8063DE0E34096 /* SearchView.swift */; };
 		F4A10CD604A5531D0511670F /* AdaptiveCompressionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32EC366749AEF09EB415F9E /* AdaptiveCompressionService.swift */; };
 		F6D5ADCC1C92DFB776B5A660 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0A8FB8FFCCA764D5F39F /* OnboardingView.swift */; };
@@ -68,6 +73,7 @@
 		2383902961CA4FD8F4F01CA5 /* MonthBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthBrowserView.swift; sourceTree = "<group>"; };
 		263080A98CB337A20C795FA2 /* FreemiumEnforcementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreemiumEnforcementView.swift; sourceTree = "<group>"; };
 		266ACBAF38268F0BB0652919 /* OnThisDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnThisDayView.swift; sourceTree = "<group>"; };
+		2DFEF09040719F5304FA4C9B /* CloseCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseCircleView.swift; sourceTree = "<group>"; };
 		3611BA1F7A16AA6199641486 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3786EA84862953171B2F1DD4 /* CloudBackupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudBackupService.swift; sourceTree = "<group>"; };
 		3BE22E372387EAE1F747F9CE /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
@@ -75,6 +81,7 @@
 		48431B2C296BDB92BF0BB93C /* Blink.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Blink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B31CDA126203664640FFF96 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4FC1D3267C2F269D24EF8D5E /* AIHighlightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIHighlightsView.swift; sourceTree = "<group>"; };
+		559F847110F28B2919000925 /* CollaborativeAlbumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollaborativeAlbumView.swift; sourceTree = "<group>"; };
 		5FAC6C2D8514F54B23719E2F /* AIHighlightsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIHighlightsService.swift; sourceTree = "<group>"; };
 		624004AAB910D2FFA2EAD28B /* PasscodeSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasscodeSetupView.swift; sourceTree = "<group>"; };
 		63FA7877F854456A362FBAB1 /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
@@ -93,7 +100,9 @@
 		C5F832BA7296AD6FF81A1148 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
 		C608A4090204A1D53010AFD1 /* PrivacyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyService.swift; sourceTree = "<group>"; };
 		C64E3AB012A4C155D6E134F3 /* PublicFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicFeedView.swift; sourceTree = "<group>"; };
+		C845227BDAC2B678E3C645CD /* PrivacySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacySettingsView.swift; sourceTree = "<group>"; };
 		CA078AEF55DF0BCC69386DEA /* VideoEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoEntry.swift; sourceTree = "<group>"; };
+		CB3616C28B7201CA1AB2D056 /* SharedAlbumService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedAlbumService.swift; sourceTree = "<group>"; };
 		CB682CC8E9DE4398AEBED51D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		CE8D8A8F30B6BC23B0BEF9C6 /* CrossDeviceSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossDeviceSyncService.swift; sourceTree = "<group>"; };
 		D1686F23B320D9A398147B26 /* BlinkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkApp.swift; sourceTree = "<group>"; };
@@ -102,6 +111,7 @@
 		E76CF9977C6CC32A174A8301 /* StorageDashboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageDashboardService.swift; sourceTree = "<group>"; };
 		EC1A833551CBE055DFE4BC55 /* ErrorStatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorStatesView.swift; sourceTree = "<group>"; };
 		F280A07DE5E392640960F16F /* PricingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricingView.swift; sourceTree = "<group>"; };
+		FD929C78229837900978C661 /* SharedAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedAlbum.swift; sourceTree = "<group>"; };
 		FE8971EDA1A183FA390FB99A /* StorageDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageDashboardView.swift; sourceTree = "<group>"; };
 		FEB041C204990DCC8AC8004D /* PlaybackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,6 +131,7 @@
 				0EF5C269A788EB088117C43D /* DeepAnalysisService.swift */,
 				7FDE60BEF7DE992AB801282D /* ExportService.swift */,
 				C608A4090204A1D53010AFD1 /* PrivacyService.swift */,
+				CB3616C28B7201CA1AB2D056 /* SharedAlbumService.swift */,
 				0DCF957BFB9EF93A77C8C439 /* SmartSkipService.swift */,
 				D515561395A64FF132CEE4AF /* SocialShareService.swift */,
 				E76CF9977C6CC32A174A8301 /* StorageDashboardService.swift */,
@@ -172,6 +183,7 @@
 		C9D3CC1439A512CB2F2EFA74 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FD929C78229837900978C661 /* SharedAlbum.swift */,
 				CA078AEF55DF0BCC69386DEA /* VideoEntry.swift */,
 			);
 			path = Models;
@@ -191,6 +203,8 @@
 				4FC1D3267C2F269D24EF8D5E /* AIHighlightsView.swift */,
 				CB682CC8E9DE4398AEBED51D /* CalendarView.swift */,
 				921048E625CA0054C6C63E15 /* CameraPreview.swift */,
+				2DFEF09040719F5304FA4C9B /* CloseCircleView.swift */,
+				559F847110F28B2919000925 /* CollaborativeAlbumView.swift */,
 				63FA7877F854456A362FBAB1 /* CommunityView.swift */,
 				74214AD362DA70FD7D133D55 /* CrossDeviceSyncView.swift */,
 				479C4B35F9FA46FD0DDCD899 /* CustomGraphics.swift */,
@@ -204,6 +218,7 @@
 				FEB041C204990DCC8AC8004D /* PlaybackView.swift */,
 				F280A07DE5E392640960F16F /* PricingView.swift */,
 				1A4D9EF2CA1E7C5F75860F29 /* PrivacyLockView.swift */,
+				C845227BDAC2B678E3C645CD /* PrivacySettingsView.swift */,
 				C64E3AB012A4C155D6E134F3 /* PublicFeedView.swift */,
 				95A909F79393C52C43CF8FC2 /* RecordView.swift */,
 				1AA3EF2D76A8063DE0E34096 /* SearchView.swift */,
@@ -292,7 +307,9 @@
 				6AB8DC106410CF46AD97FD12 /* CameraPreview.swift in Sources */,
 				4554894DB716480CE2C6301A /* CameraService.swift in Sources */,
 				B9D01C7BCFA6FF744835A966 /* CaptionService.swift in Sources */,
+				96B7938F799ABE54A4296351 /* CloseCircleView.swift in Sources */,
 				CE914F5CB207E8CEEE648670 /* CloudBackupService.swift in Sources */,
+				1E481D8D961745BE6CC94C9D /* CollaborativeAlbumView.swift in Sources */,
 				18BB3B9475F1D071BDC5BCEB /* CommunityService.swift in Sources */,
 				59021CE901CD117CEE0863A1 /* CommunityView.swift in Sources */,
 				FA11B143D4913F316AA0D413 /* ContentView.swift in Sources */,
@@ -313,10 +330,13 @@
 				8B5A9AEEEBDE1F54BB3099A6 /* PricingView.swift in Sources */,
 				D890CED588DBEABC05F38CF2 /* PrivacyLockView.swift in Sources */,
 				983D69517CE6107EEF5611FC /* PrivacyService.swift in Sources */,
+				1063B8FFF446B2C8B49DB181 /* PrivacySettingsView.swift in Sources */,
 				0ACE16954A2D5D9C2B2BE0BF /* PublicFeedView.swift in Sources */,
 				66BCA5CA5A0E4FAE716E0287 /* RecordView.swift in Sources */,
 				F4357079D72F0E4AC368A7F2 /* SearchView.swift in Sources */,
 				DB4B706A1F3E34BD61B14EE3 /* SettingsView.swift in Sources */,
+				1B8F00CE2BD44D6465794506 /* SharedAlbum.swift in Sources */,
+				EF95E9067D1EFF63051F9821 /* SharedAlbumService.swift in Sources */,
 				240341EBDB78FB70479FDCC5 /* SmartSkipService.swift in Sources */,
 				2035123724EE5CA333C6AC27 /* SocialShareService.swift in Sources */,
 				CB27C92CFBAF95F45F69C0A6 /* SocialShareSheet.swift in Sources */,
