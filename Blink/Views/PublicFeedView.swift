@@ -185,9 +185,9 @@ struct FeedCard: View {
                 .background(Color(hex: "141414"))
             }
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge)
                     .stroke(Color(hex: "2a2a2a"), lineWidth: 1)
             )
         }

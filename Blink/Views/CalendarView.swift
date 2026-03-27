@@ -240,9 +240,9 @@ struct CalendarView: View {
             }
             .padding(14)
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
             .overlay(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium)
                     .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
             )
         }
@@ -342,7 +342,7 @@ struct CalendarView: View {
         }
         .padding(16)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 
     private var monthGrid: some View {
@@ -469,7 +469,7 @@ struct MonthCard: View {
 
                 if clipsThisMonth > 0 {
                     Text("\(clipsThisMonth)")
-                        .font(.system(size: 10, weight: .bold))
+                        .font(.system(size: 11, weight: .bold))
                         .foregroundColor(Color(hex: "ff3b30"))
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
@@ -482,7 +482,7 @@ struct MonthCard: View {
             LazyVGrid(columns: columns, spacing: 2) {
                 ForEach(dayLabels, id: \.self) { label in
                     Text(label)
-                        .font(.system(size: 8, weight: .medium))
+                        .font(.system(size: 11, weight: .medium))
                         .foregroundColor(Color(hex: "8a8a8a"))
                         .frame(height: 12)
                 }
@@ -511,7 +511,7 @@ struct MonthCard: View {
         }
         .padding(12)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }
 
@@ -543,7 +543,7 @@ struct DayCell: View {
                     } placeholder: {
                         Color(hex: "333333")
                     }
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
 
                     // Title overlay at bottom
                     if let title = entry.title, !title.isEmpty {
@@ -558,7 +558,7 @@ struct DayCell: View {
                                 .frame(maxWidth: .infinity)
                                 .background(Color.black.opacity(0.5))
                         }
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                     }
                 } else {
                     Circle()

@@ -119,7 +119,7 @@ struct AIHighlightsView: View {
                     .foregroundColor(.white)
                     .frame(width: 160, height: 44)
                     .background(Color(hex: "ff3b30"))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
             }
             .padding(.top, 8)
         }
@@ -173,7 +173,7 @@ struct AIHighlightsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
         .padding(.horizontal, 16)
         .padding(.top, 16)
     }
@@ -259,9 +259,9 @@ struct AIHighlightsView: View {
                 .background(Color(hex: "141414"))
             }
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge)
                     .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
             )
         }
@@ -288,9 +288,9 @@ struct AIHighlightsView: View {
                         Rectangle().fill(Color(hex: "1e1e1e"))
                     }
                     .frame(width: 56, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                 } else {
-                    RoundedRectangle(cornerRadius: 6)
+                    RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                         .fill(Color(hex: "1e1e1e"))
                         .frame(width: 56, height: 40)
                 }
@@ -328,7 +328,7 @@ struct AIHighlightsView: View {
             }
             .padding(10)
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         }
     }
 

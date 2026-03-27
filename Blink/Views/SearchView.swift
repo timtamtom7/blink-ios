@@ -211,9 +211,9 @@ struct SearchResultRow: View {
                         Color(hex: "1e1e1e")
                     }
                     .frame(width: 72, height: 48)
-                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                 } else {
-                    RoundedRectangle(cornerRadius: 6)
+                    RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                         .fill(Color(hex: "1e1e1e"))
                         .frame(width: 72, height: 48)
                         .overlay(
@@ -251,7 +251,7 @@ struct SearchResultRow: View {
             }
             .padding(12)
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         }
         .padding(.horizontal, 16)
         .accessibilityLabel("\(entry.displayTitle), \(entry.formattedDate), duration \(formatDuration(entry.duration))")

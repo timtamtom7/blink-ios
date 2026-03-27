@@ -144,9 +144,9 @@ struct SocialShareSheet: View {
                         .fill(Color(hex: "1e1e1e"))
                 }
                 .frame(width: 80, height: 60)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
             } else {
-                RoundedRectangle(cornerRadius: 8)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                     .fill(Color(hex: "1e1e1e"))
                     .frame(width: 80, height: 60)
                     .overlay(
@@ -178,7 +178,7 @@ struct SocialShareSheet: View {
         }
         .padding(12)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         .padding(.horizontal, 16)
     }
 
@@ -277,7 +277,7 @@ struct ShareOptionRow: View {
             }
             .padding(14)
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         }
     }
 }
@@ -317,7 +317,7 @@ struct ActiveLinkRow: View {
         }
         .padding(12)
         .background(Color(hex: "1a1a1a"))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
         .padding(.horizontal, 16)
     }
 }

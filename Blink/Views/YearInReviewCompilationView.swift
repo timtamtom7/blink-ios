@@ -76,7 +76,7 @@ struct YearInReviewCompilationView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: 52)
                     .background(Color(hex: "ff3b30"))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
                 }
                 .disabled(topEntries.isEmpty)
                 .opacity(topEntries.isEmpty ? 0.5 : 1)
@@ -107,7 +107,7 @@ struct YearInReviewCompilationView: View {
                             Rectangle().fill(Color(hex: "1e1e1e"))
                         }
                         .frame(width: 60, height: 80)
-                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                     }
                 }
             }
@@ -284,11 +284,11 @@ struct YearProgressCard: View {
 
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 4)
+                    RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                         .fill(Color(hex: "2a2a2a"))
                         .frame(height: 8)
 
-                    RoundedRectangle(cornerRadius: 4)
+                    RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                         .fill(
                             LinearGradient(
                                 colors: [Color(hex: "ff3b30"), Color(hex: "ff6b60")],
@@ -303,7 +303,7 @@ struct YearProgressCard: View {
         }
         .padding(16)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 
     private var progress: CGFloat {

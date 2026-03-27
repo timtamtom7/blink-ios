@@ -164,7 +164,7 @@ struct TrimView: View {
                 Color(hex: "1a1a1a")
             }
         }
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         .padding(.horizontal, 16)
     }
 
@@ -175,12 +175,12 @@ struct TrimView: View {
 
             ZStack(alignment: .leading) {
                 // Background track
-                RoundedRectangle(cornerRadius: 4)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                     .fill(Color(hex: "1e1e1e"))
                     .frame(height: 48)
 
                 // Selected range
-                RoundedRectangle(cornerRadius: 4)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                     .fill(Color(hex: "ff3b30").opacity(0.3))
                     .frame(
                         width: max(0, xForTime(endTime, width: width, handleWidth: handleWidth) - xForTime(startTime, width: width, handleWidth: handleWidth)),
@@ -191,7 +191,7 @@ struct TrimView: View {
                 // Waveform / progress bar
                 WaveformBar(duration: duration, currentTime: currentTime)
                     .frame(height: 48)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
 
                 // Start handle
                 TrimHandle(isStart: true)
@@ -460,7 +460,7 @@ struct TrimHandle: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 4)
+            RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                 .fill(Color(hex: "ff3b30"))
 
             VStack(spacing: 2) {

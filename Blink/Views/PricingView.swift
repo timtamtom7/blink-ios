@@ -166,7 +166,7 @@ struct PricingView: View {
                     ? LinearGradient(colors: [Color(hex: "333333"), Color(hex: "222222")], startPoint: .top, endPoint: .bottom)
                     : LinearGradient(colors: [Color(hex: "ff3b30"), Color(hex: "cc2f26")], startPoint: .top, endPoint: .bottom)
             )
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)
@@ -200,7 +200,7 @@ struct TierCard: View {
 
                             if tier.isPopular {
                                 Text("POPULAR")
-                                    .font(.system(size: 9, weight: .bold))
+                                    .font(.system(size: 11, weight: .bold))
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 2)
@@ -248,9 +248,9 @@ struct TierCard: View {
                 .padding(16)
             }
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge)
                     .stroke(isSelected ? tier.accentColor : Color.clear, lineWidth: 1.5)
             )
         }

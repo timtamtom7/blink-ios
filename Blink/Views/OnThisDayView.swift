@@ -289,7 +289,7 @@ struct SimilarMoodSection: View {
         }
         .padding(12)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 
     private var sceneIcon: String {
@@ -360,7 +360,7 @@ struct YearSection: View {
         }
         .padding(12)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }
 
@@ -385,7 +385,7 @@ struct OnThisDayCard: View {
                 }
             }
             .frame(width: 72, height: 48)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
 
             // Info
             VStack(alignment: .leading, spacing: 4) {
@@ -407,7 +407,7 @@ struct OnThisDayCard: View {
 
                 HStack(spacing: 4) {
                     Image(systemName: "clock")
-                        .font(.system(size: 9))
+                        .font(.system(size: 11))
                     Text(formatDuration(entry.duration))
                         .font(.system(size: 11))
                 }
@@ -422,7 +422,7 @@ struct OnThisDayCard: View {
         }
         .padding(10)
         .background(Color(hex: "1e1e1e"))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
     }
 
     private func formatTime(_ date: Date) -> String {
@@ -475,9 +475,9 @@ struct OnThisDayButtonGraphic: View {
         }
         .padding(12)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium)
                 .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
         )
     }
@@ -491,9 +491,9 @@ struct OnThisDayCalendarBadge: View {
     var body: some View {
         HStack(spacing: 3) {
             Image(systemName: "clock.arrow.circlepath")
-                .font(.system(size: 8))
+                .font(.system(size: 11))
             Text("\(count)")
-                .font(.system(size: 9, weight: .bold))
+                .font(.system(size: 11, weight: .bold))
         }
         .foregroundColor(Color(hex: "ff3b30"))
         .padding(.horizontal, 6)

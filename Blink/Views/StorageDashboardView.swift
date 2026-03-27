@@ -123,9 +123,9 @@ struct StorageDashboardView: View {
         .padding(20)
         .frame(maxWidth: .infinity)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
         .overlay(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge)
                 .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
         )
     }
@@ -153,7 +153,7 @@ struct StorageDashboardView: View {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
     }
 
     private func storageRow(label: String, value: String) -> some View {
@@ -224,7 +224,7 @@ struct StorageDashboardView: View {
                         }
                         .padding(10)
                         .background(Color(hex: "1e1e1e"))
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                     }
                 }
             }
@@ -232,7 +232,7 @@ struct StorageDashboardView: View {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
     }
 
     private func compressionSection(_ stats: StorageDashboardService.StorageStats) -> some View {
@@ -297,7 +297,7 @@ struct StorageDashboardView: View {
         .padding(16)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
     }
 
     private var emptyState: some View {
@@ -377,7 +377,7 @@ struct DuplicateDetailSheet: View {
                         }
                         .padding(12)
                         .background(Color(hex: "141414"))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                     }
 
                     Spacer()

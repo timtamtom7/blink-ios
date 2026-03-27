@@ -159,7 +159,7 @@ struct CommunityView: View {
             .padding(14)
         }
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
     }
 
     private var placeholderGradient: some View {

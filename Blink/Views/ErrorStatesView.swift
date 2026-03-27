@@ -468,7 +468,7 @@ struct EmptyCalendarView: View {
             }
             .padding(16)
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
             .padding(.horizontal, 24)
 
             Button {
@@ -484,7 +484,7 @@ struct EmptyCalendarView: View {
                 .frame(maxWidth: .infinity)
                 .frame(height: 52)
                 .background(Color(hex: "ff3b30"))
-                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
             }
             .padding(.horizontal, 24)
 

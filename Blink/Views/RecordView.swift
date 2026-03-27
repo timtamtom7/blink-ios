@@ -120,11 +120,11 @@ struct RecordView: View {
 
     private var viewfinderFrame: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge)
                 .stroke(Color(hex: "333333"), lineWidth: 1)
 
             CameraPreview(session: cameraService.session)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
 
             // REC indicator
             VStack {

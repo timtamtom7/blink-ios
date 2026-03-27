@@ -168,9 +168,9 @@ struct SubscriptionsView: View {
                 .padding(16)
             }
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge)
                     .stroke(isCurrentPlan(plan) ? Color(hex: "34c759").opacity(0.3) : Color.clear, lineWidth: 1)
             )
         }
@@ -197,7 +197,7 @@ struct SubscriptionsView: View {
                 faqRow(question: "Is there a free trial?", answer: "Yes, new subscribers get a 7-day free trial to experience all premium features.")
             }
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
         }
     }
 

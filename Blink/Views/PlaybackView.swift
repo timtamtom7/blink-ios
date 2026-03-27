@@ -363,7 +363,7 @@ struct PlaybackView: View {
                     .padding(.vertical, 6)
                     .padding(.horizontal, 12)
                     .background(playbackSpeed == speed ? Color(hex: "ff3b30").opacity(0.15) : Color.clear)
-                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                 }
                 .accessibilityLabel("\(speedLabelText(for: speed)) playback speed")
                 .accessibilityAddTraits(playbackSpeed == speed ? .isSelected : [])
@@ -371,9 +371,9 @@ struct PlaybackView: View {
         }
         .padding(12)
         .background(Color.black.opacity(0.85))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium)
                 .stroke(Color.white.opacity(0.1), lineWidth: 1)
         )
         .padding(.trailing, 12)
@@ -457,7 +457,7 @@ struct TitleEditSheet: View {
                             .foregroundColor(.white)
                             .padding(12)
                             .background(Color(hex: "1e1e1e"))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                             .tint(Color(hex: "ff3b30"))
                     }
 

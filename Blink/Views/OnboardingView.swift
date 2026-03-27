@@ -253,7 +253,7 @@ struct OnboardingScreen4: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 52)
                             .background(Color(hex: "ff3b30"))
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
                     }
                     .padding(.horizontal, 32)
                 }
@@ -268,7 +268,7 @@ struct OnboardingScreen4: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 52)
                         .background(Color(hex: "ff3b30"))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
                 }
                 .padding(.horizontal, 32)
                 .padding(.bottom, 48)

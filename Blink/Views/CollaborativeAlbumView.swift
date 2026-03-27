@@ -87,7 +87,7 @@ struct CollaborativeAlbumRowView: View {
     var body: some View {
         HStack(spacing: 12) {
             ZStack {
-                RoundedRectangle(cornerRadius: 8).fill(Color.purple.opacity(0.15)).frame(width: 44, height: 44)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall).fill(Color.purple.opacity(0.15)).frame(width: 44, height: 44)
                 Image(systemName: "person.3.fill").foregroundColor(.purple)
             }
             VStack(alignment: .leading, spacing: 2) {

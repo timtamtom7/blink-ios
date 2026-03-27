@@ -267,9 +267,9 @@ struct PrivacyLockButtonGraphic: View {
         }
         .padding(12)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium)
                 .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
         )
     }
@@ -331,13 +331,13 @@ struct LockClipView: View {
                     .frame(maxWidth: .infinity)
                     .frame(height: 48)
                     .background(Color(hex: "ff3b30"))
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
             }
             .padding(.horizontal, 32)
         }
         .padding(.vertical, 32)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
         .padding(.horizontal, 32)
     }
 }

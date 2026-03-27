@@ -107,7 +107,7 @@ struct DeepAnalysisView: View {
                     .foregroundColor(.white)
                     .frame(width: 160, height: 44)
                     .background(Color(hex: "ff3b30"))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
             }
             .padding(.top, 8)
         }
@@ -183,7 +183,7 @@ struct DeepAnalysisView: View {
         .frame(width: 180)
         .padding(14)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
     }
 
     private func insightTypeLabel(_ type: DeepAnalysisService.InsightType) -> String {
@@ -241,7 +241,7 @@ struct DeepAnalysisView: View {
             }
             .padding(12)
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
         }
     }
 
@@ -310,7 +310,7 @@ struct DeepAnalysisView: View {
         .padding(14)
         .frame(maxWidth: .infinity)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
     }
 
     private var faceSection: some View {
@@ -343,11 +343,11 @@ struct DeepAnalysisView: View {
 
                 GeometryReader { geometry in
                     ZStack(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: 4)
+                        RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                             .fill(Color(hex: "1e1e1e"))
                             .frame(height: 8)
 
-                        RoundedRectangle(cornerRadius: 4)
+                        RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                             .fill(Color(hex: "ff3b30"))
                             .frame(width: geometry.size.width * percentage, height: 8)
                     }
@@ -356,7 +356,7 @@ struct DeepAnalysisView: View {
             }
             .padding(14)
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
             .padding(.horizontal, 16)
         }
     }
@@ -450,7 +450,7 @@ struct SceneEntriesView: View {
                 .padding(.vertical, 6)
         }
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
     }
 }
 

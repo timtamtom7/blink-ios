@@ -68,11 +68,11 @@ struct CrossDeviceSyncView: View {
                 VStack(spacing: 8) {
                     GeometryReader { geometry in
                         ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 4)
+                            RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                                 .fill(Color(hex: "1e1e1e"))
                                 .frame(height: 4)
 
-                            RoundedRectangle(cornerRadius: 4)
+                            RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                                 .fill(Color(hex: "ff3b30"))
                                 .frame(width: geometry.size.width * syncService.syncProgress, height: 4)
                         }
@@ -87,7 +87,7 @@ struct CrossDeviceSyncView: View {
         }
         .padding(16)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 14))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
     }
 
     private var devicesSection: some View {
@@ -126,7 +126,7 @@ struct CrossDeviceSyncView: View {
                 .frame(maxWidth: .infinity)
                 .padding(24)
                 .background(Color(hex: "141414"))
-                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
             } else {
                 ForEach(syncService.connectedDevices) { device in
                     deviceRow(device)
@@ -162,7 +162,7 @@ struct CrossDeviceSyncView: View {
         }
         .padding(12)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
     }
 
     private func deviceIcon(_ type: CrossDeviceSyncService.Device.DeviceType) -> String {
@@ -188,7 +188,7 @@ struct CrossDeviceSyncView: View {
                 syncSettingRow(title: "Background Sync", icon: "arrow.clockwise.icloud", isOn: .constant(true))
             }
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
         }
     }
 

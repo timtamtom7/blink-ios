@@ -158,15 +158,15 @@ struct MonthBrowseCard: View {
                             Color(hex: "1e1e1e")
                         }
                         .frame(width: 60, height: 40)
-                        .clipShape(RoundedRectangle(cornerRadius: 4))
+                        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                     }
 
                     // Clip count
                     HStack(spacing: 3) {
                         Image(systemName: "video.fill")
-                            .font(.system(size: 8))
+                            .font(.system(size: 11))
                         Text("\(clipCount)")
-                            .font(.system(size: 9, weight: .bold))
+                            .font(.system(size: 11, weight: .bold))
                     }
                     .foregroundColor(Color(hex: "ff3b30"))
                 }
@@ -182,9 +182,9 @@ struct MonthBrowseCard: View {
         }
         .frame(maxWidth: .infinity)
         .background(Color(hex: "141414"))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
         .overlay(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                 .stroke(clipCount > 0 ? Color(hex: "ff3b30").opacity(0.3) : Color.clear, lineWidth: 1)
         )
     }
@@ -295,21 +295,21 @@ struct JumpToMonthView: View {
                                     .fill(Color(hex: "ff3b30"))
                                     .frame(width: 4, height: 4)
                                 Text("\(count)")
-                                    .font(.system(size: 9, weight: .bold))
+                                    .font(.system(size: 11, weight: .bold))
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
                         } else {
                             Text("—")
-                                .font(.system(size: 9))
+                                .font(.system(size: 11))
                                 .foregroundColor(Color(hex: "333333"))
                         }
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
                     .background(isCurrentMonth ? Color(hex: "ff3b30").opacity(0.15) : Color(hex: "141414"))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
                     .overlay(
-                        RoundedRectangle(cornerRadius: 10)
+                        RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall)
                             .stroke(isCurrentMonth ? Color(hex: "ff3b30") : Color(hex: "2a2a2a"), lineWidth: 1)
                     )
                 }

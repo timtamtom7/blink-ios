@@ -52,7 +52,7 @@ struct FreemiumEnforcementView: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 52)
                         .background(Color(hex: "ff3b30"))
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
                     }
 
                     Button {
@@ -102,7 +102,7 @@ struct DurationLimitBanner: View {
         }
         .padding(12)
         .background(Color(hex: "1e1e1e"))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }
 
@@ -148,9 +148,9 @@ struct FreePlanNudgeView: View {
             }
             .padding(12)
             .background(Color(hex: "141414"))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
             .overlay(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium)
                     .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
             )
         }
