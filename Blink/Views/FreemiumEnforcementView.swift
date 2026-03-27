@@ -166,12 +166,14 @@ struct FreePlanNudgeView: View {
     .preferredColorScheme(.dark)
 }
 
-#Preview("Duration Banner") {
-    VStack {
-        DurationLimitBanner(maxDuration: 30) {}
-        Spacer()
+struct FreemiumPreviews: PreviewProvider {
+    static var previews: some View {
+        VStack {
+            DurationLimitBanner(maxDuration: 30) {}
+            Spacer()
+        }
+        .padding()
+        .background(Color(hex: "0a0a0a"))
+        .preferredColorScheme(.dark)
     }
-    .padding()
-    .background(Color(hex: "0a0a0a"))
-    .preferredColorScheme(.dark)
 }

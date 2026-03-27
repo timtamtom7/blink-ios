@@ -828,21 +828,23 @@ struct YearInReviewCompilationMockup: View {
     }
 }
 
-#Preview("Graphics") {
-    VStack(spacing: 40) {
-        ViewfinderGraphic()
-            .frame(width: 160, height: 220)
+struct GraphicsPreviews: PreviewProvider {
+    static var previews: some View {
+        VStack(spacing: 40) {
+            ViewfinderGraphic()
+                .frame(width: 160, height: 220)
 
-        ClipCompositionGraphic()
-            .frame(width: 200, height: 200)
+            ClipCompositionGraphic()
+                .frame(width: 200, height: 200)
 
-        YearInReviewGraphic()
-            .frame(width: 240, height: 240)
+            YearInReviewGraphic()
+                .frame(width: 240, height: 240)
 
-        ApertureGraphic()
-            .frame(width: 120, height: 120)
+            ApertureGraphic()
+                .frame(width: 120, height: 120)
+        }
+        .padding()
+        .background(Color(hex: "0a0a0a"))
+        .preferredColorScheme(.dark)
     }
-    .padding()
-    .background(Color(hex: "0a0a0a"))
-    .preferredColorScheme(.dark)
 }
