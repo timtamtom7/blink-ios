@@ -139,9 +139,11 @@ struct SettingsView: View {
                                 .foregroundColor(Color(hex: "f5f5f5"))
                         }
 
-                        Link(destination: URL(string: "https://example.com/privacy")!) {
-                            Label("Privacy Policy", systemImage: "hand.raised.fill")
-                                .foregroundColor(Color(hex: "f5f5f5"))
+                        if let privacyURL = URL(string: "https://example.com/privacy") {
+                            Link(destination: privacyURL) {
+                                Label("Privacy Policy", systemImage: "hand.raised.fill")
+                                    .foregroundColor(Color(hex: "f5f5f5"))
+                            }
                         }
                     } header: {
                         Text("About")

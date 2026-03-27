@@ -359,8 +359,9 @@ struct ContactsPickerView: View {
                                 showConfirm = true
                             } label: {
                                 HStack(spacing: 12) {
-                                    if let imageData = contact.thumbnailImageData {
-                                        Image(uiImage: UIImage(data: imageData)!)
+                                    if let imageData = contact.thumbnailImageData,
+                                       let contactImage = UIImage(data: imageData) {
+                                        Image(uiImage: contactImage)
                                             .resizable()
                                             .aspectRatio(contentMode: .fill)
                                             .frame(width: 44, height: 44)

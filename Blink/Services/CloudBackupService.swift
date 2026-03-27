@@ -223,8 +223,9 @@ final class CloudBackupService: ObservableObject {
         var thumbnailFilename: String? = nil
         if let thumbAsset = record["thumbnailAsset"] as? CKAsset,
            let thumbURL = thumbAsset.fileURL {
-            thumbnailFilename = "thumb_\(manifestEntry.filename)"
-            let thumbDestination = VideoStore.shared.videosDirectory.appendingPathComponent(thumbnailFilename!)
+            let thumbName = "thumb_\(manifestEntry.filename)"
+            thumbnailFilename = thumbName
+            let thumbDestination = VideoStore.shared.videosDirectory.appendingPathComponent(thumbName)
             try? fileManager.copyItem(at: thumbURL, to: thumbDestination)
         }
 
