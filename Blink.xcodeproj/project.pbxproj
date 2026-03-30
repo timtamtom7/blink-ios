@@ -12,6 +12,7 @@
 		0709BFE3F3B8DCF03A0B88A3 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6C1573AF99CBC737AECD9C /* TodayView.swift */; };
 		07EABB5387F1F5190343320A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 959AD37F91CAB7F10BBE80C1 /* CoreMedia.framework */; };
 		085957DD84173860BE0DB7DC /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1039FF991F5B626215E8FB /* CameraPreviewView.swift */; };
+		0A3F1A06D4E30232DD0D7203 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BB7464815BAC559BEE35F190 /* PrivacyInfo.xcprivacy */; };
 		0ACE16954A2D5D9C2B2BE0BF /* PublicFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C64E3AB012A4C155D6E134F3 /* PublicFeedView.swift */; };
 		0DAE7A42AAF05AFC66D2B69A /* CrossDeviceSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8D8A8F30B6BC23B0BEF9C6 /* CrossDeviceSyncService.swift */; };
 		1063B8FFF446B2C8B49DB181 /* PrivacySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C845227BDAC2B678E3C645CD /* PrivacySettingsView.swift */; };
@@ -37,6 +38,7 @@
 		44A45038B0F961D173826104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3611BA1F7A16AA6199641486 /* Assets.xcassets */; };
 		4554894DB716480CE2C6301A /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE22E372387EAE1F747F9CE /* CameraService.swift */; };
 		46CF493E094C40225BF8C23A /* SubscriptionBusiness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FDA0BD0DC13AAEA143BAD9 /* SubscriptionBusiness.swift */; };
+		48A81A8CD5D615A1DF548D34 /* BlinkShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027B1A167A5AEB3195E47F58 /* BlinkShortcuts.swift */; };
 		4C66D56B10AC5AD19CD0C538 /* HapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C58456A7E61C2F40994A8FE /* HapticService.swift */; };
 		54B0FFA1F9870E36D3830823 /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE60BEF7DE992AB801282D /* ExportService.swift */; };
 		59021CE901CD117CEE0863A1 /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FA7877F854456A362FBAB1 /* CommunityView.swift */; };
@@ -99,6 +101,7 @@
 /* Begin PBXFileReference section */
 		017AB57B1C5663A8525C84C8 /* SubscriptionBusinessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionBusinessService.swift; sourceTree = "<group>"; };
 		01EBB5DC60FEE43E778403BC /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
+		027B1A167A5AEB3195E47F58 /* BlinkShortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkShortcuts.swift; sourceTree = "<group>"; };
 		03DF45CD2964213E2C02CE06 /* ThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailGenerator.swift; sourceTree = "<group>"; };
 		042F0A8FB8FFCCA764D5F39F /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		05FDA0BD0DC13AAEA143BAD9 /* SubscriptionBusiness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionBusiness.swift; sourceTree = "<group>"; };
@@ -161,6 +164,7 @@
 		AD6ED5A306713CFE51162031 /* VideoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStore.swift; sourceTree = "<group>"; };
 		B03D584E1F2E623989F1F8A6 /* DeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandler.swift; sourceTree = "<group>"; };
 		B0E8620C7EFF755DD5BAC678 /* VideoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStore.swift; sourceTree = "<group>"; };
+		BB7464815BAC559BEE35F190 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BF3CCF2E87AE05C96A9268D3 /* SubscriptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionsView.swift; sourceTree = "<group>"; };
 		C32EC366749AEF09EB415F9E /* AdaptiveCompressionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveCompressionService.swift; sourceTree = "<group>"; };
 		C49628EC967051CBEE3D76CC /* ShowHighlightsIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowHighlightsIntent.swift; sourceTree = "<group>"; };
@@ -315,6 +319,7 @@
 		7E7A4CCF2AC34BCD258096EC /* AppIntents */ = {
 			isa = PBXGroup;
 			children = (
+				027B1A167A5AEB3195E47F58 /* BlinkShortcuts.swift */,
 				A654F1298F77F0651683DA55 /* OnThisDayIntent.swift */,
 				F3E3C217B6F9DD852886A070 /* RecordBlinkIntent.swift */,
 				C49628EC967051CBEE3D76CC /* ShowHighlightsIntent.swift */,
@@ -326,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				0B47EB8B7273BB95141192DE /* Info.plist */,
+				BB7464815BAC559BEE35F190 /* PrivacyInfo.xcprivacy */,
 				3A5A319BF81EB2179ABD557E /* App */,
 				7E7A4CCF2AC34BCD258096EC /* AppIntents */,
 				C9D3CC1439A512CB2F2EFA74 /* Models */,
@@ -510,6 +516,7 @@
 				44A45038B0F961D173826104 /* Assets.xcassets in Resources */,
 				84274CDD52EA9C6868C90B58 /* Localizable.strings in Resources */,
 				C2D9B5770B0336CE721B311A /* Localizable.stringsdict in Resources */,
+				0A3F1A06D4E30232DD0D7203 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +543,7 @@
 				7812F73C11E3D5A2E026259D /* Blink2.swift in Sources */,
 				65E3F70D703C0CF911D09F52 /* Blink2Service.swift in Sources */,
 				FAE270F80E962907749867E0 /* BlinkApp.swift in Sources */,
+				48A81A8CD5D615A1DF548D34 /* BlinkShortcuts.swift in Sources */,
 				C64D380C0DD88FCA755E02DA /* CalendarView.swift in Sources */,
 				6AB8DC106410CF46AD97FD12 /* CameraPreview.swift in Sources */,
 				4554894DB716480CE2C6301A /* CameraService.swift in Sources */,

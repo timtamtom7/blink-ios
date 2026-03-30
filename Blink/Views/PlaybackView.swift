@@ -19,6 +19,7 @@ struct PlaybackView: View {
     @State private var playbackSpeed: Float = 1.0
     @State private var showSpeedPicker = false
     @State private var exportTask: Task<Void, Never>?
+    @State private var notificationToken: NSObjectProtocol?
     @ObservedObject private var videoStore = VideoStore.shared
 
     private let playbackSpeeds: [Float] = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
@@ -84,6 +85,10 @@ struct PlaybackView: View {
         }
         .onDisappear {
             player?.pause()
+            if let token = notificationToken {
+                NotificationCenter.default.removeObserver(token)
+                notificationToken = nil
+            }
             player = nil
             exportTask?.cancel()
         }
@@ -283,7 +288,7 @@ struct PlaybackView: View {
         player.rate = playbackSpeed
         player.play()
 
-        NotificationCenter.default.addObserver(
+        notificationToken = NotificationCenter.default.addObserver(
             forName: .AVPlayerItemDidPlayToEndTime,
             object: player.currentItem,
             queue: .main

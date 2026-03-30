@@ -21,6 +21,7 @@ struct TrimView: View {
     @State private var saveMode: SaveMode = .new
     @State private var setupTask: Task<Void, Never>?
     @State private var saveTask: Task<Void, Never>?
+    @State private var periodicObserver: Any?
 
     enum SaveMode {
         case new
@@ -91,6 +92,10 @@ struct TrimView: View {
         }
         .onDisappear {
             player?.pause()
+            if let observer = periodicObserver {
+                player?.removeTimeObserver(observer)
+                periodicObserver = nil
+            }
             player = nil
             setupTask?.cancel()
             saveTask?.cancel()
@@ -369,7 +374,7 @@ struct TrimView: View {
         }
 
         // Update current time
-        player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.05, preferredTimescale: 600), queue: .main) { time in
+        periodicObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.05, preferredTimescale: 600), queue: .main) { time in
             let secs = time.seconds
             self.currentTime = secs
 
