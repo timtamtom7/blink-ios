@@ -13,6 +13,15 @@ final class VideoStore: ObservableObject {
     private let entriesFile: URL
     private let fileManager = FileManager.default
 
+    // MARK: - On This Day Cache
+
+    private var _cachedOnThisDayEntries: [VideoEntry]?
+    private var _onThisDayCacheEntryCount: Int = 0
+
+    private func invalidateOnThisDayCache() {
+        _cachedOnThisDayEntries = nil
+    }
+
     private init() {
         let docsDir = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         videosDirectory = docsDir.appendingPathComponent("BlinkVideos", isDirectory: true)
@@ -75,6 +84,7 @@ final class VideoStore: ObservableObject {
 
             entries.append(entry)
             saveEntries()
+            invalidateOnThisDayCache()
             return true
         } catch {
             print("Failed to add video: \(error)")
@@ -108,6 +118,7 @@ final class VideoStore: ObservableObject {
 
         entries.removeAll { $0.id == entry.id }
         saveEntries()
+        invalidateOnThisDayCache()
     }
 
     func clipCountThisYear() -> Int {
@@ -201,6 +212,7 @@ final class VideoStore: ObservableObject {
         }
 
         saveEntries()
+        invalidateOnThisDayCache()
         return newEntry
     }
 
@@ -261,6 +273,7 @@ final class VideoStore: ObservableObject {
         guard let index = entries.firstIndex(where: { $0.id == entry.id }) else { return }
         entries[index] = entry
         saveEntries()
+        invalidateOnThisDayCache()
     }
 
     /// Add a restored entry from iCloud backup.
@@ -270,6 +283,7 @@ final class VideoStore: ObservableObject {
         guard !entries.contains(where: { $0.id == entry.id }) else { return }
         entries.append(entry)
         saveEntries()
+        invalidateOnThisDayCache()
     }
 
     // MARK: - Months
@@ -295,14 +309,20 @@ final class VideoStore: ObservableObject {
     // MARK: - On This Day
 
     /// Returns entries from the same month and day in previous years (excluding today).
+    /// Results are cached and recomputed only when entries change.
     func onThisDayEntries(excludingToday: Bool = true) -> [VideoEntry] {
+        // Check cache validity
+        if _cachedOnThisDayEntries != nil && _onThisDayCacheEntryCount == entries.count {
+            return _cachedOnThisDayEntries!
+        }
+
         let calendar = Calendar.current
         let today = Date()
         let todayMonth = calendar.component(.month, from: today)
         let todayDay = calendar.component(.day, from: today)
         let todayYear = calendar.component(.year, from: today)
 
-        return entries.filter { entry in
+        let result = entries.filter { entry in
             let entryMonth = calendar.component(.month, from: entry.date)
             let entryDay = calendar.component(.day, from: entry.date)
             let entryYear = calendar.component(.year, from: entry.date)
@@ -316,6 +336,12 @@ final class VideoStore: ObservableObject {
                 return sameDate && !entry.isLocked
             }
         }.sorted { $0.date < $1.date }
+
+        // Cache the result
+        _cachedOnThisDayEntries = result
+        _onThisDayCacheEntryCount = entries.count
+
+        return result
     }
 
     /// Count of On This Day entries.
@@ -330,5 +356,6 @@ final class VideoStore: ObservableObject {
         guard let index = entries.firstIndex(where: { $0.id == entry.id }) else { return }
         entries[index].isLocked.toggle()
         saveEntries()
+        invalidateOnThisDayCache()
     }
 }

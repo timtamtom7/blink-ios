@@ -304,42 +304,35 @@ struct BlinkPillButtonStyle: ButtonStyle {
 
 // MARK: - Font Extension for Dynamic Type
 
-extension Font {
-    /// Returns a Dynamic Type-enabled font with a minimum size of 11pt
-    static func blinkText(_ style: ThemeFontStyle) -> Font {
-        switch style {
-        case .largeTitle:
-            return .system(size: 28, weight: .bold, design: .default)
-        case .title1:
-            return .system(size: 22, weight: .bold, design: .default)
-        case .title2:
-            return .system(size: 20, weight: .bold, design: .default)
-        case .title3:
-            return .system(size: 18, weight: .bold, design: .default)
-        case .headline:
-            return .system(size: 17, weight: .semibold, design: .default)
-        case .body:
-            return .system(size: 15, weight: .regular, design: .default)
-        case .callout:
-            return .system(size: 14, weight: .regular, design: .default)
-        case .subheadline:
-            return .system(size: 13, weight: .medium, design: .default)
-        case .footnote:
-            return .system(size: 13, weight: .regular, design: .default)
-        case .caption1:
-            return .system(size: 12, weight: .regular, design: .default)
-        case .caption2:
-            return .system(size: 11, weight: .regular, design: .default)
-        case .caption2Bold:
-            return .system(size: 11, weight: .bold, design: .default)
+/// Dynamic Type-enabled font styles that scale with user accessibility settings.
+/// Use these instead of fixed-size Font.system() calls.
+enum BlinkFontStyle {
+    case largeTitle, title, title2, title3
+    case headline, body, callout, subheadline, footnote
+    case caption, caption2
+
+    var font: Font {
+        switch self {
+        case .largeTitle: return .largeTitle
+        case .title: return .title
+        case .title2: return .title2
+        case .title3: return .title3
+        case .headline: return .headline
+        case .body: return .body
+        case .callout: return .callout
+        case .subheadline: return .subheadline
+        case .footnote: return .footnote
+        case .caption: return .caption
+        case .caption2: return .caption2
         }
     }
 }
 
-enum ThemeFontStyle {
-    case largeTitle, title1, title2, title3
-    case headline, body, callout, subheadline, footnote
-    case caption1, caption2, caption2Bold
+extension Font {
+    /// Returns a Dynamic Type-enabled font (delegates to BlinkFontStyle)
+    static func blinkText(_ style: BlinkFontStyle) -> Font {
+        style.font
+    }
 }
 
 // MARK: - Blur / Material Styles

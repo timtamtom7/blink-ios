@@ -7,6 +7,7 @@ final class AdaptiveCompressionService: ObservableObject {
     static let shared = AdaptiveCompressionService()
 
     @Published private(set) var isCompressing = false
+    @Published private(set) var processedCount: Int = 0
     @Published private(set) var compressionProgress: Double = 0
     @Published private(set) var totalSavedBytes: Int64 = 0
 
@@ -43,18 +44,18 @@ final class AdaptiveCompressionService: ObservableObject {
 
         isCompressing = true
         compressionProgress = 0
+        processedCount = 0
 
         for (index, entry) in candidates.enumerated() {
             let saved = await compressEntry(entry)
             await MainActor.run {
+                processedCount += 1
                 totalSavedBytes += saved
+                if saved > 0 {
+                    compressedEntries.insert(entry.id)
+                }
+                compressionProgress = Double(index + 1) / Double(candidates.count)
             }
-
-            if saved > 0 {
-                compressedEntries.insert(entry.id)
-            }
-
-            compressionProgress = Double(index + 1) / Double(candidates.count)
         }
 
         saveCompressedEntries()
