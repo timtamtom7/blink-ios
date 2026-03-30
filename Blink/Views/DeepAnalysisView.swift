@@ -6,6 +6,8 @@ struct DeepAnalysisView: View {
     @ObservedObject private var videoStore = VideoStore.shared
     @State private var selectedScene: DeepAnalysisService.SceneType?
     @State private var showSceneEntries = false
+    @State private var analysisTask: Task<Void, Never>?
+    @State private var refreshTask: Task<Void, Never>?
 
     var body: some View {
         NavigationStack {
@@ -30,7 +32,7 @@ struct DeepAnalysisView: View {
                 if !analysisService.analyzedEntries.isEmpty {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            Task {
+                            refreshTask = Task {
                                 await analysisService.analyzeAll(entries: videoStore.entries)
                             }
                         } label: {
@@ -45,6 +47,10 @@ struct DeepAnalysisView: View {
                 if let scene = selectedScene {
                     SceneEntriesView(scene: scene)
                 }
+            }
+            .onDisappear {
+                analysisTask?.cancel()
+                refreshTask?.cancel()
             }
         }
     }
@@ -98,7 +104,7 @@ struct DeepAnalysisView: View {
             }
 
             Button {
-                Task {
+                analysisTask = Task {
                     await analysisService.analyzeAll(entries: videoStore.entries)
                 }
             } label: {

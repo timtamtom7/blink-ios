@@ -1,0 +1,113 @@
+/* General */
+"app.name" = "Blink";
+"common.done" = "Done";
+"common.cancel" = "Cancel";
+"common.save" = "Save";
+"common.delete" = "Delete";
+"common.undo" = "Undo";
+"common.error" = "Something went wrong";
+"common.retry" = "Try Again";
+"common.close" = "Close";
+"common.loading" = "Loading…";
+"common.coming_soon" = "Coming Soon";
+"common.coming_soon.desc" = "This feature is in development.";
+
+/* Record */
+"record.button" = "Record";
+"record.flip_camera" = "Flip Camera";
+"record.flash" = "Flash";
+"record.timer" = "Timer";
+"record.countdown" = "Get ready…";
+"record.stop" = "Stop";
+"record.preview.delete" = "Delete clip";
+"record.preview.retake" = "Retake";
+"record.preview.keep" = "Keep";
+
+/* Playback */
+"playback.play" = "Play";
+"playback.pause" = "Pause";
+"playback.delete" = "Delete clip";
+"playback.share" = "Share";
+"playback.trim" = "Trim";
+"playback.clip_deleted" = "Clip deleted";
+"playback.clip_deleted.undo" = "Undo";
+
+/* Calendar */
+"calendar.title" = "Calendar";
+"calendar.today" = "Today";
+"calendar.no_clips" = "No clips this month";
+"calendar.day_format" = "EEEE, MMMM d";
+
+/* Search */
+"search.placeholder" = "Search your moments…";
+"search.no_results" = "No moments found";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.privacy" = "Privacy & Security";
+"settings.reminders" = "Reminders";
+"settings.daily_reminder" = "Daily Reminder";
+"settings.reminder_time" = "Reminder Time";
+"settings.subscription" = "Subscription";
+"settings.upgrade_plan" = "Upgrade Plan";
+"settings.recording" = "Recording";
+"settings.recording_quality" = "Recording Quality";
+"settings.recording_quality.high" = "High";
+"settings.recording_quality.medium" = "Medium";
+"settings.storage" = "Storage";
+"settings.storage_dashboard" = "Storage Dashboard";
+"settings.backup" = "Backup";
+"settings.icloud_backup" = "iCloud Backup";
+"settings.icloud_not_available" = "iCloud not available";
+"settings.restore" = "Restore from iCloud";
+"settings.backup_now" = "Back up now";
+"settings.last_backup" = "Last backup:";
+"settings.backing_up" = "Backing up…";
+"settings.about" = "About";
+"settings.about_blink" = "About Blink";
+"settings.privacy_policy" = "Privacy Policy";
+"settings.privacy.note" = "Your videos are stored locally on this device. No accounts. No sharing. No social.";
+
+/* Privacy */
+"privacy.app_lock" = "App Lock";
+"privacy.enable_passcode" = "Enable App Lock";
+"privacy.change_passcode" = "Change Passcode";
+"privacy.remove_app_lock" = "Remove App Lock";
+"privacy.lock_on_background" = "Lock when leaving app";
+"privacy.biometric" = "Face ID";
+"privacy.passcode_enter" = "Enter Passcode";
+"privacy.passcode_error" = "Incorrect passcode";
+
+/* Freemium */
+"freemium.title" = "Daily limit reached";
+"freemium.message" = "You've used your daily clip on the Free plan.";
+"freemium.upgrade" = "Upgrade";
+"freemium.later" = "Maybe Later";
+
+/* Onboarding */
+"onboarding.welcome" = "Welcome to Blink";
+"onboarding.subtitle" = "One second a day. Forever.";
+"onboarding.get_started" = "Get Started";
+"onboarding.next" = "Next";
+"onboarding.skip" = "Skip";
+
+/* Notifications */
+"notification.daily.title" = "Blink today?";
+"notification.daily.body" = "Your year is waiting. Record a moment.";
+"notification.on_this_day.title" = "On this day";
+"notification.on_this_day.body" = "Your moment from last year is waiting.";
+
+/* Stub / Coming Soon */
+"stub.cloud_backup.title" = "Cloud Backup";
+"stub.cloud_backup.desc" = "Coming Soon";
+"stub.cross_device.title" = "Cross-Device Sync";
+"stub.cross_device.desc" = "Coming Soon";
+"stub.community.title" = "Community";
+"stub.community.desc" = "Coming Soon";
+
+/* Errors */
+"error.generic" = "Something went wrong. Please try again.";
+"error.network" = "Network error. Check your connection.";
+"error.camera_access" = "Camera access required. Enable in Settings.";
+"error.mic_access" = "Microphone access required. Enable in Settings.";
+"error.storage_full" = "Storage is full. Free up space to continue recording.";

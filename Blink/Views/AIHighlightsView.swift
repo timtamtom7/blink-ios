@@ -10,6 +10,8 @@ struct AIHighlightsView: View {
     @State private var reelURL: URL?
     @State private var showReelError: String?
     @State private var selectedHighlight: AIHighlightsService.AIHighlight?
+    @State private var analyzeTask: Task<Void, Never>?
+    @State private var reelTask: Task<Void, Never>?
 
     var body: some View {
         NavigationStack {
@@ -71,6 +73,10 @@ struct AIHighlightsView: View {
                     await aiService.analyzeHighlights(entries: videoStore.entries)
                 }
             }
+            .onDisappear {
+                analyzeTask?.cancel()
+                reelTask?.cancel()
+            }
         }
     }
 
@@ -110,7 +116,7 @@ struct AIHighlightsView: View {
             }
 
             Button {
-                Task {
+                analyzeTask = Task {
                     await aiService.analyzeHighlights(entries: videoStore.entries)
                 }
             } label: {
@@ -361,7 +367,7 @@ struct AIHighlightsView: View {
         showReelGeneration = true
         isGeneratingReel = true
 
-        Task {
+        reelTask = Task {
             do {
                 let url = try await aiService.generateHighlightReel(clips: aiService.highlights)
                 await MainActor.run {

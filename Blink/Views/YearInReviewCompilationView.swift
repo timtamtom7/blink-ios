@@ -17,6 +17,7 @@ struct YearInReviewCompilationView: View {
     @State private var player: AVPlayer?
     @State private var progressTimer: Timer?
     @State private var generationTask: Task<Void, Never>?
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     private var topEntries: [VideoEntry] {
         entries
@@ -133,7 +134,7 @@ struct YearInReviewCompilationView: View {
                     )
                     .frame(width: 120, height: 120)
                     .rotationEffect(.degrees(-90))
-                    .animation(.linear(duration: 0.5), value: generationProgress)
+                    .animation(reduceMotion ? .none : .linear(duration: 0.5), value: generationProgress)
 
                 VStack(spacing: 2) {
                     Text("\(Int(generationProgress * 100))%")

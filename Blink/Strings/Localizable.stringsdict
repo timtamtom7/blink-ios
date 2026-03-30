@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>notification.on_this_day.body.plural</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@ moments from last year</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d moment from last year</string>
+			<key>other</key>
+			<string>%d moments from last year</string>
+		</dict>
+	</dict>
+	<key>calendar.clip_count</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@ clips</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d clip</string>
+			<key>other</key>
+			<string>%d clips</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

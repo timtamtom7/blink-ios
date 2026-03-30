@@ -9,6 +9,10 @@ struct StorageDashboardView: View {
     @State private var isRunningAnalysis = false
     @State private var showDeduplicationSheet = false
     @State private var selectedDuplicate: DeduplicationService.DuplicateGroup?
+    @State private var deduplicationTask: Task<Void, Never>?
+    @State private var compressionTask: Task<Void, Never>?
+    @State private var duplicateDeleteTask: Task<Void, Never>?
+    @State private var sheetRefreshTask: Task<Void, Never>?
 
     var body: some View {
         NavigationStack {

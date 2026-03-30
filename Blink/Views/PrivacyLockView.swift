@@ -345,6 +345,7 @@ struct LockClipView: View {
 
 struct PrivacyLockIconGraphic: View {
     @State private var isAnimating = false
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var body: some View {
         ZStack {
@@ -358,14 +359,18 @@ struct PrivacyLockIconGraphic: View {
                 .fill(Theme.accent.opacity(0.15))
                 .frame(width: 60, height: 60)
                 .scaleEffect(isAnimating ? 1.1 : 1.0)
-                .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
 
             // Lock icon
             Image(systemName: "lock.fill")
                 .font(.system(size: 24))
                 .foregroundColor(Theme.accent)
         }
-        .onAppear { isAnimating = true }
+        .onAppear {
+            if !reduceMotion {
+                isAnimating = true
+            }
+        }
+        .animation(reduceMotion ? .none : .easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
     }
 }
 

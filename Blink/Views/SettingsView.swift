@@ -19,6 +19,8 @@ struct SettingsView: View {
     @State private var showBackupProgress = false
     @State private var showRestoreProgress = false
     @State private var backupError: String?
+    @State private var backupTask: Task<Void, Never>?
+    @State private var restoreTask: Task<Void, Never>?
 
     var body: some View {
         NavigationStack {
@@ -301,6 +303,10 @@ struct SettingsView: View {
             } message: {
                 Text("This will download your clips from iCloud. Existing clips will not be affected.")
             }
+            .onDisappear {
+                backupTask?.cancel()
+                restoreTask?.cancel()
+            }
         }
     }
 
@@ -403,7 +409,7 @@ struct SettingsView: View {
 
     private func startBackup() {
         guard cloudBackup.iCloudAvailable else { return }
-        Task {
+        backupTask = Task {
             do {
                 try await cloudBackup.backupAllClips()
             } catch {
@@ -413,7 +419,7 @@ struct SettingsView: View {
     }
 
     private func startRestore() {
-        Task {
+        restoreTask = Task {
             do {
                 try await cloudBackup.restoreClips()
             } catch {
