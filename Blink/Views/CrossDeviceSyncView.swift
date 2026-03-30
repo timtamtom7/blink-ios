@@ -4,6 +4,7 @@ import SwiftUI
 struct CrossDeviceSyncView: View {
     @StateObject private var syncService = CrossDeviceSyncService.shared
     @State private var showAddDevice = false
+    @State private var syncTask: Task<Void, Never>?
 
     var body: some View {
         NavigationStack {
@@ -51,6 +52,9 @@ struct CrossDeviceSyncView: View {
             .toolbarBackground(Color(hex: "0a0a0a"), for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
+            .onDisappear {
+                syncTask?.cancel()
+            }
         }
     }
 
@@ -74,7 +78,7 @@ struct CrossDeviceSyncView: View {
                         .tint(Color(hex: "ff3b30"))
                 } else {
                     Button {
-                        Task {
+                        syncTask = Task {
                             try? await syncService.syncAll()
                         }
                     } label: {

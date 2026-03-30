@@ -363,6 +363,7 @@ struct ContactsPickerView: View {
     @State private var showConfirm = false
     @State private var isSending = false
     @State private var sendSuccess = false
+    @State private var sendTask: Task<Void, Never>?
 
     var body: some View {
         NavigationStack {
@@ -466,6 +467,9 @@ struct ContactsPickerView: View {
             }
         }
         .presentationDetents([.medium, .large])
+        .onDisappear {
+            sendTask?.cancel()
+        }
     }
 
     private func sendToContact() {

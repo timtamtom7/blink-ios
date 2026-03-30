@@ -119,9 +119,6 @@ struct OnboardingScreen1: View {
             Spacer()
             Spacer()
         }
-        .onDisappear {
-            permissionTask?.cancel()
-        }
     }
 }
 
@@ -192,6 +189,7 @@ struct OnboardingScreen3: View {
 struct OnboardingScreen4: View {
     let onComplete: () -> Void
     @State private var permissionStatus: PermissionStatus = .unknown
+    @State private var permissionTask: Task<Void, Never>?
 
     enum PermissionStatus {
         case unknown, granted, denied
@@ -282,6 +280,9 @@ struct OnboardingScreen4: View {
         }
         .onAppear {
             checkPermissions()
+        }
+        .onDisappear {
+            permissionTask?.cancel()
         }
     }
 

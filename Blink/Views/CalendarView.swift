@@ -374,34 +374,28 @@ struct CalendarView: View {
         isExporting = true
         exportProgress = 0
 
-        exportTask = Task {
+        exportTask = Task { @MainActor in
             do {
                 let outputURL = try await ExportService.shared.exportMonthClips(
                     month: currentMonth,
                     year: currentYear,
                     onProgress: { progress in
-                        Task { @MainActor in
-                            exportProgress = progress
-                        }
+                        exportProgress = progress
                     }
                 )
 
                 // Save to camera roll
                 try await ExportService.shared.saveToCameraRoll(url: outputURL)
 
-                await MainActor.run {
-                    isExporting = false
-                    showExportedAlert = true
-                    exportedVideoURL = outputURL
-                }
+                isExporting = false
+                showExportedAlert = true
+                exportedVideoURL = outputURL
 
                 // Clean up temp file
                 try? FileManager.default.removeItem(at: outputURL)
             } catch {
-                await MainActor.run {
-                    isExporting = false
-                    exportError = error.localizedDescription
-                }
+                isExporting = false
+                exportError = error.localizedDescription
             }
         }
     }

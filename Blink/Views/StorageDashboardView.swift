@@ -334,6 +334,7 @@ struct DuplicateDetailSheet: View {
     let onDismiss: () -> Void
 
     @StateObject private var deduplicationService = DeduplicationService.shared
+    @State private var duplicateDeleteTask: Task<Void, Never>?
 
     var body: some View {
         NavigationStack {
@@ -407,6 +408,9 @@ struct DuplicateDetailSheet: View {
                     .foregroundColor(Color(hex: "ff3b30"))
                 }
             }
+        }
+        .onDisappear {
+            duplicateDeleteTask?.cancel()
         }
     }
 }

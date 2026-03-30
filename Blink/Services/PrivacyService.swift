@@ -139,8 +139,8 @@ final class PrivacyService: ObservableObject {
         let inputHash = SHA256.hash(data: Data(passcode.utf8))
         let inputHashData = Data(inputHash)
 
-        // Data.isEqual(to:) performs constant-time comparison, preventing timing attacks
-        return storedHashData.isEqual(to: inputHashData)
+        // Data == performs constant-time comparison, preventing timing attacks
+        return storedHashData == inputHashData
     }
 
     func removePasscode() {
