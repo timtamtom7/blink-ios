@@ -87,6 +87,7 @@ struct PrivacyLockView: View {
                     .fill(index < currentPasscode.count ? Theme.accent : Theme.backgroundQuaternary)
                     .frame(width: 14, height: 14)
                     .scaleEffect(index < currentPasscode.count ? 1.2 : 1.0)
+                    .accessibilityLabel("Passcode, \(currentPasscode.count) of 6 digits entered")
             }
         }
         .overlay {
@@ -138,6 +139,7 @@ struct PrivacyLockView: View {
                     .foregroundColor(Theme.textPrimary)
                     .frame(width: 72, height: 72)
             }
+            .accessibilityLabel("Delete")
         } else {
             Button {
                 addDigit(key)
@@ -148,6 +150,7 @@ struct PrivacyLockView: View {
                     .frame(width: 72, height: 72)
                     .background(Circle().fill(Theme.backgroundTertiary))
             }
+            .accessibilityLabel(key)
         }
     }
 

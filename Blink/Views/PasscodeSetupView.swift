@@ -60,6 +60,7 @@ struct PasscodeSetupView: View {
                     .frame(width: 14, height: 14)
                     .scaleEffect(index < currentPasscode.count ? 1.2 : 1.0)
                     .animation(.spring(response: 0.15, dampingFraction: 0.6), value: currentPasscode.count)
+                    .accessibilityLabel("Passcode, \(currentPasscode.count) of 6 digits entered")
             }
         }
         .overlay {
@@ -107,6 +108,7 @@ struct PasscodeSetupView: View {
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .frame(width: 72, height: 72)
             }
+            .accessibilityLabel("Delete")
         } else {
             Button {
                 addDigit(key)
@@ -117,6 +119,7 @@ struct PasscodeSetupView: View {
                     .frame(width: 72, height: 72)
                     .background(Circle().fill(Color(hex: "1e1e1e")))
             }
+            .accessibilityLabel(key)
         }
     }
 

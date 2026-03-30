@@ -47,7 +47,7 @@ struct YearInReviewCompilationView: View {
             Spacer()
 
             // Year ring
-            YearInReviewGraphic()
+            YearInReviewGraphic(clipCount: entries.count)
                 .frame(width: 220, height: 220)
 
             VStack(spacing: 10) {

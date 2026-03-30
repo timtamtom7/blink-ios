@@ -94,11 +94,13 @@ struct OnboardingView: View {
 // MARK: - Screen 1: Your Year, One Moment
 
 struct OnboardingScreen1: View {
+    @ObservedObject private var videoStore = VideoStore.shared
+
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
 
-            YearInReviewGraphic()
+            YearInReviewGraphic(clipCount: videoStore.entries.count)
                 .frame(width: 240, height: 240)
                 .padding(.bottom, 48)
 

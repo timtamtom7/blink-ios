@@ -15,6 +15,11 @@ struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var wasInBackground = false
 
+    // Deep link state
+    @State private var deepLinkShowHighlights = false
+    @State private var deepLinkShowOnThisDay = false
+    @State private var deepLinkShareEntry: VideoEntry?
+
     private var isNewDay: Bool {
         let today = Calendar.current.startOfDay(for: Date()).formatted(date: .numeric, time: .omitted)
         return freemiumAcknowledgedDate != today
@@ -75,6 +80,30 @@ struct ContentView: View {
                 }
             }
         }
+        .onChange(of: DeepLinkHandler.shared.pendingDeepLink) { _, newValue in
+            guard let link = newValue else { return }
+            switch link {
+            case .share(let clipId):
+                if let entry = videoStore.entries.first(where: { $0.id == clipId }) {
+                    deepLinkShareEntry = entry
+                }
+            case .highlights:
+                selectedTab = .calendar
+                deepLinkShowHighlights = true
+            case .onThisDay:
+                selectedTab = .calendar
+                deepLinkShowOnThisDay = true
+            case .record:
+                selectedTab = .record
+            case .home:
+                selectedTab = .record
+            }
+            DeepLinkHandler.shared.clearPending()
+        }
+        .fullScreenCover(item: $deepLinkShareEntry) { entry in
+            PlaybackView(entry: entry, onDelete: { })
+                .environmentObject(videoStore)
+        }
         .sheet(isPresented: $showPricing) {
             PricingView()
         }
@@ -112,7 +141,7 @@ struct ContentView: View {
                 .tag(Tab.record)
                 .accessibilityLabel("Record tab")
 
-            CalendarView()
+            CalendarView(showHighlightsBinding: $deepLinkShowHighlights, showOnThisDayBinding: $deepLinkShowOnThisDay)
                 .tabItem {
                     Label("Calendar", systemImage: "calendar")
                 }

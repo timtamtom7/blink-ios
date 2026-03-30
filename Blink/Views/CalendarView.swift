@@ -22,11 +22,49 @@ struct CalendarView: View {
     @State private var showPricing = false
     @State private var exportTask: Task<Void, Never>?
 
+    // External bindings for deep link control (optional)
+    var showHighlightsBinding: Binding<Bool>?
+    var showOnThisDayBinding: Binding<Bool>?
+
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     private let dayLabels = ["S", "M", "T", "W", "T", "F", "S"]
 
     init() {
         _selectedYear = State(initialValue: Calendar.current.component(.year, from: Date()))
+    }
+
+    // Deep link: use external bindings if provided, otherwise local state
+    private var effectiveShowAIHighlights: Bool {
+        showHighlightsBinding?.wrappedValue ?? showAIHighlights
+    }
+    private var effectiveShowOnThisDay: Bool {
+        showOnThisDayBinding?.wrappedValue ?? showOnThisDay
+    }
+
+    // Bindings for fullScreenCover modifiers
+    private var aiHighlightsBinding: Binding<Bool> {
+        Binding(
+            get: { effectiveShowAIHighlights },
+            set: { newValue in
+                if showHighlightsBinding != nil {
+                    showHighlightsBinding?.wrappedValue = newValue
+                } else {
+                    showAIHighlights = newValue
+                }
+            }
+        )
+    }
+    private var onThisDayBinding: Binding<Bool> {
+        Binding(
+            get: { effectiveShowOnThisDay },
+            set: { newValue in
+                if showOnThisDayBinding != nil {
+                    showOnThisDayBinding?.wrappedValue = newValue
+                } else {
+                    showOnThisDay = newValue
+                }
+            }
+        )
     }
 
     private var clipsThisYear: Int {
@@ -157,7 +195,7 @@ struct CalendarView: View {
                 selectedEntry = updatedEntry
             })
         }
-        .fullScreenCover(isPresented: $showAIHighlights) {
+        .fullScreenCover(isPresented: aiHighlightsBinding) {
             AIHighlightsView()
         }
         .fullScreenCover(isPresented: $showPublicFeed) {
@@ -181,11 +219,11 @@ struct CalendarView: View {
         .fullScreenCover(isPresented: $showMonthBrowser) {
             MonthBrowserView(selectedEntry: $selectedEntry)
         }
-        .fullScreenCover(isPresented: $showOnThisDay) {
+        .fullScreenCover(isPresented: onThisDayBinding) {
             OnThisDayView(
                 entries: videoStore.onThisDayEntries(),
                 onDismiss: {
-                    showOnThisDay = false
+                    onThisDayBinding.wrappedValue = false
                 }
             )
         }

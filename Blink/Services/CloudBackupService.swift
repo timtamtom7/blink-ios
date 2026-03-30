@@ -1,6 +1,7 @@
 import Foundation
 import CloudKit
 import AVFoundation
+import Network
 
 // MARK: - Cloud Backup Service
 
@@ -13,6 +14,7 @@ final class CloudBackupService: ObservableObject {
         case downloadFailed(String)
         case noICloud
         case cancelled
+        case networkUnavailable
 
         var errorDescription: String? {
             switch self {
@@ -26,6 +28,8 @@ final class CloudBackupService: ObservableObject {
                 return "iCloud is not available on this device."
             case .cancelled:
                 return "Backup was cancelled."
+            case .networkUnavailable:
+                return "Network unavailable. Check your connection and try again."
             }
         }
     }
@@ -41,6 +45,7 @@ final class CloudBackupService: ObservableObject {
     @Published var backupProgress: Double = 0
     @Published var isRestoring = false
     @Published var restoreProgress: Double = 0
+    @Published private(set) var isConnected = true
 
     // NOTE: container and privateDatabase are lazy vars, not let constants.
     // CKContainer crashes with EXC_BREAKPOINT (not a catchable Swift error) if the
@@ -50,6 +55,8 @@ final class CloudBackupService: ObservableObject {
     private lazy var privateDatabase: CKDatabase = container.privateCloudDatabase
     private let recordType = "BlinkBackup"
     private let fileManager = FileManager.default
+    private let networkMonitor = NWPathMonitor()
+    private let monitorQueue = DispatchQueue(label: "com.blink.networkmonitor")
 
     /// Checks if iCloud is available. Safe to call at any time — does not trigger CloudKit.
     var iCloudAvailable: Bool {
@@ -58,12 +65,30 @@ final class CloudBackupService: ObservableObject {
 
     private init() {
         lastBackupDate = UserDefaults.standard.object(forKey: "lastBackupDate") as? Date
+        startNetworkMonitoring()
+    }
+
+    deinit {
+        networkMonitor.cancel()
+    }
+
+    private func startNetworkMonitoring() {
+        networkMonitor.pathUpdateHandler = { [weak self] path in
+            Task { @MainActor [weak self] in
+                self?.isConnected = path.status == .satisfied
+            }
+        }
+        networkMonitor.start(queue: monitorQueue)
     }
 
     // MARK: - Backup All Clips
 
     @MainActor
     func backupAllClips() async throws {
+        guard isConnected else {
+            throw BackupError.networkUnavailable
+        }
+
         guard iCloudAvailable else {
             throw BackupError.noICloud
         }
@@ -122,6 +147,10 @@ final class CloudBackupService: ObservableObject {
 
     @MainActor
     func restoreClips() async throws {
+        guard isConnected else {
+            throw BackupError.networkUnavailable
+        }
+
         guard iCloudAvailable else {
             throw BackupError.noICloud
         }

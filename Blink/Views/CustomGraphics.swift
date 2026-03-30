@@ -372,6 +372,7 @@ struct ClipCompositionGraphic: View {
 // MARK: - Year-in-Review Abstract Visual
 
 struct YearInReviewGraphic: View {
+    let clipCount: Int
     @State private var progress: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
@@ -419,15 +420,16 @@ struct YearInReviewGraphic: View {
                 .fill(Color(hex: "ff3b30"))
                 .frame(width: 12, height: 12)
 
-            // "83 clips" or similar
+            // Dynamic clip count
             VStack(spacing: 2) {
-                Text("83")
+                Text("\(clipCount)")
                     .font(.system(size: 28, weight: .bold, design: .rounded))
                     .foregroundColor(Color(hex: "f5f5f5"))
                 Text("clips")
                     .font(.system(size: 11, weight: .medium))
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
+            .accessibilityLabel("\(clipCount) clips recorded this year")
         }
         .onAppear {
             if !reduceMotion {
@@ -855,7 +857,7 @@ struct GraphicsPreviews: PreviewProvider {
             ClipCompositionGraphic()
                 .frame(width: 200, height: 200)
 
-            YearInReviewGraphic()
+            YearInReviewGraphic(clipCount: 83)
                 .frame(width: 240, height: 240)
 
             ApertureGraphic()

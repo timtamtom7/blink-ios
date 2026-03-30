@@ -88,6 +88,10 @@ struct FreemiumEnforcementView: View {
                     }
                     .accessibilityLabel("Maybe Later")
                     .accessibilityHint("Dismisses this screen and continues with the free plan")
+
+                    Text("You'll be asked again tomorrow")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(hex: "8a8a8a").opacity(0.7))
                 }
                 .padding(.horizontal, 24)
             }

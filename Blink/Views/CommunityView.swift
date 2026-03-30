@@ -236,6 +236,7 @@ struct CommunityView: View {
 
 struct SkeletonMomentCard: View {
     @State private var isAnimating = false
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var body: some View {
         VStack(spacing: 0) {
@@ -258,8 +259,7 @@ struct SkeletonMomentCard: View {
                         )
                         .offset(x: isAnimating ? 200 : -200)
                         .animation(
-                            .linear(duration: 1.5)
-                            .repeatForever(autoreverses: false),
+                            reduceMotion ? .identity : .linear(duration: 1.5).repeatForever(autoreverses: false),
                             value: isAnimating
                         )
                 )
