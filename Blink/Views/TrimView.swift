@@ -19,6 +19,8 @@ struct TrimView: View {
     @State private var isSaving = false
     @State private var showError: TrimErrorState?
     @State private var saveMode: SaveMode = .new
+    @State private var setupTask: Task<Void, Never>?
+    @State private var saveTask: Task<Void, Never>?
 
     enum SaveMode {
         case new
@@ -90,6 +92,8 @@ struct TrimView: View {
         .onDisappear {
             player?.pause()
             player = nil
+            setupTask?.cancel()
+            saveTask?.cancel()
         }
         .alert(item: $showError) { error in
             switch error {
@@ -355,7 +359,7 @@ struct TrimView: View {
         let player = AVPlayer(url: entry.videoURL)
         self.player = player
 
-        Task {
+        setupTask = Task {
             let asset = AVURLAsset(url: entry.videoURL)
             let d = try? await asset.load(.duration).seconds
             await MainActor.run {
@@ -417,7 +421,7 @@ struct TrimView: View {
 
     private func saveTrimmed() {
         isSaving = true
-        Task {
+        saveTask = Task {
             do {
                 let newEntry = try await VideoStore.shared.trimClip(
                     entry,

@@ -63,10 +63,16 @@ struct StorageDashboardView: View {
             .sheet(item: $selectedDuplicate) { group in
                 DuplicateDetailSheet(group: group) {
                     selectedDuplicate = nil
-                    Task {
+                    sheetRefreshTask = Task {
                         await dashboardService.refresh(entries: videoStore.entries)
                     }
                 }
+            }
+            .onDisappear {
+                deduplicationTask?.cancel()
+                compressionTask?.cancel()
+                duplicateDeleteTask?.cancel()
+                sheetRefreshTask?.cancel()
             }
         }
     }
@@ -198,7 +204,7 @@ struct StorageDashboardView: View {
                         .tint(Color(hex: "ff3b30"))
                 } else {
                     Button {
-                        Task {
+                        deduplicationTask = Task {
                             await deduplicationService.findDuplicates(entries: videoStore.entries)
                             await dashboardService.refresh(entries: videoStore.entries)
                         }
@@ -265,7 +271,7 @@ struct StorageDashboardView: View {
                     }
                 } else {
                     Button {
-                        Task {
+                        compressionTask = Task {
                             await compressionService.compressEligibleEntries(entries: videoStore.entries)
                             await dashboardService.refresh(entries: videoStore.entries)
                         }
@@ -364,7 +370,7 @@ struct DuplicateDetailSheet: View {
                                     .clipShape(Capsule())
                             } else {
                                 Button {
-                                    Task {
+                                    duplicateDeleteTask = Task {
                                         await deduplicationService.removeEntry(entry)
                                         onDismiss()
                                     }

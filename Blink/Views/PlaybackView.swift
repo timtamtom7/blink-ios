@@ -18,6 +18,7 @@ struct PlaybackView: View {
     @State private var showExportError: ExportErrorState?
     @State private var playbackSpeed: Float = 1.0
     @State private var showSpeedPicker = false
+    @State private var exportTask: Task<Void, Never>?
     @ObservedObject private var videoStore = VideoStore.shared
 
     private let playbackSpeeds: [Float] = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
@@ -84,6 +85,7 @@ struct PlaybackView: View {
         .onDisappear {
             player?.pause()
             player = nil
+            exportTask?.cancel()
         }
         .confirmationDialog("Delete this clip?", isPresented: $showDeleteConfirm, titleVisibility: .visible) {
             Button("Delete", role: .destructive) {
@@ -396,7 +398,7 @@ struct PlaybackView: View {
 
     private func exportClip() {
         isExporting = true
-        Task {
+        exportTask = Task {
             do {
                 try await videoStore.exportToCameraRoll(currentEntry)
                 await MainActor.run {

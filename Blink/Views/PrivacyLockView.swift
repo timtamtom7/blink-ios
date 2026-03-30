@@ -11,6 +11,7 @@ struct PrivacyLockView: View {
     @State private var isConfirming: Bool = false
     @State private var wrongPasscode: Bool = false
     @State private var isAuthenticating: Bool = false
+    @State private var biometricTask: Task<Void, Never>?
 
     var body: some View {
         ZStack {
@@ -221,7 +222,7 @@ struct PrivacyLockView: View {
         guard privacy.biometricType != .none else { return }
 
         isAuthenticating = true
-        Task {
+        biometricTask = Task {
             let success = await privacy.unlockWithBiometrics()
             await MainActor.run {
                 isAuthenticating = false

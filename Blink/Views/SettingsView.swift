@@ -165,6 +165,22 @@ struct SettingsView: View {
 
                     // iCloud Backup Section
                     Section {
+                        HStack {
+                            Text("iCloud Backup")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundColor(Color(hex: "8a8a8a"))
+                            Spacer()
+                            Text("Coming Soon")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundColor(Color(hex: "555555"))
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 3)
+                                .background(Color(hex: "1e1e1e"))
+                                .clipShape(Capsule())
+                        }
+                        .listRowBackground(Color.clear)
+                        .padding(.bottom, -8)
+
                         if !cloudBackup.iCloudAvailable {
                             VStack(alignment: .leading, spacing: 4) {
                                 Label("iCloud not available", systemImage: "icloud.slash")

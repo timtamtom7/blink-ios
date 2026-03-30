@@ -7,6 +7,7 @@ struct PublicFeedView: View {
     @State private var isLoading = false
     @State private var loadError: String?
     @State private var selectedItem: SocialShareService.PublicFeedItem?
+    @State private var feedLoadTask: Task<Void, Never>?
 
     var body: some View {
         NavigationStack {
@@ -48,6 +49,9 @@ struct PublicFeedView: View {
             .task {
                 loadFeed()
             }
+            .onDisappear {
+                feedLoadTask?.cancel()
+            }
         }
     }
 
@@ -88,7 +92,7 @@ struct PublicFeedView: View {
         isLoading = true
         loadError = nil
 
-        Task {
+        feedLoadTask = Task {
             do {
                 let items = try await socialService.fetchPublicFeed()
                 await MainActor.run {

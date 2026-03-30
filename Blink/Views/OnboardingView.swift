@@ -5,6 +5,7 @@ struct OnboardingView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @State private var currentPage = 0
     @State private var showCameraPermission = false
+    @State private var permissionTask: Task<Void, Never>?
 
     var body: some View {
         ZStack {
@@ -117,6 +118,9 @@ struct OnboardingScreen1: View {
 
             Spacer()
             Spacer()
+        }
+        .onDisappear {
+            permissionTask?.cancel()
         }
     }
 }
@@ -293,7 +297,7 @@ struct OnboardingScreen4: View {
     }
 
     private func requestPermissions() {
-        Task {
+        permissionTask = Task {
             let cameraGranted = await AVCaptureDevice.requestAccess(for: .video)
             let micGranted = await AVCaptureDevice.requestAccess(for: .audio)
 

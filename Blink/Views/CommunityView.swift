@@ -23,6 +23,26 @@ struct CommunityView: View {
                 } else {
                     communityContent
                 }
+
+                // Coming Soon overlay — this feature is not yet functional
+                VStack {}
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color(hex: "0a0a0a").opacity(0.85))
+                    .overlay {
+                        VStack(spacing: 16) {
+                            Image(systemName: "person.2.slash")
+                                .font(.system(size: 48))
+                                .foregroundColor(Color(hex: "333333"))
+                            Text("Coming Soon")
+                                .font(.system(size: 20, weight: .bold))
+                                .foregroundColor(Color(hex: "f5f5f5"))
+                            Text("The community feed is in development.")
+                                .font(.system(size: 15))
+                                .foregroundColor(Color(hex: "8a8a8a"))
+                                .multilineTextAlignment(.center)
+                        }
+                        .padding(32)
+                    }
             }
             .navigationTitle("Community")
             .navigationBarTitleDisplayMode(.inline)
