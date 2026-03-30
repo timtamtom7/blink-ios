@@ -96,6 +96,7 @@ final class VideoStore: ObservableObject {
         entryForDate(Date()) != nil
     }
 
+    @MainActor
     func deleteEntry(_ entry: VideoEntry) {
         let videoURL = videosDirectory.appendingPathComponent(entry.filename)
         try? fileManager.removeItem(at: videoURL)

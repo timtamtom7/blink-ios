@@ -20,6 +20,9 @@ struct RecordView: View {
     @State private var freemiumBlockReason = ""
     @State private var showPricing = false
     @State private var hasWarnedDuration = false
+    @State private var isCameraSettingUp = true
+    @State private var countdownTask: Task<Void, Never>?
+    @State private var savedAnimationTask: Task<Void, Never>?
 
     private var maxDuration: TimeInterval {
         subscription.maxRecordingDuration
@@ -107,6 +110,23 @@ struct RecordView: View {
             viewfinderFrame
                 .padding(.horizontal, 16)
                 .padding(.top, 20)
+                .overlay {
+                    if isCameraSettingUp {
+                        ZStack {
+                            Color.black.opacity(0.6)
+                                .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
+
+                            VStack(spacing: 16) {
+                                ProgressView()
+                                    .tint(Color(hex: "ff3b30"))
+                                    .scaleEffect(1.5)
+                                Text("Setting up camera...")
+                                    .font(.system(size: 14))
+                                    .foregroundColor(Color(hex: "8a8a8a"))
+                            }
+                        }
+                    }
+                }
 
             Spacer()
 
@@ -155,9 +175,15 @@ struct RecordView: View {
             cameraService.maxRecordingDuration = subscription.maxRecordingDuration
             cameraService.setupSession()
             cameraService.startSession()
+            // Hide loading after a short delay to allow camera to initialize
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                isCameraSettingUp = false
+            }
         }
         .onDisappear {
             cameraService.stopSession()
+            countdownTask?.cancel()
+            savedAnimationTask?.cancel()
         }
     }
 
@@ -224,18 +250,20 @@ struct RecordView: View {
                         .font(.system(size: 13))
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
-                .accessibilityLabel("Last clip from \(todayEntry.formattedDate). Tap to view.")
+                .accessibilityLabel("Last clip from \(todayEntry.formattedDate)")
+                .accessibilityHint("Double tap to view this clip")
             } else {
                 Text("No clip recorded today")
                     .font(.system(size: 13))
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .accessibilityLabel("No clip recorded today")
+                    .accessibilityHint("Record your first clip to start your Blink diary")
             }
 
             Text("This year: \(videoStore.clipCountThisYear()) clips")
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(Color(hex: "f5f5f5"))
-                .accessibilityLabel("This year: \(videoStore.clipCountThisYear()) clips recorded")
+                .accessibilityLabel("\(videoStore.clipCountThisYear()) clips recorded this year")
         }
     }
 
@@ -300,7 +328,7 @@ struct RecordView: View {
         countdownValue = 3
         hasWarnedDuration = false
 
-        Task {
+        countdownTask = Task {
             for i in [3, 2, 1] {
                 countdownValue = i
                 HapticService.shared.countdownTick()
@@ -319,7 +347,7 @@ struct RecordView: View {
         }
         HapticService.shared.clipSaved()
 
-        Task {
+        savedAnimationTask = Task {
             try? await Task.sleep(nanoseconds: 1_500_000_000)
             withAnimation {
                 showSaved = false

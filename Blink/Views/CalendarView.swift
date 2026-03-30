@@ -20,6 +20,7 @@ struct CalendarView: View {
     @State private var exportedVideoURL: URL?
     @State private var showExportedAlert = false
     @State private var showPricing = false
+    @State private var exportTask: Task<Void, Never>?
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     private let dayLabels = ["S", "M", "T", "W", "T", "F", "S"]
@@ -44,7 +45,7 @@ struct CalendarView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(hex: "0a0a0a")
+                Theme.background
                     .ignoresSafeArea()
 
                 if clipsThisYear == 0 && selectedYear == Calendar.current.component(.year, from: Date()) {
@@ -86,7 +87,7 @@ struct CalendarView: View {
             }
             .navigationTitle("Calendar")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(Color(hex: "0a0a0a"), for: .navigationBar)
+            .toolbarBackground(Theme.background, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbar {
@@ -99,7 +100,7 @@ struct CalendarView: View {
                             } label: {
                                 Image(systemName: "sparkles")
                                     .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(Color(hex: "8a8a8a"))
+                                    .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("AI Highlights")
 
@@ -109,7 +110,7 @@ struct CalendarView: View {
                             } label: {
                                 Image(systemName: "globe")
                                     .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(Color(hex: "8a8a8a"))
+                                    .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("Public feed")
 
@@ -119,7 +120,7 @@ struct CalendarView: View {
                             } label: {
                                 Image(systemName: "magnifyingglass")
                                     .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(Color(hex: "8a8a8a"))
+                                    .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("Search clips")
 
@@ -129,7 +130,7 @@ struct CalendarView: View {
                             } label: {
                                 Image(systemName: "rectangle.stack")
                                     .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(Color(hex: "8a8a8a"))
+                                    .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("Browse by month")
 
@@ -139,7 +140,7 @@ struct CalendarView: View {
                             } label: {
                                 Image(systemName: "square.and.arrow.up")
                                     .font(.system(size: 14, weight: .medium))
-                                    .foregroundColor(Color(hex: "8a8a8a"))
+                                    .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("Export options")
                         }
@@ -214,36 +215,36 @@ struct CalendarView: View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(Color(hex: "ff3b30").opacity(0.15))
+                        .fill(Theme.accent.opacity(0.15))
                         .frame(width: 48, height: 48)
 
                     Image(systemName: "clock.arrow.circlepath")
                         .font(.system(size: 20))
-                        .foregroundColor(Color(hex: "ff3b30"))
+                        .foregroundColor(Theme.accent)
                 }
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("On This Day")
                         .font(.system(size: 15, weight: .semibold))
-                        .foregroundColor(Color(hex: "f5f5f5"))
+                        .foregroundColor(Theme.textPrimary)
 
                     Text("\(videoStore.onThisDayCount) moment\(videoStore.onThisDayCount == 1 ? "" : "s") from this date")
                         .font(.system(size: 12))
-                        .foregroundColor(Color(hex: "8a8a8a"))
+                        .foregroundColor(Theme.textTertiary)
                 }
 
                 Spacer()
 
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(Color(hex: "8a8a8a"))
+                    .foregroundColor(Theme.textTertiary)
             }
             .padding(14)
-            .background(Color(hex: "141414"))
+            .background(Theme.backgroundSecondary)
             .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
             .overlay(
                 RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium)
-                    .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
+                    .stroke(Theme.accent.opacity(0.3), lineWidth: 1)
             )
         }
     }
@@ -258,17 +259,17 @@ struct CalendarView: View {
             } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(Color(hex: "f5f5f5"))
+                    .foregroundColor(Theme.textPrimary)
                     .frame(width: 44, height: 44)
             }
-            .accessibilityLabel("Previous year")
-            .accessibilityHint("Shows the calendar for \(selectedYear - 1)")
+            .accessibilityLabel("Previous year, \(selectedYear - 1)")
+            .accessibilityHint("Double tap to view calendar for \(selectedYear - 1)")
 
             Spacer()
 
             Text(String(selectedYear))
                 .font(.system(size: 20, weight: .bold))
-                .foregroundColor(Color(hex: "f5f5f5"))
+                .foregroundColor(Theme.textPrimary)
                 .accessibilityLabel("\(selectedYear)")
 
             Spacer()
@@ -281,12 +282,12 @@ struct CalendarView: View {
             } label: {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(Color(hex: "f5f5f5"))
+                    .foregroundColor(Theme.textPrimary)
                     .frame(width: 44, height: 44)
             }
             .disabled(selectedYear >= Calendar.current.component(.year, from: Date()))
-            .accessibilityLabel("Next year")
-            .accessibilityHint(selectedYear >= Calendar.current.component(.year, from: Date()) ? "No year after \(selectedYear)" : "Shows the calendar for \(selectedYear + 1)")
+            .accessibilityLabel(selectedYear >= Calendar.current.component(.year, from: Date()) ? "Next year, unavailable" : "Next year, \(selectedYear + 1)")
+            .accessibilityHint(selectedYear >= Calendar.current.component(.year, from: Date()) ? "No year after \(selectedYear) available" : "Double tap to view calendar for \(selectedYear + 1)")
         }
         .padding(.horizontal, 16)
     }
@@ -296,28 +297,28 @@ struct CalendarView: View {
             // Progress ring
             ZStack {
                 Circle()
-                    .stroke(Color(hex: "1e1e1e"), lineWidth: 3)
+                    .stroke(Theme.backgroundTertiary, lineWidth: 3)
                     .frame(width: 52, height: 52)
 
                 Circle()
                     .trim(from: 0, to: min(CGFloat(clipsThisYear) / CGFloat(daysElapsedThisYear), 1.0))
-                    .stroke(Color(hex: "ff3b30"), style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                    .stroke(Theme.accent, style: StrokeStyle(lineWidth: 3, lineCap: .round))
                     .frame(width: 52, height: 52)
                     .rotationEffect(.degrees(-90))
 
                 Text("\(Int(Double(clipsThisYear) / Double(daysElapsedThisYear) * 100))%")
                     .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(hex: "f5f5f5"))
+                    .foregroundColor(Theme.textPrimary)
             }
 
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(clipsThisYear) moments recorded")
                     .font(.system(size: 15, weight: .semibold))
-                    .foregroundColor(Color(hex: "f5f5f5"))
+                    .foregroundColor(Theme.textPrimary)
 
                 Text("\(daysElapsedThisYear) days into \(selectedYear)")
                     .font(.system(size: 13))
-                    .foregroundColor(Color(hex: "8a8a8a"))
+                    .foregroundColor(Theme.textTertiary)
             }
 
             Spacer()
@@ -332,16 +333,16 @@ struct CalendarView: View {
                         Image(systemName: "arrow.right")
                             .font(.system(size: 11, weight: .medium))
                     }
-                    .foregroundColor(Color(hex: "ff3b30"))
+                    .foregroundColor(Theme.accent)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
-                    .background(Color(hex: "ff3b30").opacity(0.15))
+                    .background(Theme.accent.opacity(0.15))
                     .clipShape(Capsule())
                 }
             }
         }
         .padding(16)
-        .background(Color(hex: "141414"))
+        .background(Theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 
@@ -373,7 +374,7 @@ struct CalendarView: View {
         isExporting = true
         exportProgress = 0
 
-        Task {
+        exportTask = Task {
             do {
                 let outputURL = try await ExportService.shared.exportMonthClips(
                     month: currentMonth,
@@ -463,17 +464,17 @@ struct MonthCard: View {
             HStack {
                 Text(monthName)
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(Color(hex: "f5f5f5"))
+                    .foregroundColor(Theme.textPrimary)
 
                 Spacer()
 
                 if clipsThisMonth > 0 {
                     Text("\(clipsThisMonth)")
                         .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(Color(hex: "ff3b30"))
+                        .foregroundColor(Theme.accent)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
-                        .background(Color(hex: "ff3b30").opacity(0.15))
+                        .background(Theme.accent.opacity(0.15))
                         .clipShape(Capsule())
                 }
             }
@@ -483,7 +484,7 @@ struct MonthCard: View {
                 ForEach(dayLabels, id: \.self) { label in
                     Text(label)
                         .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(Color(hex: "8a8a8a"))
+                        .foregroundColor(Theme.textTertiary)
                         .frame(height: 12)
                 }
             }
@@ -510,7 +511,7 @@ struct MonthCard: View {
             }
         }
         .padding(12)
-        .background(Color(hex: "141414"))
+        .background(Theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
     }
 }
@@ -541,7 +542,7 @@ struct DayCell: View {
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                     } placeholder: {
-                        Color(hex: "333333")
+                        Theme.backgroundTertiary
                     }
                     .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
 
@@ -562,14 +563,14 @@ struct DayCell: View {
                     }
                 } else {
                     Circle()
-                        .stroke(Color(hex: "2a2a2a"), lineWidth: 1)
+                        .stroke(Theme.backgroundQuaternary, lineWidth: 1)
                         .frame(width: 32, height: 32)
                 }
 
                 // Day number overlay
                 Text("\(day)")
                     .font(.system(size: 9, weight: .medium))
-                    .foregroundColor(entry != nil ? .white : Color(hex: "6a6a6a"))
+                    .foregroundColor(entry != nil ? .white : Theme.textQuaternary)
             }
             .frame(width: 36, height: 36)
         }

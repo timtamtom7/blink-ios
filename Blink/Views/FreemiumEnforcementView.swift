@@ -14,6 +14,28 @@ struct FreemiumEnforcementView: View {
                 .ignoresSafeArea()
                 .background(.ultraThinMaterial)
 
+            // Dismiss button top-right
+            VStack {
+                HStack {
+                    Spacer()
+                    Button {
+                        onDismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 12, weight: .semibold))
+                            .foregroundColor(Color(hex: "8a8a8a"))
+                            .frame(width: 28, height: 28)
+                            .background(Color(hex: "2a2a2a"))
+                            .clipShape(Circle())
+                    }
+                    .accessibilityLabel("Dismiss")
+                    .accessibilityHint("Closes the upgrade prompt")
+                }
+                Spacer()
+            }
+            .padding(.top, 60)
+            .padding(.horizontal, 24)
+
             VStack(spacing: 24) {
                 // Icon
                 ZStack {
@@ -54,6 +76,8 @@ struct FreemiumEnforcementView: View {
                         .background(Color(hex: "ff3b30"))
                         .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
                     }
+                    .accessibilityLabel("Upgrade to Memories")
+                    .accessibilityHint("Opens the subscription plan to upgrade your account")
 
                     Button {
                         onDismiss()
@@ -62,6 +86,8 @@ struct FreemiumEnforcementView: View {
                             .font(.system(size: 15))
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
+                    .accessibilityLabel("Maybe Later")
+                    .accessibilityHint("Dismisses this screen and continues with the free plan")
                 }
                 .padding(.horizontal, 24)
             }
@@ -93,6 +119,8 @@ struct DurationLimitBanner: View {
                 }
                 .font(.system(size: 12, weight: .semibold))
                 .foregroundColor(Color(hex: "ff3b30"))
+                .accessibilityLabel("Upgrade")
+                .accessibilityHint("Opens the subscription plan to upgrade your account")
             }
 
             Text("Upgrade to Memories for up to 60-second clips")
@@ -103,6 +131,8 @@ struct DurationLimitBanner: View {
         .padding(12)
         .background(Color(hex: "1e1e1e"))
         .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Duration limit: Free clips are capped at \(Int(maxDuration)) seconds. Upgrade to Memories for up to 60-second clips")
     }
 }
 
@@ -145,6 +175,8 @@ struct FreePlanNudgeView: View {
                     .padding(.vertical, 6)
                     .background(Color(hex: "ff3b30").opacity(0.15))
                     .clipShape(Capsule())
+                    .accessibilityLabel("Upgrade")
+                    .accessibilityHint("Opens the subscription plan to upgrade your account")
             }
             .padding(12)
             .background(Color(hex: "141414"))
@@ -154,6 +186,9 @@ struct FreePlanNudgeView: View {
                     .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
             )
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Free plan: \(clipCount) clip recorded today. \(clipCount == 0 ? "Record your first clip today" : "1 clip per day, 30 second limit, 30 day storage")")
+        .accessibilityHint("Double tap to upgrade to Memories")
     }
 }
 

@@ -46,7 +46,9 @@ final class AdaptiveCompressionService: ObservableObject {
 
         for (index, entry) in candidates.enumerated() {
             let saved = await compressEntry(entry)
-            totalSavedBytes += saved
+            await MainActor.run {
+                totalSavedBytes += saved
+            }
 
             if saved > 0 {
                 compressedEntries.insert(entry.id)

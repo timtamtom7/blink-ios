@@ -12,6 +12,7 @@ struct SocialShareSheet: View {
     @State private var showPublicFeed = false
     @State private var showCopied = false
     @State private var isLoadingContacts = false
+    @State private var isCreatingLink = false
     @State private var contacts: [CNContact] = []
     @State private var contactError: String?
     @State private var isSubmittingToFeed = false
@@ -38,10 +39,11 @@ struct SocialShareSheet: View {
                                 icon: "link",
                                 iconColor: Color(hex: "ff3b30"),
                                 title: "Private Link",
-                                subtitle: "Share as an expiring link (3 views, 7 days)"
+                                subtitle: isCreatingLink ? "Creating link..." : "Share as an expiring link (3 views, 7 days)"
                             ) {
                                 createAndShowPrivateLink()
                             }
+                            .disabled(isCreatingLink)
 
                             // Blink to Friends
                             ShareOptionRow(
@@ -93,6 +95,22 @@ struct SocialShareSheet: View {
                         }
                     }
                     .padding(.bottom, 40)
+                }
+
+                if isCreatingLink {
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea()
+                    VStack(spacing: 16) {
+                        ProgressView()
+                            .tint(Color(hex: "ff3b30"))
+                            .scaleEffect(1.5)
+                        Text("Creating link...")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color(hex: "8a8a8a"))
+                    }
+                    .padding(24)
+                    .background(Color(hex: "1e1e1e"))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
                 }
             }
             .navigationTitle("Share")
@@ -183,12 +201,14 @@ struct SocialShareSheet: View {
     }
 
     private func createAndShowPrivateLink() {
+        isCreatingLink = true
         let link = socialService.createPrivateLink(for: entry)
         shareLink = link
         socialService.copyShareText(for: entry)
         showCopied = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             showCopied = false
+            isCreatingLink = false
         }
     }
 

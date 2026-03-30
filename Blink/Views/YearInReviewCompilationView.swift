@@ -15,6 +15,8 @@ struct YearInReviewCompilationView: View {
     @State private var showError = false
     @State private var errorMessage = ""
     @State private var player: AVPlayer?
+    @State private var progressTimer: Timer?
+    @State private var generationTask: Task<Void, Never>?
 
     private var topEntries: [VideoEntry] {
         entries
@@ -208,6 +210,8 @@ struct YearInReviewCompilationView: View {
         }
         .onDisappear {
             player?.pause()
+            progressTimer?.invalidate()
+            generationTask?.cancel()
         }
     }
 
@@ -216,14 +220,14 @@ struct YearInReviewCompilationView: View {
         isGenerating = true
         generationProgress = 0
 
-        // Animate progress
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+        // Animate progress with stored timer
+        progressTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
             if generationProgress < 0.9 {
                 generationProgress += 0.05
             }
         }
 
-        Task {
+        generationTask = Task {
             do {
                 // First analyze to get highlights
                 await aiService.analyzeHighlights(entries: entries)

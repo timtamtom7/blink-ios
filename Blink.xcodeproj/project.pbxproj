@@ -135,9 +135,9 @@
 		7C58456A7E61C2F40994A8FE /* HapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticService.swift; sourceTree = "<group>"; };
 		7FDE60BEF7DE992AB801282D /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
 		805B46228CF223838DC28596 /* AppleEcosystemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleEcosystemService.swift; sourceTree = "<group>"; };
-		8B8B52D1D378A0B6423530AC /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8631C1DEB62CD994D4F340D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8830EB6374B67CEC3A63BE9A /* BlinkMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkMacApp.swift; sourceTree = "<group>"; };
+		8B8B52D1D378A0B6423530AC /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		921048E625CA0054C6C63E15 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 		959AD37F91CAB7F10BBE80C1 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		95A909F79393C52C43CF8FC2 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };

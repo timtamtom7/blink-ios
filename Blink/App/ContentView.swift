@@ -3,13 +3,22 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @AppStorage("hasSeenPricing") private var hasSeenPricing = false
+    @AppStorage("hasAcknowledgedFreemiumToday") private var hasAcknowledgedFreemiumToday = false
+    @AppStorage("freemiumAcknowledgedDate") private var freemiumAcknowledgedDate: String = ""
     @State private var showPricing = false
+    @State private var showFreemium = false
     @State private var selectedTab: Tab = .record
     @State private var selectedPlaybackEntry: VideoEntry?
     @ObservedObject private var videoStore = VideoStore.shared
     @ObservedObject private var privacy = PrivacyService.shared
+    @ObservedObject private var subscription = SubscriptionService.shared
     @Environment(\.scenePhase) private var scenePhase
     @State private var wasInBackground = false
+
+    private var isNewDay: Bool {
+        let today = Calendar.current.startOfDay(for: Date()).formatted(date: .numeric, time: .omitted)
+        return freemiumAcknowledgedDate != today
+    }
 
     enum Tab {
         case record
@@ -27,6 +36,11 @@ struct ContentView: View {
         }
         .preferredColorScheme(.dark)
         .onAppear {
+            // Reset freemium acknowledgment if it's a new day
+            if isNewDay {
+                hasAcknowledgedFreemiumToday = false
+                freemiumAcknowledgedDate = Calendar.current.startOfDay(for: Date()).formatted(date: .numeric, time: .omitted)
+            }
             // Show pricing once after onboarding (with delay to not interrupt UX)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 if hasCompletedOnboarding && !hasSeenPricing {
@@ -37,6 +51,10 @@ struct ContentView: View {
             // Check if app should be locked on launch
             if privacy.isPasscodeEnabled {
                 privacy.lockApp(reason: .appOpen)
+            }
+            // Show freemium enforcement once per day for free users
+            if !hasAcknowledgedFreemiumToday && subscription.tier == .free {
+                showFreemium = true
             }
         }
         .onChange(of: scenePhase) { oldPhase, newPhase in
@@ -64,6 +82,23 @@ struct ContentView: View {
             if privacy.isAppLocked && privacy.isPasscodeEnabled {
                 PrivacyLockView()
                     .transition(.opacity)
+            }
+        }
+        .overlay {
+            if showFreemium {
+                FreemiumEnforcementView(
+                    reason: "You've used your daily clip on the Free plan. Upgrade to record unlimited moments.",
+                    onUpgrade: {
+                        showFreemium = false
+                        showPricing = true
+                    },
+                    onDismiss: {
+                        hasAcknowledgedFreemiumToday = true
+                        freemiumAcknowledgedDate = Calendar.current.startOfDay(for: Date()).formatted(date: .numeric, time: .omitted)
+                        showFreemium = false
+                    }
+                )
+                .transition(.opacity)
             }
         }
     }

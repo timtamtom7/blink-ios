@@ -178,11 +178,11 @@ struct ClipSaveFailedView: View {
                 .foregroundColor(Color(hex: "ff3b30").opacity(0.8))
 
             VStack(spacing: 12) {
-                Text("Couldn't save clip")
+                Text("This clip got a bit tangled")
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(Color(hex: "f5f5f5"))
 
-                Text("Something went wrong saving your moment. This can happen if storage is tight or an app update interrupted things.")
+                Text("We couldn't save your moment this time — your storage might be full or an app update got in the way. Want to try again?")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
@@ -237,11 +237,11 @@ struct TrimSaveFailedView: View {
                 .foregroundColor(Color(hex: "ff3b30").opacity(0.8))
 
             VStack(spacing: 12) {
-                Text("Trim failed")
+                Text("Trim didn't save")
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(Color(hex: "f5f5f5"))
 
-                Text("Something went wrong saving your trimmed clip. Try again — your original clip is safe until you confirm the save.")
+                Text("We couldn't save your trimmed clip — don't worry, your original is still intact. Try again?")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
@@ -307,11 +307,11 @@ struct TrimStorageFullView: View {
             }
 
             VStack(spacing: 12) {
-                Text("Not enough space")
+                Text("Storage's running low")
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(Color(hex: "f5f5f5"))
 
-                Text("Your device is running out of space. Free up storage to save your trimmed clip.")
+                Text("Your device needs a bit more room to save your trimmed clip. Export a few clips to your Camera Roll to free up space.")
                     .font(.system(size: 15))
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)

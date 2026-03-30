@@ -14,7 +14,7 @@ struct PrivacyLockView: View {
 
     var body: some View {
         ZStack {
-            Color(hex: "0a0a0a")
+            Theme.background
                 .ignoresSafeArea()
 
             VStack(spacing: 40) {
@@ -27,11 +27,11 @@ struct PrivacyLockView: View {
                 VStack(spacing: 8) {
                     Text(lockTitle)
                         .font(.system(size: 22, weight: .bold))
-                        .foregroundColor(Color(hex: "f5f5f5"))
+                        .foregroundColor(Theme.textPrimary)
 
                     Text(lockSubtitle)
                         .font(.system(size: 15))
-                        .foregroundColor(Color(hex: "8a8a8a"))
+                        .foregroundColor(Theme.textTertiary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
                 }
@@ -70,12 +70,12 @@ struct PrivacyLockView: View {
     private var lockIcon: some View {
         ZStack {
             Circle()
-                .fill(Color(hex: "ff3b30").opacity(0.15))
+                .fill(Theme.accent.opacity(0.15))
                 .frame(width: 100, height: 100)
 
             Image(systemName: privacy.biometricType.iconName)
                 .font(.system(size: 40))
-                .foregroundColor(Color(hex: "ff3b30"))
+                .foregroundColor(Theme.accent)
         }
     }
 
@@ -83,17 +83,16 @@ struct PrivacyLockView: View {
         HStack(spacing: 16) {
             ForEach(0..<6, id: \.self) { index in
                 Circle()
-                    .fill(index < currentPasscode.count ? Color(hex: "ff3b30") : Color(hex: "2a2a2a"))
+                    .fill(index < currentPasscode.count ? Theme.accent : Theme.backgroundQuaternary)
                     .frame(width: 14, height: 14)
                     .scaleEffect(index < currentPasscode.count ? 1.2 : 1.0)
-                    .animation(.spring(response: 0.15, dampingFraction: 0.6), value: currentPasscode.count)
             }
         }
         .overlay {
             if wrongPasscode {
                 Text("Wrong passcode")
                     .font(.system(size: 12))
-                    .foregroundColor(Color(hex: "ff3b30"))
+                    .foregroundColor(Theme.accent)
                     .offset(y: 30)
             }
         }
@@ -135,7 +134,7 @@ struct PrivacyLockView: View {
             } label: {
                 Image(systemName: "delete.left")
                     .font(.system(size: 22))
-                    .foregroundColor(Color(hex: "f5f5f5"))
+                    .foregroundColor(Theme.textPrimary)
                     .frame(width: 72, height: 72)
             }
         } else {
@@ -144,9 +143,9 @@ struct PrivacyLockView: View {
             } label: {
                 Text(key)
                     .font(.system(size: 28, weight: .medium, design: .rounded))
-                    .foregroundColor(Color(hex: "f5f5f5"))
+                    .foregroundColor(Theme.textPrimary)
                     .frame(width: 72, height: 72)
-                    .background(Circle().fill(Color(hex: "1e1e1e")))
+                    .background(Circle().fill(Theme.backgroundTertiary))
             }
         }
     }
@@ -245,32 +244,32 @@ struct PrivacyLockButtonGraphic: View {
         HStack(spacing: 12) {
             ZStack {
                 Circle()
-                    .fill(Color(hex: "ff3b30").opacity(0.15))
+                    .fill(Theme.accent.opacity(0.15))
                     .frame(width: 44, height: 44)
 
                 Image(systemName: "lock.fill")
                     .font(.system(size: 18))
-                    .foregroundColor(Color(hex: "ff3b30"))
+                    .foregroundColor(Theme.accent)
             }
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("App Lock")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(Color(hex: "f5f5f5"))
+                    .foregroundColor(Theme.textPrimary)
 
                 Text("Require passcode to open Blink")
                     .font(.system(size: 11))
-                    .foregroundColor(Color(hex: "8a8a8a"))
+                    .foregroundColor(Theme.textTertiary)
             }
 
             Spacer()
         }
         .padding(12)
-        .background(Color(hex: "141414"))
+        .background(Theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
         .overlay(
             RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium)
-                .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 1)
+                .stroke(Theme.accent.opacity(0.3), lineWidth: 1)
         )
     }
 }
@@ -289,22 +288,22 @@ struct LockClipView: View {
             // Lock icon
             ZStack {
                 Circle()
-                    .fill(Color(hex: "ff3b30").opacity(0.15))
+                    .fill(Theme.accent.opacity(0.15))
                     .frame(width: 80, height: 80)
 
                 Image(systemName: isLocked ? "lock.fill" : "lock.open.fill")
                     .font(.system(size: 32))
-                    .foregroundColor(Color(hex: "ff3b30"))
+                    .foregroundColor(Theme.accent)
             }
 
             VStack(spacing: 8) {
                 Text(isLocked ? "Clip locked" : "Clip unlocked")
                     .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(Color(hex: "f5f5f5"))
+                    .foregroundColor(Theme.textPrimary)
 
                 Text(isLocked ? "This clip is hidden from Year in Review and On This Day." : "This clip appears in your year highlights.")
                     .font(.system(size: 14))
-                    .foregroundColor(Color(hex: "8a8a8a"))
+                    .foregroundColor(Theme.textTertiary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }
@@ -313,13 +312,13 @@ struct LockClipView: View {
             Toggle(isOn: $isLocked) {
                 HStack {
                     Image(systemName: isLocked ? "eye.slash.fill" : "eye.fill")
-                        .foregroundColor(Color(hex: "ff3b30"))
+                        .foregroundColor(Theme.accent)
                     Text(isLocked ? "Hide from highlights" : "Show in highlights")
                         .font(.system(size: 15))
-                        .foregroundColor(Color(hex: "f5f5f5"))
+                        .foregroundColor(Theme.textPrimary)
                 }
             }
-            .tint(Color(hex: "ff3b30"))
+            .tint(Theme.accent)
             .padding(.horizontal, 32)
 
             Button {
@@ -330,13 +329,13 @@ struct LockClipView: View {
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 48)
-                    .background(Color(hex: "ff3b30"))
+                    .background(Theme.accent)
                     .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
             }
             .padding(.horizontal, 32)
         }
         .padding(.vertical, 32)
-        .background(Color(hex: "141414"))
+        .background(Theme.backgroundSecondary)
         .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
         .padding(.horizontal, 32)
     }
@@ -351,12 +350,12 @@ struct PrivacyLockIconGraphic: View {
         ZStack {
             // Outer circle
             Circle()
-                .stroke(Color(hex: "ff3b30").opacity(0.3), lineWidth: 2)
+                .stroke(Theme.accent.opacity(0.3), lineWidth: 2)
                 .frame(width: 80, height: 80)
 
             // Inner filled circle
             Circle()
-                .fill(Color(hex: "ff3b30").opacity(0.15))
+                .fill(Theme.accent.opacity(0.15))
                 .frame(width: 60, height: 60)
                 .scaleEffect(isAnimating ? 1.1 : 1.0)
                 .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
@@ -364,7 +363,7 @@ struct PrivacyLockIconGraphic: View {
             // Lock icon
             Image(systemName: "lock.fill")
                 .font(.system(size: 24))
-                .foregroundColor(Color(hex: "ff3b30"))
+                .foregroundColor(Theme.accent)
         }
         .onAppear { isAnimating = true }
     }

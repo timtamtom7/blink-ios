@@ -238,6 +238,7 @@ struct ExportShareButtonGraphic: View {
 
 struct ViewfinderGraphic: View {
     @State private var isAnimating = false
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var body: some View {
         ZStack {
@@ -282,10 +283,14 @@ struct ViewfinderGraphic: View {
                     .frame(width: 1, height: 16)
             }
             .opacity(isAnimating ? 1 : 0.4)
-            .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
         }
         .aspectRatio(9/16, contentMode: .fit)
-        .onAppear { isAnimating = true }
+        .onAppear {
+            if !reduceMotion {
+                isAnimating = true
+            }
+        }
+        .animation(reduceMotion ? .none : .easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isAnimating)
     }
 }
 
@@ -308,6 +313,7 @@ struct CornerBracket: View {
 
 struct ClipCompositionGraphic: View {
     @State private var animateClips = false
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var body: some View {
         ZStack {
@@ -354,8 +360,10 @@ struct ClipCompositionGraphic: View {
                 )
         }
         .onAppear {
-            withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
-                animateClips = true
+            if !reduceMotion {
+                withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
+                    animateClips = true
+                }
             }
         }
     }
@@ -365,6 +373,7 @@ struct ClipCompositionGraphic: View {
 
 struct YearInReviewGraphic: View {
     @State private var progress: CGFloat = 0
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var body: some View {
         ZStack {
@@ -421,8 +430,12 @@ struct YearInReviewGraphic: View {
             }
         }
         .onAppear {
-            withAnimation(.easeOut(duration: 1.5)) {
-                progress = 0.23 // ~83/365 of the year
+            if !reduceMotion {
+                withAnimation(.easeOut(duration: 1.5)) {
+                    progress = 0.23 // ~83/365 of the year
+                }
+            } else {
+                progress = 0.23
             }
         }
     }
@@ -432,6 +445,7 @@ struct YearInReviewGraphic: View {
 
 struct ApertureGraphic: View {
     @State private var isOpen = false
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var body: some View {
         ZStack {
@@ -449,8 +463,12 @@ struct ApertureGraphic: View {
         }
         .rotationEffect(.degrees(isOpen ? 0 : 30))
         .scaleEffect(isOpen ? 1 : 0.85)
-        .animation(.spring(response: 0.8, dampingFraction: 0.6).repeatForever(autoreverses: true), value: isOpen)
-        .onAppear { isOpen = true }
+        .onAppear {
+            if !reduceMotion {
+                isOpen = true
+            }
+        }
+        .animation(reduceMotion ? .none : .spring(response: 0.8, dampingFraction: 0.6).repeatForever(autoreverses: true), value: isOpen)
     }
 }
 

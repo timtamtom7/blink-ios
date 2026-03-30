@@ -1,6 +1,7 @@
 import Foundation
 import LocalAuthentication
 import Security
+import CryptoKit
 
 // MARK: - Privacy Service
 
@@ -98,8 +99,9 @@ final class PrivacyService: ObservableObject {
             return false
         }
 
-        // Store securely in keychain
-        let data = Data(passcode.utf8)
+        // Store SHA256 hash in keychain (never store plaintext)
+        let hash = SHA256.hash(data: Data(passcode.utf8))
+        let data = Data(hash)
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: passcodeKey,
@@ -129,13 +131,16 @@ final class PrivacyService: ObservableObject {
         var result: AnyObject?
         let status = SecItemCopyMatching(query as CFDictionary, &result)
 
-        guard status == errSecSuccess,
-              let data = result as? Data,
-              let storedPasscode = String(data: data, encoding: .utf8) else {
+        guard status == errSecSuccess, let storedHashData = result as? Data else {
             return false
         }
 
-        return storedPasscode == passcode
+        // Hash the provided passcode and compare in constant time
+        let inputHash = SHA256.hash(data: Data(passcode.utf8))
+        let inputHashData = Data(inputHash)
+
+        // Data.isEqual(to:) performs constant-time comparison, preventing timing attacks
+        return storedHashData.isEqual(to: inputHashData)
     }
 
     func removePasscode() {
@@ -190,13 +195,12 @@ final class PrivacyService: ObservableObject {
         return false
     }
 
+    @MainActor
     func unlockWithBiometrics() async -> Bool {
-        if await authenticateWithBiometrics() {
-            await MainActor.run {
-                unlockApp()
-            }
-            return true
+        let success = await authenticateWithBiometrics()
+        if success {
+            unlockApp()
         }
-        return false
+        return success
     }
 }

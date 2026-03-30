@@ -97,6 +97,8 @@ struct SettingsView: View {
                                     .foregroundColor(Color(hex: "ff3b30"))
                             }
                         }
+                        .accessibilityLabel("Upgrade Plan")
+                        .accessibilityHint("Opens subscription options")
                     } header: {
                         Text("Subscription")
                             .foregroundColor(Color(hex: "8a8a8a"))
@@ -112,6 +114,8 @@ struct SettingsView: View {
                                 .foregroundColor(Color(hex: "f5f5f5"))
                         }
                         .tint(Color(hex: "ff3b30"))
+                        .accessibilityLabel("Recording Quality")
+                        .accessibilityValue(videoQuality == "high" ? "High" : "Medium")
 
                         Button {
                             showStorageDashboard = true
@@ -125,6 +129,8 @@ struct SettingsView: View {
                                     .foregroundColor(Color(hex: "ff3b30"))
                             }
                         }
+                        .accessibilityLabel("Storage Dashboard")
+                        .accessibilityHint("View storage usage and manage clips")
                     } header: {
                         Text("Recording")
                             .foregroundColor(Color(hex: "8a8a8a"))
@@ -138,12 +144,16 @@ struct SettingsView: View {
                             Label("About Blink", systemImage: "info.circle.fill")
                                 .foregroundColor(Color(hex: "f5f5f5"))
                         }
+                        .accessibilityLabel("About Blink")
+                        .accessibilityHint("View app information and credits")
 
                         if let privacyURL = URL(string: "https://example.com/privacy") {
                             Link(destination: privacyURL) {
                                 Label("Privacy Policy", systemImage: "hand.raised.fill")
                                     .foregroundColor(Color(hex: "f5f5f5"))
                             }
+                            .accessibilityLabel("Privacy Policy")
+                            .accessibilityHint("Opens privacy policy in browser")
                         }
                     } header: {
                         Text("About")
