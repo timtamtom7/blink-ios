@@ -18,6 +18,9 @@ struct SocialShareSheet: View {
     @State private var isSubmittingToFeed = false
     @State private var feedSubmitSuccess = false
     @State private var shareLink: SocialShareService.SharedLink?
+    @State private var contactsTask: Task<Void, Never>?
+    @State private var feedSubmitTask: Task<Void, Never>?
+    @State private var sendTask: Task<Void, Never>?
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -148,6 +151,11 @@ struct SocialShareSheet: View {
             }
         }
         .presentationDetents([.medium, .large])
+        .onDisappear {
+            contactsTask?.cancel()
+            feedSubmitTask?.cancel()
+            sendTask?.cancel()
+        }
     }
 
     private var clipPreview: some View {
@@ -214,7 +222,7 @@ struct SocialShareSheet: View {
 
     private func loadContacts() {
         isLoadingContacts = true
-        Task {
+        contactsTask = Task {
             do {
                 let fetchedContacts = try await socialService.fetchRecentContacts()
                 await MainActor.run {
@@ -242,7 +250,7 @@ struct SocialShareSheet: View {
 
     private func submitToPublicFeed() {
         isSubmittingToFeed = true
-        Task {
+        feedSubmitTask = Task {
             do {
                 try await socialService.submitToPublicFeed(entry: entry)
                 await MainActor.run {
@@ -464,7 +472,7 @@ struct ContactsPickerView: View {
         guard let contact = selectedContact else { return }
         isSending = true
 
-        Task {
+        sendTask = Task {
             try? await socialService.shareViaMessages(to: contact, entry: entry)
             await MainActor.run {
                 isSending = false

@@ -5,6 +5,7 @@ struct RecordView: View {
     @StateObject private var cameraService = CameraService()
     @ObservedObject private var videoStore = VideoStore.shared
     @StateObject private var subscription = SubscriptionService.shared
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     @State private var showCountdown = false
     @State private var countdownValue = 3
@@ -277,9 +278,9 @@ struct RecordView: View {
             Text("\(countdownValue)")
                 .font(.system(size: 120, weight: .bold, design: .rounded))
                 .foregroundColor(.white)
-                .transition(.scale.combined(with: .opacity))
         }
-        .animation(.easeInOut(duration: 0.3), value: countdownValue)
+        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+        .animation(reduceMotion ? .none : .easeInOut(duration: 0.3), value: countdownValue)
     }
 
     private var savedOverlay: some View {
@@ -298,7 +299,8 @@ struct RecordView: View {
                     .foregroundColor(Color(hex: "f5f5f5"))
             }
         }
-        .transition(.opacity)
+        .transition(reduceMotion ? .opacity : .opacity)
+        .animation(reduceMotion ? .none : .easeInOut(duration: 0.3), value: showSaved)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Clip saved successfully")
     }

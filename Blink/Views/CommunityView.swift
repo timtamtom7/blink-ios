@@ -19,9 +19,7 @@ struct CommunityView: View {
                     .ignoresSafeArea()
 
                 if communityService.isLoading {
-                    ProgressView()
-                        .tint(Color(hex: "ff3b30"))
-                        .scaleEffect(1.5)
+                    skeletonLoadingView
                 } else {
                     communityContent
                 }
@@ -33,6 +31,33 @@ struct CommunityView: View {
             .toolbarColorScheme(.dark, for: .navigationBar)
             .task {
                 await communityService.loadPublicFeed()
+            }
+        }
+    }
+
+    private var skeletonLoadingView: some View {
+        VStack(spacing: 0) {
+            // Category filter skeleton
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(0..<4, id: \.self) { _ in
+                        RoundedRectangle(cornerRadius: 14)
+                            .fill(Color(hex: "1e1e1e"))
+                            .frame(width: 70, height: 30)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+            }
+
+            // Feed skeleton
+            ScrollView {
+                LazyVStack(spacing: 12) {
+                    ForEach(0..<5, id: \.self) { _ in
+                        SkeletonMomentCard()
+                    }
+                }
+                .padding(16)
             }
         }
     }
@@ -184,6 +209,81 @@ struct CommunityView: View {
         let formatter = RelativeDateTimeFormatter()
         formatter.unitsStyle = .abbreviated
         return formatter.localizedString(for: date, relativeTo: Date())
+    }
+}
+
+// MARK: - Skeleton Loading Card
+
+struct SkeletonMomentCard: View {
+    @State private var isAnimating = false
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // Thumbnail skeleton
+            RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge)
+                .fill(Color(hex: "1e1e1e"))
+                .frame(height: 180)
+                .overlay(
+                    RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge)
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color(hex: "1e1e1e"),
+                                    Color(hex: "2a2a2a"),
+                                    Color(hex: "1e1e1e")
+                                ],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .offset(x: isAnimating ? 200 : -200)
+                        .animation(
+                            .linear(duration: 1.5)
+                            .repeatForever(autoreverses: false),
+                            value: isAnimating
+                        )
+                )
+
+            // Info skeleton
+            VStack(alignment: .leading, spacing: 10) {
+                HStack {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(hex: "1e1e1e"))
+                        .frame(width: 80, height: 12)
+                    Spacer()
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(hex: "1e1e1e"))
+                        .frame(width: 50, height: 12)
+                }
+
+                HStack(spacing: 8) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(hex: "1e1e1e"))
+                        .frame(width: 60, height: 16)
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(hex: "1e1e1e"))
+                        .frame(width: 100, height: 16)
+                }
+
+                HStack(spacing: 16) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(hex: "1e1e1e"))
+                        .frame(width: 40, height: 14)
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(hex: "1e1e1e"))
+                        .frame(width: 40, height: 14)
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color(hex: "1e1e1e"))
+                        .frame(width: 60, height: 14)
+                }
+            }
+            .padding(14)
+        }
+        .background(Color(hex: "141414"))
+        .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusLarge))
+        .onAppear {
+            isAnimating = true
+        }
     }
 }
 

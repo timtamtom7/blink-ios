@@ -53,7 +53,7 @@ struct ContentView: View {
                 privacy.lockApp(reason: .appOpen)
             }
             // Show freemium enforcement once per day for free users
-            if !hasAcknowledgedFreemiumToday && subscription.tier == .free {
+            if !hasAcknowledgedFreemiumToday && subscription.currentTier == .free {
                 showFreemium = true
             }
         }
