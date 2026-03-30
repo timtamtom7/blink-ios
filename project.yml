@@ -56,6 +56,10 @@ targets:
         UIUserInterfaceStyle: Dark
         UISupportsDocumentBrowser: false
         LSSupportsOpeningDocumentsInPlace: false
+        CFBundleURLTypes:
+          - CFBundleURLName: com.blink.app
+            CFBundleURLSchemes:
+              - blink
 
   BlinkMac:
     type: application
