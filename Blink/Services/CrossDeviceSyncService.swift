@@ -1,4 +1,5 @@
 import Foundation
+import Network
 
 /// R8: Cross-device sync service for iPad, macOS, Apple Watch
 final class CrossDeviceSyncService: ObservableObject {
@@ -9,6 +10,10 @@ final class CrossDeviceSyncService: ObservableObject {
     @Published private(set) var syncProgress: Double = 0
     @Published private(set) var connectedDevices: [Device] = []
     @Published private(set) var pendingChanges: Int = 0
+    @Published private(set) var isConnected = true
+
+    private let networkMonitor = NWPathMonitor()
+    private let monitorQueue = DispatchQueue(label: "com.blink.sync.networkmonitor")
 
     struct Device: Identifiable, Codable {
         let id: UUID
@@ -47,12 +52,29 @@ final class CrossDeviceSyncService: ObservableObject {
     private init() {
         loadLastSyncDate()
         loadConnectedDevices()
+        startNetworkMonitoring()
+    }
+
+    deinit {
+        networkMonitor.cancel()
+    }
+
+    private func startNetworkMonitoring() {
+        networkMonitor.pathUpdateHandler = { [weak self] path in
+            Task { @MainActor [weak self] in
+                self?.isConnected = path.status == .satisfied
+            }
+        }
+        networkMonitor.start(queue: monitorQueue)
     }
 
     // MARK: - Sync Operations
 
     @MainActor
     func syncAll() async throws {
+        guard isConnected else {
+            throw SyncError.networkUnavailable
+        }
         guard !isSyncing else { return }
         isSyncing = true
         syncProgress = 0

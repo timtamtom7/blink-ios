@@ -29,8 +29,10 @@ struct CalendarView: View {
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     private let dayLabels = ["S", "M", "T", "W", "T", "F", "S"]
 
-    init() {
+    init(showHighlightsBinding: Binding<Bool>? = nil, showOnThisDayBinding: Binding<Bool>? = nil) {
         _selectedYear = State(initialValue: Calendar.current.component(.year, from: Date()))
+        self.showHighlightsBinding = showHighlightsBinding
+        self.showOnThisDayBinding = showOnThisDayBinding
     }
 
     // Deep link: use external bindings if provided, otherwise local state

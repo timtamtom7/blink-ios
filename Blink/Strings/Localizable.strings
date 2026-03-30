@@ -111,3 +111,42 @@
 "error.camera_access" = "Camera access required. Enable in Settings.";
 "error.mic_access" = "Microphone access required. Enable in Settings.";
 "error.storage_full" = "Storage is full. Free up space to continue recording.";
+
+/* Trim */
+"trim.title" = "Trim";
+"trim.cancel" = "Cancel";
+"trim.save" = "Save";
+"trim.save_as_new" = "Save as new clip";
+"trim.replace_original" = "Replace original";
+"trim.selected" = "Selected: %@";
+"trim.error.failed" = "Trim failed";
+"trim.error.failed.message" = "Something went wrong saving your trimmed clip. Try again or save as a new clip.";
+"trim.error.storage" = "Storage full";
+"trim.error.storage.message" = "Your device is running out of space. Free up storage and try again.";
+"trim.error.not_found" = "Clip not found";
+"trim.error.not_found.message" = "The original clip could not be found. It may have been deleted.";
+
+/* Search */
+"search.find_clips" = "Find clips by title or date";
+"search.no_results" = "No results";
+"search.no_results.hint" = "Try a different search term or filter";
+"search.clips_found" = "%d clip%@ found";
+
+/* Storage Dashboard */
+"storage.analyzing" = "Analyzing storage…";
+"storage.saved_you" = "Blink has saved you";
+"storage.in_storage" = "in storage";
+"storage.compressed" = "Compressed";
+"storage.duplicates_removed" = "Duplicates Removed";
+"storage.total_footage" = "Total Footage";
+"storage.breakdown" = "Storage Breakdown";
+"storage.duplicates" = "Duplicates";
+"storage.no_duplicates" = "No duplicates detected";
+"storage.duplicates_found" = "%d groups found";
+"storage.similar_clips" = "%d similar clip%@";
+"storage.scan" = "Scan";
+
+/* Settings - Backup notes */
+"settings.icloud_backup.note" = "Your videos are stored locally on this device. iCloud backup is optional.";
+"settings.passcode_removal.note" = "You will no longer need to enter a passcode to open Blink.";
+"settings.restore.note" = "This will download your clips from iCloud. Existing clips will not be affected.";

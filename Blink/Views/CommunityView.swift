@@ -259,7 +259,7 @@ struct SkeletonMomentCard: View {
                         )
                         .offset(x: isAnimating ? 200 : -200)
                         .animation(
-                            reduceMotion ? .identity : .linear(duration: 1.5).repeatForever(autoreverses: false),
+                            reduceMotion ? .linear(duration: 0) : .linear(duration: 1.5).repeatForever(autoreverses: false),
                             value: isAnimating
                         )
                 )
