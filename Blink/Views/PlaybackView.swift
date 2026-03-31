@@ -156,7 +156,7 @@ struct PlaybackView: View {
                 dismiss()
             } label: {
                 Image(systemName: "xmark")
-                    .font(.system(size: 18, weight: .medium))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(.white)
                     .frame(width: 44, height: 44)
             }
@@ -178,7 +178,7 @@ struct PlaybackView: View {
                             .frame(width: 44, height: 44)
                     } else {
                         Image(systemName: "square.and.arrow.up")
-                            .font(.system(size: 18, weight: .medium))
+                            .font(BlinkFontStyle.title3.font)
                             .foregroundColor(.white)
                             .frame(width: 44, height: 44)
                     }
@@ -191,7 +191,7 @@ struct PlaybackView: View {
                     showTrim = true
                 } label: {
                     Image(systemName: "scissors")
-                        .font(.system(size: 18, weight: .medium))
+                        .font(BlinkFontStyle.title3.font)
                         .foregroundColor(.white)
                         .frame(width: 44, height: 44)
                 }
@@ -203,7 +203,7 @@ struct PlaybackView: View {
                     showDeleteConfirm = true
                 } label: {
                     Image(systemName: "trash")
-                        .font(.system(size: 18, weight: .medium))
+                        .font(BlinkFontStyle.title3.font)
                         .foregroundColor(.white)
                         .frame(width: 44, height: 44)
                 }
@@ -215,7 +215,7 @@ struct PlaybackView: View {
                     showSocialSheet = true
                 } label: {
                     Image(systemName: "person.2.fill")
-                        .font(.system(size: 18, weight: .medium))
+                        .font(BlinkFontStyle.title3.font)
                         .foregroundColor(.white)
                         .frame(width: 44, height: 44)
                 }
@@ -357,7 +357,7 @@ struct PlaybackView: View {
                 } label: {
                     HStack(spacing: 8) {
                         Text(speedLabelText(for: speed))
-                            .font(.system(size: 14, weight: playbackSpeed == speed ? .bold : .medium))
+                            .font(BlinkFontStyle.callout.font.weight(playbackSpeed == speed ? .bold : .medium))
                             .foregroundColor(playbackSpeed == speed ? Color(hex: "ff3b30") : .white)
 
                         if playbackSpeed == speed {

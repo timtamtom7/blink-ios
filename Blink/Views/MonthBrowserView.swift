@@ -80,7 +80,7 @@ struct MonthBrowserView: View {
                         }
                     } label: {
                         Text(String(year))
-                            .font(.system(size: 14, weight: selectedYear == year ? .bold : .medium))
+                            .font(BlinkFontStyle.callout.font.weight(selectedYear == year ? .bold : .medium))
                             .foregroundColor(selectedYear == year ? .white : Color(hex: "8a8a8a"))
                             .padding(.horizontal, 16)
                             .padding(.vertical, 8)
@@ -260,7 +260,7 @@ struct JumpToMonthView: View {
                         }
                     } label: {
                         Text(String(year))
-                            .font(.system(size: 14, weight: selectedYear == year ? .bold : .medium))
+                            .font(BlinkFontStyle.callout.font.weight(selectedYear == year ? .bold : .medium))
                             .foregroundColor(selectedYear == year ? .white : Color(hex: "8a8a8a"))
                             .padding(.horizontal, 14)
                             .padding(.vertical, 7)
@@ -286,7 +286,7 @@ struct JumpToMonthView: View {
                 } label: {
                     VStack(spacing: 4) {
                         Text(monthNames[month - 1].prefix(3).uppercased())
-                            .font(.system(size: 13, weight: isCurrentMonth ? .bold : .medium))
+                            .font(BlinkFontStyle.subheadline.font.weight(isCurrentMonth ? .bold : .medium))
                             .foregroundColor(count > 0 ? (isCurrentMonth ? Color(hex: "ff3b30") : .white) : Color(hex: "555555"))
 
                         if count > 0 {

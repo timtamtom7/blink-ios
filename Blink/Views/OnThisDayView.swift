@@ -84,7 +84,7 @@ struct OnThisDayView: View {
         } label: {
             VStack(spacing: 4) {
                 Text(title)
-                    .font(.system(size: 14, weight: selectedTab == tab ? .semibold : .medium))
+                    .font(BlinkFontStyle.callout.font.weight(selectedTab == tab ? .semibold : .medium))
                     .foregroundColor(selectedTab == tab ? Color(hex: "f5f5f5") : Color(hex: "8a8a8a"))
 
                 Rectangle()

@@ -319,7 +319,7 @@ struct CalendarView: View {
                 HapticService.shared.selectionChanged()
             } label: {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 18, weight: .medium))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Theme.textPrimary)
                     .frame(width: 44, height: 44)
             }
@@ -342,7 +342,7 @@ struct CalendarView: View {
                 HapticService.shared.selectionChanged()
             } label: {
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 18, weight: .medium))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Theme.textPrimary)
                     .frame(width: 44, height: 44)
             }
