@@ -270,6 +270,7 @@ final class VideoStore: ObservableObject {
         guard let index = entries.firstIndex(where: { $0.id == entry.id }) else { return }
         entries[index].title = title.isEmpty ? nil : title
         saveEntries()
+        invalidateOnThisDayCache()
     }
 
     @MainActor

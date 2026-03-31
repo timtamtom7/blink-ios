@@ -176,9 +176,9 @@ struct RecordView: View {
             cameraService.maxRecordingDuration = subscription.maxRecordingDuration
             cameraService.setupSession()
             cameraService.startSession()
-            // Hide loading after a short delay to allow camera to initialize
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                isCameraSettingUp = false
+            // Wait for session to actually be running before hiding the loading overlay
+            Task {
+                await waitForSessionReady()
             }
         }
         .onDisappear {
@@ -391,6 +391,17 @@ struct RecordView: View {
             showStorageFullError = true
         case .clipSaveFailed:
             showClipSaveFailedError = true
+        }
+    }
+
+    private func waitForSessionReady() async {
+        let session = cameraService.session
+        // Poll isRunning — this is the proper session-ready signal, not a fixed delay
+        while !session.isRunning {
+            try? await Task.sleep(nanoseconds: 50_000_000) // 50ms
+        }
+        await MainActor.run {
+            isCameraSettingUp = false
         }
     }
 }

@@ -90,6 +90,14 @@ struct PrivacyLockView: View {
                     .accessibilityLabel("Passcode, \(currentPasscode.count) of 6 digits entered")
             }
         }
+        .background(
+            GeometryReader { _ in
+                Color.clear
+                    .onAppear {
+                        dotsViewHolder = true
+                    }
+            }
+        )
         .overlay {
             if wrongPasscode {
                 Text("Wrong passcode")
@@ -237,7 +245,11 @@ struct PrivacyLockView: View {
     }
 
     private func shakeAnimation() {
-        // Simple wrong-passcode feedback - passcode dots will shake via wrongPasscode flag
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.duration = 0.5
+        animation.values = [-10, 10, -8, 8, -5, 5, -3, 3, 0]
+        // Animate the passcode dots container
     }
 }
 

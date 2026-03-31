@@ -24,14 +24,14 @@ enum Theme {
     /// Text: primary (headings, titles)
     static let textPrimary = Color(hex: "f5f5f5")
 
-    /// Text: secondary (body, descriptions)
-    static let textSecondary = Color(hex: "c0c0c0")
+    /// Text: secondary (body, descriptions) — WCAG AA ≥ 4.5:1 on #0a0a0a
+    static let textSecondary = Color(hex: "AAAAAA")
 
-    /// Text: tertiary (captions, metadata)
-    static let textTertiary = Color(hex: "8a8a8a")
+    /// Text: tertiary (captions, metadata) — WCAG AA ≥ 4.5:1 on #141414
+    static let textTertiary = Color(hex: "888888")
 
-    /// Text: quaternary (disabled, placeholders)
-    static let textQuaternary = Color(hex: "555555")
+    /// Text: quaternary (disabled, placeholders) — WCAG AA ≥ 4.5:1 on #0a0a0a
+    static let textQuaternary = Color(hex: "AAAAAA")
 
     /// Text: inverse (on colored backgrounds)
     static let textInverse = Color.white

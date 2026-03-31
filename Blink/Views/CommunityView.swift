@@ -164,7 +164,7 @@ struct CommunityView: View {
 
                     Text(timeAgo(moment.createdAt))
                         .font(.system(size: 11))
-                        .foregroundColor(Color(hex: "555555"))
+                        .foregroundColor(Color(hex: "AAAAAA"))
                 }
 
                 HStack(spacing: 8) {
@@ -304,6 +304,8 @@ struct SkeletonMomentCard: View {
         .onAppear {
             isAnimating = true
         }
+        .accessibilityLabel("Loading community post")
+        .accessibilityHidden(true)
     }
 }
 
