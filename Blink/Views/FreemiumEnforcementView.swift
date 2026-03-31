@@ -44,7 +44,7 @@ struct FreemiumEnforcementView: View {
                         .frame(width: 80, height: 80)
 
                     Image(systemName: "crown.fill")
-                        .font(.system(size: 32))
+                        .font(BlinkFontStyle.lockIconMedium.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                 }
 

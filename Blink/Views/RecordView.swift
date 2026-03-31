@@ -156,7 +156,7 @@ struct RecordView: View {
                                 .fill(Color(hex: "ff3b30"))
                                 .frame(width: 8, height: 8)
                             Text("REC")
-                                .font(.system(size: 12, weight: .bold, design: .monospaced))
+                                .font(BlinkFontStyle.monospacedFootnote.font)
                                 .foregroundColor(Color(hex: "ff3b30"))
                         }
                         .padding(.horizontal, 10)
@@ -214,7 +214,7 @@ struct RecordView: View {
                 // Timer text
                 if cameraService.isRecording {
                     Text(timerText)
-                        .font(.system(size: 11, weight: .medium, design: .monospaced))
+                        .font(BlinkFontStyle.timerText.font)
                         .foregroundColor(.white)
                 }
             }
@@ -276,7 +276,7 @@ struct RecordView: View {
                 .accessibilityLabel("Recording starting in \(countdownValue)")
 
             Text("\(countdownValue)")
-                .font(.system(size: 120, weight: .bold, design: .rounded))
+                .font(BlinkFontStyle.countdown.font)
                 .foregroundColor(.white)
         }
         .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
@@ -291,7 +291,7 @@ struct RecordView: View {
 
             VStack(spacing: 12) {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 48))
+                    .font(BlinkFontStyle.displayExtraLarge.font)
                     .foregroundColor(Color(hex: "ff3b30"))
 
                 Text("Saved")

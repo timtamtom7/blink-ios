@@ -269,7 +269,7 @@ struct BlinkSecondaryButtonStyle: ButtonStyle {
 struct BlinkTertiaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 15, weight: .medium))
+            .font(BlinkFontStyle.buttonTextMedium.font)
             .foregroundColor(Theme.textTertiary)
             .opacity(configuration.isPressed ? 0.6 : 1.0)
             .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
@@ -298,7 +298,7 @@ struct BlinkPillButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 13, weight: .semibold))
+            .font(BlinkFontStyle.pillButtonText.font)
             .foregroundColor(.white)
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
@@ -319,6 +319,44 @@ enum BlinkFontStyle {
     case headline, body, callout, subheadline, footnote
     case caption, caption2
 
+    // Custom display sizes (non-DynamicType — intentional for design consistency)
+    case displayGigantic     // 80pt, bold
+    case displayHero          // 60pt
+    case displayExtraLarge    // 48pt
+    case displayLarge         // 40pt
+    case displayMedium        // 34pt, bold
+    case displaySmall         // 32pt
+    case display56            // 56pt
+    case display42Bold        // 42pt, bold, rounded
+    case display50            // 50pt
+    case display36            // 36pt
+    case countdown            // 120pt, bold, rounded
+    case speedLabel           // 14pt, bold, monospaced
+    case monospacedCaption    // 13pt, monospaced
+    case monospacedBold       // 14pt, bold, monospaced
+    case monospacedFootnote   // 12pt, bold, monospaced
+    case monospacedSmall      // 12pt, monospaced
+    case monospacedTimerLabel // 11pt, medium, monospaced
+    case monospaced16Bold     // 16pt, bold, monospaced
+    case italicMedium         // 15pt, italic
+    case roundedBold          // 24pt, bold, rounded
+    case roundedSemibold      // 34pt, bold, rounded
+    case roundedMedium        // 28pt, medium, rounded
+    case bold24                // 24pt, bold
+    case lockIconLarge        // 40pt
+    case lockIconMedium       // 32pt
+    case recLabel             // 12pt, bold, monospaced
+    case timerText            // 11pt, medium, monospaced
+    case microBold            // 7pt, bold
+    case micro                 // 8pt
+    case badge                 // 10pt, semibold
+    case display64BoldRounded  // 64pt, bold, rounded
+    case display48BoldRounded // 48pt, bold, rounded
+    case icon24                // 24pt (icon)
+    case icon48                // 48pt (icon)
+    case buttonTextMedium      // 15pt, medium (button labels)
+    case pillButtonText        // 13pt, semibold (pill button labels)
+
     var font: Font {
         switch self {
         case .largeTitle: return .largeTitle
@@ -332,6 +370,42 @@ enum BlinkFontStyle {
         case .footnote: return .footnote
         case .caption: return .caption
         case .caption2: return .caption2
+        case .displayGigantic:     return .system(size: 80, weight: .bold)
+        case .displayHero:          return .system(size: 60)
+        case .displayExtraLarge:    return .system(size: 48)
+        case .displayLarge:         return .system(size: 40)
+        case .displayMedium:        return .system(size: 34, weight: .bold)
+        case .displaySmall:         return .system(size: 32)
+        case .display56:            return .system(size: 56)
+        case .display42Bold:        return .system(size: 42, weight: .bold, design: .rounded)
+        case .display50:            return .system(size: 50)
+        case .display36:            return .system(size: 36)
+        case .countdown:            return .system(size: 120, weight: .bold, design: .rounded)
+        case .speedLabel:           return .system(size: 14, weight: .bold, design: .monospaced)
+        case .monospacedCaption:    return .system(size: 13, design: .monospaced)
+        case .monospacedBold:       return .system(size: 14, weight: .bold, design: .monospaced)
+        case .monospacedFootnote:   return .system(size: 12, weight: .bold, design: .monospaced)
+        case .monospacedSmall:      return .system(size: 12, design: .monospaced)
+        case .monospacedTimerLabel: return .system(size: 11, weight: .medium, design: .monospaced)
+        case .monospaced16Bold:     return .system(size: 16, weight: .bold, design: .monospaced)
+        case .italicMedium:         return .system(size: 15, weight: .medium).italic()
+        case .roundedBold:          return .system(size: 24, weight: .bold, design: .rounded)
+        case .roundedSemibold:      return .system(size: 34, weight: .bold, design: .rounded)
+        case .roundedMedium:        return .system(size: 28, weight: .medium, design: .rounded)
+        case .bold24:               return .system(size: 24, weight: .bold)
+        case .lockIconLarge:        return .system(size: 40)
+        case .lockIconMedium:       return .system(size: 32)
+        case .recLabel:             return .system(size: 12, weight: .bold, design: .monospaced)
+        case .timerText:            return .system(size: 11, weight: .medium, design: .monospaced)
+        case .microBold:            return .system(size: 7, weight: .bold)
+        case .micro:                return .system(size: 8)
+        case .badge:                return .system(size: 10, weight: .semibold)
+        case .display64BoldRounded: return .system(size: 64, weight: .bold, design: .rounded)
+        case .display48BoldRounded: return .system(size: 48, weight: .bold, design: .rounded)
+        case .icon24: return .system(size: 24)
+        case .icon48: return .system(size: 48)
+        case .buttonTextMedium: return .system(size: 15, weight: .medium)
+        case .pillButtonText: return .system(size: 13, weight: .semibold)
         }
     }
 }

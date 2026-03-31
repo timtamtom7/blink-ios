@@ -31,7 +31,7 @@ struct CommunityView: View {
                     .overlay {
                         VStack(spacing: 16) {
                             Image(systemName: "person.2.slash")
-                                .font(.system(size: 48))
+                                .font(BlinkFontStyle.displayExtraLarge.font)
                                 .foregroundColor(Color(hex: "333333"))
                             Text("Coming Soon")
                                 .font(BlinkFontStyle.title2.font)
@@ -217,7 +217,7 @@ struct CommunityView: View {
 
     private func categoryBadge(_ category: CommunityService.Category) -> some View {
         Text(category.rawValue)
-            .font(.system(size: 10, weight: .semibold))
+            .font(BlinkFontStyle.badge.font)
             .foregroundColor(Color(hex: "ff3b30"))
             .padding(.horizontal, 8)
             .padding(.vertical, 4)

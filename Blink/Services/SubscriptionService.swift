@@ -5,6 +5,7 @@ import Combine
 /// Free: 1 clip/day, 30-sec max, 30-day storage
 /// Memories: unlimited clips, 60-sec videos, cloud backup, 1-year storage
 /// Archive: unlimited duration, export all, lifetime storage, monthly highlights
+@MainActor
 final class SubscriptionService: ObservableObject {
     static let shared = SubscriptionService()
 

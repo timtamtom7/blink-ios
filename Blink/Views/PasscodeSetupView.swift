@@ -114,7 +114,7 @@ struct PasscodeSetupView: View {
                 addDigit(key)
             } label: {
                 Text(key)
-                    .font(.system(size: 28, weight: .medium, design: .rounded))
+                    .font(BlinkFontStyle.roundedMedium.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .frame(width: 72, height: 72)
                     .background(Circle().fill(Color(hex: "1e1e1e")))

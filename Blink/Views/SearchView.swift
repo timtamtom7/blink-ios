@@ -141,11 +141,11 @@ struct SearchView: View {
     private var emptyState: some View {
         VStack(spacing: 16) {
             Image(systemName: "magnifyingglass")
-                .font(.system(size: 48))
+                .font(BlinkFontStyle.displayExtraLarge.font)
                 .foregroundColor(Color(hex: "333333"))
 
             Text("Search your clips")
-                .font(.system(size: 17, weight: .medium))
+                .font(BlinkFontStyle.body.font.weight(.medium))
                 .foregroundColor(Color(hex: "8a8a8a"))
 
             Text("Find clips by title or date")
@@ -157,11 +157,11 @@ struct SearchView: View {
     private var noResultsState: some View {
         VStack(spacing: 16) {
             Image(systemName: "doc.text.magnifyingglass")
-                .font(.system(size: 48))
+                .font(BlinkFontStyle.displayExtraLarge.font)
                 .foregroundColor(Color(hex: "333333"))
 
             Text("No results")
-                .font(.system(size: 17, weight: .medium))
+                .font(BlinkFontStyle.body.font.weight(.medium))
                 .foregroundColor(Color(hex: "8a8a8a"))
 
             Text("Try a different search term or filter")

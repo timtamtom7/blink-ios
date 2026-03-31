@@ -87,12 +87,12 @@ struct SubscriptionsView: View {
     private var headerSection: some View {
         VStack(spacing: 12) {
             Image(systemName: "crown.fill")
-                .font(.system(size: 48))
+                .font(BlinkFontStyle.displayExtraLarge.font)
                 .foregroundColor(Color(hex: "ffd700"))
 
             VStack(spacing: 8) {
                 Text("Unlock Your Memories")
-                    .font(.system(size: 24, weight: .bold))
+                    .font(BlinkFontStyle.bold24.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Choose a plan to get unlimited clips, cloud backup, and advanced AI features.")
@@ -127,7 +127,7 @@ struct SubscriptionsView: View {
 
                         HStack(spacing: 4) {
                             Text(plan.price)
-                                .font(.system(size: 24, weight: .bold))
+                                .font(BlinkFontStyle.bold24.font)
                                 .foregroundColor(Color(hex: "ff3b30"))
                             Text(plan.period)
                                 .font(BlinkFontStyle.callout.font)

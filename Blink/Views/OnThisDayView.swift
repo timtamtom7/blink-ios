@@ -136,7 +136,7 @@ struct OnThisDayView: View {
                     .frame(width: 100, height: 100)
 
                 Image(systemName: "clock.arrow.circlepath")
-                    .font(.system(size: 36))
+                    .font(BlinkFontStyle.display36.font)
                     .foregroundColor(Color(hex: "333333"))
             }
 
@@ -159,7 +159,7 @@ struct OnThisDayView: View {
     private var noSameDateState: some View {
         VStack(spacing: 16) {
             Image(systemName: "calendar")
-                .font(.system(size: 40))
+                .font(BlinkFontStyle.displayLarge.font)
                 .foregroundColor(Color(hex: "333333"))
 
             Text("No clips on this date in past years")
@@ -172,7 +172,7 @@ struct OnThisDayView: View {
     private var noSimilarMoodState: some View {
         VStack(spacing: 16) {
             Image(systemName: "sparkles")
-                .font(.system(size: 40))
+                .font(BlinkFontStyle.displayLarge.font)
                 .foregroundColor(Color(hex: "333333"))
 
             Text("Analyze clips to discover similar moments")
@@ -402,7 +402,7 @@ struct OnThisDayCard: View {
                 }
 
                 Text(formatTime(entry.date))
-                    .font(.system(size: 12, design: .monospaced))
+                    .font(BlinkFontStyle.monospacedSmall.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
 
                 HStack(spacing: 4) {

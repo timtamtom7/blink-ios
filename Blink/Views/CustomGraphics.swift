@@ -52,15 +52,15 @@ struct TrimScrubberGraphic: View {
             // Time labels
             HStack {
                 Text("0:00")
-                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .font(BlinkFontStyle.monospacedTimerLabel.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                 Spacer()
                 Text("0:30")
-                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .font(BlinkFontStyle.monospacedTimerLabel.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                 Spacer()
                 Text("0:45")
-                    .font(.system(size: 11, weight: .medium, design: .monospaced))
+                    .font(BlinkFontStyle.monospacedTimerLabel.font)
                     .foregroundColor(Color(hex: "ff3b30"))
             }
             .frame(width: 280)
@@ -147,7 +147,7 @@ struct MonthBrowserGraphic: View {
                                     .fill(Color(hex: "ff3b30"))
                                     .frame(width: 4, height: 4)
                                 Text("\(idx == 2 ? 7 : 12)")
-                                    .font(.system(size: 9, weight: .bold))
+                                    .font(BlinkFontStyle.microBold.font)
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
                         } else {
@@ -526,7 +526,7 @@ struct YearInReviewView: View {
 
                     VStack(spacing: 4) {
                         Text("\(clipsThisYear)")
-                            .font(.system(size: 64, weight: .bold, design: .rounded))
+                            .font(BlinkFontStyle.display64BoldRounded.font)
                             .foregroundColor(Color(hex: "f5f5f5"))
                         Text("of \(totalDaysElapsed) days")
                             .font(BlinkFontStyle.body.font)
@@ -536,7 +536,7 @@ struct YearInReviewView: View {
 
                 VStack(spacing: 12) {
                     Text("Your year in Blink")
-                        .font(.system(size: 24, weight: .bold))
+                        .font(BlinkFontStyle.bold24.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
 
                     Text(yearInsightText)
@@ -595,7 +595,7 @@ struct MonthStripView: View {
                         .frame(width: 20, height: monthHeight(for: month))
 
                     Text(monthLabel(for: month))
-                        .font(.system(size: 8))
+                        .font(BlinkFontStyle.micro.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -805,7 +805,7 @@ struct YearInReviewCompilationMockup: View {
 
                     VStack(spacing: 4) {
                         Text("83")
-                            .font(.system(size: 48, weight: .bold, design: .rounded))
+                            .font(BlinkFontStyle.display48BoldRounded.font)
                             .foregroundColor(Color(hex: "f5f5f5"))
                         Text("clips")
                             .font(BlinkFontStyle.subheadline.font)

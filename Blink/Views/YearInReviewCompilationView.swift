@@ -137,7 +137,7 @@ struct YearInReviewCompilationView: View {
                     .animation(reduceMotion ? .none : .linear(duration: 0.5), value: generationProgress)
 
                 Image(systemName: "film")
-                    .font(.system(size: 32))
+                    .font(BlinkFontStyle.lockIconMedium.font)
                     .foregroundColor(Color(hex: "ff3b30"))
             }
 

@@ -101,7 +101,7 @@ struct AIHighlightsView: View {
     private var emptyState: some View {
         VStack(spacing: 16) {
             Image(systemName: "sparkles")
-                .font(.system(size: 60))
+                .font(BlinkFontStyle.displayHero.font)
                 .foregroundColor(Color(hex: "333333"))
 
             VStack(spacing: 6) {
@@ -280,7 +280,7 @@ struct AIHighlightsView: View {
             HStack(spacing: 12) {
                 // Rank
                 Text("#\(rank)")
-                    .font(.system(size: 12, weight: .bold, design: .monospaced))
+                    .font(BlinkFontStyle.monospacedFootnote.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                     .frame(width: 28)
 
@@ -328,7 +328,7 @@ struct AIHighlightsView: View {
                     .rotationEffect(.degrees(-90))
                     .overlay(
                         Text("\(Int(highlight.score * 100))")
-                            .font(.system(size: 7, weight: .bold))
+                            .font(BlinkFontStyle.microBold.font)
                             .foregroundColor(Color(hex: "f5f5f5"))
                     )
             }

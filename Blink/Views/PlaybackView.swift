@@ -253,7 +253,7 @@ struct PlaybackView: View {
             }
 
             Text(currentEntry.formattedDate)
-                .font(.system(size: 13, design: .monospaced))
+                .font(BlinkFontStyle.monospacedCaption.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
 
             Text(daysAgoText)
@@ -322,7 +322,7 @@ struct PlaybackView: View {
                     HapticService.shared.selectionChanged()
                 } label: {
                     Text(speedLabel)
-                        .font(.system(size: 14, weight: .bold, design: .monospaced))
+                        .font(BlinkFontStyle.speedLabel.font)
                         .foregroundColor(.white)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)

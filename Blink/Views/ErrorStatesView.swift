@@ -8,7 +8,7 @@ struct CameraPermissionDeniedView: View {
             Spacer()
 
             Image(systemName: "video.slash.fill")
-                .font(.system(size: 56))
+                .font(BlinkFontStyle.display56.font)
                 .foregroundColor(Color(hex: "ff3b30").opacity(0.8))
 
             VStack(spacing: 12) {
@@ -56,7 +56,7 @@ struct MicrophonePermissionDeniedView: View {
             Spacer()
 
             Image(systemName: "mic.slash.fill")
-                .font(.system(size: 56))
+                .font(BlinkFontStyle.display56.font)
                 .foregroundColor(Color(hex: "ff3b30").opacity(0.8))
 
             VStack(spacing: 12) {
@@ -174,7 +174,7 @@ struct ClipSaveFailedView: View {
             Spacer()
 
             Image(systemName: "exclamationmark.triangle.fill")
-                .font(.system(size: 56))
+                .font(BlinkFontStyle.display56.font)
                 .foregroundColor(Color(hex: "ff3b30").opacity(0.8))
 
             VStack(spacing: 12) {
@@ -233,7 +233,7 @@ struct TrimSaveFailedView: View {
             Spacer()
 
             Image(systemName: "scissors")
-                .font(.system(size: 56))
+                .font(BlinkFontStyle.display56.font)
                 .foregroundColor(Color(hex: "ff3b30").opacity(0.8))
 
             VStack(spacing: 12) {
@@ -359,7 +359,7 @@ struct ExportFailedView: View {
             Spacer()
 
             Image(systemName: "square.and.arrow.down.trianglebadge.exclamationmark")
-                .font(.system(size: 56))
+                .font(BlinkFontStyle.display56.font)
                 .foregroundColor(Color(hex: "ff3b30").opacity(0.8))
 
             VStack(spacing: 12) {

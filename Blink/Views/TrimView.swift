@@ -259,7 +259,7 @@ struct TrimView: View {
     private var timeLabels: some View {
         HStack {
             Text(formatTime(startTime))
-                .font(.system(size: 12, weight: .medium, design: .monospaced))
+                .font(BlinkFontStyle.monospacedSmall.font)
                 .foregroundColor(Color(hex: "ff3b30"))
 
             Spacer()
@@ -271,7 +271,7 @@ struct TrimView: View {
             Spacer()
 
             Text(formatTime(endTime))
-                .font(.system(size: 12, weight: .medium, design: .monospaced))
+                .font(BlinkFontStyle.monospacedSmall.font)
                 .foregroundColor(Color(hex: "ff3b30"))
         }
     }

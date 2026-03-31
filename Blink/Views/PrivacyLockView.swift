@@ -77,7 +77,7 @@ struct PrivacyLockView: View {
                 .frame(width: 100, height: 100)
 
             Image(systemName: privacy.biometricType.iconName)
-                .font(.system(size: 40))
+                .font(BlinkFontStyle.lockIconLarge.font)
                 .foregroundColor(Theme.accent)
         }
     }
@@ -148,7 +148,7 @@ struct PrivacyLockView: View {
                 addDigit(key)
             } label: {
                 Text(key)
-                    .font(.system(size: 28, weight: .medium, design: .rounded))
+                    .font(BlinkFontStyle.roundedMedium.font)
                     .foregroundColor(Theme.textPrimary)
                     .frame(width: 72, height: 72)
                     .background(Circle().fill(Theme.backgroundTertiary))
@@ -319,7 +319,7 @@ struct LockClipView: View {
                     .frame(width: 80, height: 80)
 
                 Image(systemName: isLocked ? "lock.fill" : "lock.open.fill")
-                    .font(.system(size: 32))
+                    .font(BlinkFontStyle.lockIconMedium.font)
                     .foregroundColor(Theme.accent)
             }
 
@@ -389,7 +389,7 @@ struct PrivacyLockIconGraphic: View {
 
             // Lock icon
             Image(systemName: "lock.fill")
-                .font(.system(size: 24))
+                .font(BlinkFontStyle.icon24.font)
                 .foregroundColor(Theme.accent)
         }
         .onAppear {

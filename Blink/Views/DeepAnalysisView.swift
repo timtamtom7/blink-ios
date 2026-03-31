@@ -70,7 +70,7 @@ struct DeepAnalysisView: View {
                     .animation(.easeInOut(duration: 0.3), value: analysisService.analysisProgress)
 
                 Text("\(Int(analysisService.analysisProgress * 100))%")
-                    .font(.system(size: 16, weight: .bold, design: .monospaced))
+                    .font(BlinkFontStyle.monospaced16Bold.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
             }
 
@@ -89,7 +89,7 @@ struct DeepAnalysisView: View {
     private var emptyState: some View {
         VStack(spacing: 16) {
             Image(systemName: "brain.head.profile")
-                .font(.system(size: 60))
+                .font(BlinkFontStyle.displayHero.font)
                 .foregroundColor(Color(hex: "333333"))
 
             VStack(spacing: 6) {
@@ -412,7 +412,7 @@ struct SceneEntriesView: View {
     private var emptyState: some View {
         VStack(spacing: 12) {
             Image(systemName: "doc.text.magnifyingglass")
-                .font(.system(size: 40))
+                .font(BlinkFontStyle.displayLarge.font)
                 .foregroundColor(Color(hex: "333333"))
 
             Text("No clips found")

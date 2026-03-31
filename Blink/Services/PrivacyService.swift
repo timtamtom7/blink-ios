@@ -5,6 +5,7 @@ import CryptoKit
 
 // MARK: - Privacy Service
 
+@MainActor
 final class PrivacyService: ObservableObject {
     static let shared = PrivacyService()
 

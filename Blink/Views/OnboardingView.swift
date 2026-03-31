@@ -245,7 +245,7 @@ struct OnboardingScreen4: View {
             } else if permissionStatus == .granted {
                 VStack(spacing: 12) {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 32))
+                        .font(BlinkFontStyle.lockIconMedium.font)
                         .foregroundColor(Color(hex: "ff3b30"))
 
                     Button {

@@ -459,11 +459,11 @@ struct AboutView: View {
 
                     VStack(spacing: 16) {
                         Image(systemName: "video.circle.fill")
-                            .font(.system(size: 80))
+                            .font(BlinkFontStyle.displayGigantic.font)
                             .foregroundColor(Color(hex: "ff3b30"))
 
                         Text("Blink")
-                            .font(.system(size: 34, weight: .bold))
+                            .font(BlinkFontStyle.roundedSemibold.font)
                             .foregroundColor(Color(hex: "f5f5f5"))
 
                         Text("Your year, one moment at a time.")
@@ -484,7 +484,7 @@ struct AboutView: View {
                     Spacer()
 
                     Text("The opposite of TikTok.")
-                        .font(.system(size: 15, weight: .medium).italic())
+                        .font(BlinkFontStyle.italicMedium.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                         .padding(.bottom, 40)
                 }

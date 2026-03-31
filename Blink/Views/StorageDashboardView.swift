@@ -92,7 +92,7 @@ struct StorageDashboardView: View {
                     .foregroundColor(Color(hex: "8a8a8a"))
 
                 Text(stats.formattedTotalSaved)
-                    .font(.system(size: 42, weight: .bold, design: .rounded))
+                    .font(BlinkFontStyle.display42Bold.font)
                     .foregroundColor(Color(hex: "ff3b30"))
 
                 Text("in storage")
@@ -319,7 +319,7 @@ struct StorageDashboardView: View {
     private var emptyState: some View {
         VStack(spacing: 16) {
             Image(systemName: "externaldrive.fill")
-                .font(.system(size: 50))
+                .font(BlinkFontStyle.display50.font)
                 .foregroundColor(Color(hex: "333333"))
 
             Text("No clips yet")

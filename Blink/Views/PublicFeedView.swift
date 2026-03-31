@@ -21,7 +21,7 @@ struct PublicFeedView: View {
                 } else if let error = loadError {
                     VStack(spacing: 12) {
                         Image(systemName: "wifi.slash")
-                            .font(.system(size: 40))
+                            .font(BlinkFontStyle.displayLarge.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                         Text(error)
                             .font(BlinkFontStyle.body.font)
@@ -58,7 +58,7 @@ struct PublicFeedView: View {
     private var emptyState: some View {
         VStack(spacing: 16) {
             Image(systemName: "globe")
-                .font(.system(size: 60))
+                .font(BlinkFontStyle.displayHero.font)
                 .foregroundColor(Color(hex: "333333"))
 
             VStack(spacing: 6) {
@@ -149,7 +149,7 @@ struct FeedCard: View {
                             .frame(height: 160)
                             .overlay(
                                 Image(systemName: "video.fill")
-                                    .font(.system(size: 32))
+                                    .font(BlinkFontStyle.lockIconMedium.font)
                                     .foregroundColor(Color(hex: "333333"))
                             )
                     }

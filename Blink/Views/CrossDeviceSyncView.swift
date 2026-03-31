@@ -33,7 +33,7 @@ struct CrossDeviceSyncView: View {
                     .overlay {
                         VStack(spacing: 16) {
                             Image(systemName: "icloud.slash")
-                                .font(.system(size: 48))
+                                .font(BlinkFontStyle.icon48.font)
                                 .foregroundColor(Color(hex: "333333"))
                             Text("Coming Soon")
                                 .font(BlinkFontStyle.title2.font)
@@ -136,7 +136,7 @@ struct CrossDeviceSyncView: View {
             if syncService.connectedDevices.isEmpty {
                 VStack(spacing: 12) {
                     Image(systemName: "iphone.and.arrow.forward")
-                        .font(.system(size: 40))
+                        .font(BlinkFontStyle.lockIconLarge.font)
                         .foregroundColor(Color(hex: "333333"))
 
                     Text("No devices connected")

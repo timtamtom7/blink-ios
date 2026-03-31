@@ -406,7 +406,7 @@ struct ContactsPickerView: View {
                 if contacts.isEmpty {
                     VStack(spacing: 12) {
                         Image(systemName: "person.crop.circle.badge.questionmark")
-                            .font(.system(size: 48))
+                            .font(BlinkFontStyle.displayExtraLarge.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                         Text("No contacts found")
                             .font(BlinkFontStyle.body.font)
@@ -464,7 +464,7 @@ struct ContactsPickerView: View {
                         .ignoresSafeArea()
                     VStack(spacing: 12) {
                         Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 48))
+                            .font(BlinkFontStyle.displayExtraLarge.font)
                             .foregroundColor(Color(hex: "ff3b30"))
                         Text("Copied! Send manually")
                             .font(BlinkFontStyle.body.font)
