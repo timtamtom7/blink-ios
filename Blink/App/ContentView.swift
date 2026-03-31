@@ -46,13 +46,6 @@ struct ContentView: View {
                 hasAcknowledgedFreemiumToday = false
                 freemiumAcknowledgedDate = Calendar.current.startOfDay(for: Date()).formatted(date: .numeric, time: .omitted)
             }
-            // Show pricing once after onboarding (with delay to not interrupt UX)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                if hasCompletedOnboarding && !hasSeenPricing {
-                    showPricing = true
-                    hasSeenPricing = true
-                }
-            }
             // Check if app should be locked on launch
             if privacy.isPasscodeEnabled {
                 privacy.lockApp(reason: .appOpen)
@@ -60,6 +53,14 @@ struct ContentView: View {
             // Show freemium enforcement once per day for free users
             if !hasAcknowledgedFreemiumToday && subscription.currentTier == .free {
                 showFreemium = true
+            }
+        }
+        .task {
+            // Show pricing once after onboarding (with delay to not interrupt UX)
+            try? await Task.sleep(nanoseconds: 500_000_000)
+            if hasCompletedOnboarding && !hasSeenPricing {
+                showPricing = true
+                hasSeenPricing = true
             }
         }
         .onChange(of: scenePhase) { oldPhase, newPhase in

@@ -172,7 +172,7 @@ struct SettingsView: View {
                             Spacer()
                             Text("Coming Soon")
                                 .font(BlinkFontStyle.caption.font)
-                                .foregroundColor(Color(hex: "555555"))
+                                .foregroundColor(Theme.textSecondary)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 3)
                                 .background(Color(hex: "1e1e1e"))
@@ -187,7 +187,7 @@ struct SettingsView: View {
                                     .foregroundColor(Color(hex: "8a8a8a"))
                                 Text("Sign in to iCloud in Settings to enable backup")
                                     .font(BlinkFontStyle.caption.font)
-                                    .foregroundColor(Color(hex: "555555"))
+                                    .foregroundColor(Theme.textSecondary)
                             }
                             .padding(.vertical, 4)
                         } else {
@@ -217,7 +217,7 @@ struct SettingsView: View {
                                     HStack {
                                         Text("Last backup:")
                                             .font(BlinkFontStyle.footnote.font)
-                                            .foregroundColor(Color(hex: "555555"))
+                                            .foregroundColor(Theme.textTertiary)
                                         Text(lastBackup, style: .relative)
                                             .font(BlinkFontStyle.footnote.font)
                                             .foregroundColor(Color(hex: "8a8a8a"))

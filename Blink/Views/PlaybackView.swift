@@ -258,7 +258,7 @@ struct PlaybackView: View {
 
             Text(daysAgoText)
                 .font(BlinkFontStyle.footnote.font)
-                .foregroundColor(Color(hex: "666666"))
+                .foregroundColor(Theme.textSecondary)
 
             // Duration
             HStack(spacing: 4) {
@@ -267,7 +267,7 @@ struct PlaybackView: View {
                 Text(formatDuration(currentEntry.duration))
                     .font(BlinkFontStyle.caption.font)
             }
-            .foregroundColor(Color(hex: "666666"))
+            .foregroundColor(Theme.textSecondary)
         }
         .padding(.bottom, 40)
         .padding(.top, 60)
@@ -283,6 +283,11 @@ struct PlaybackView: View {
     }
 
     private func setupPlayer() {
+        if let oldToken = notificationToken {
+            NotificationCenter.default.removeObserver(oldToken)
+            notificationToken = nil
+        }
+
         let player = AVPlayer(url: currentEntry.videoURL)
         self.player = player
         player.rate = playbackSpeed
@@ -470,7 +475,7 @@ struct TitleEditSheet: View {
 
                     Text("Default: \(defaultTitle)")
                         .font(BlinkFontStyle.footnote.font)
-                        .foregroundColor(Color(hex: "555555"))
+                        .foregroundColor(Theme.textSecondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Spacer()

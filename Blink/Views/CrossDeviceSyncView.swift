@@ -145,7 +145,7 @@ struct CrossDeviceSyncView: View {
 
                     Text("Sign in with the same Apple ID on other devices to sync your clips.")
                         .font(BlinkFontStyle.subheadline.font)
-                        .foregroundColor(Color(hex: "555555"))
+                        .foregroundColor(Theme.textSecondary)
                         .multilineTextAlignment(.center)
                 }
                 .frame(maxWidth: .infinity)

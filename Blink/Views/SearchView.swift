@@ -150,7 +150,7 @@ struct SearchView: View {
 
             Text("Find clips by title or date")
                 .font(BlinkFontStyle.callout.font)
-                .foregroundColor(Color(hex: "555555"))
+                .foregroundColor(Theme.textSecondary)
         }
     }
 
@@ -166,7 +166,7 @@ struct SearchView: View {
 
             Text("Try a different search term or filter")
                 .font(BlinkFontStyle.callout.font)
-                .foregroundColor(Color(hex: "555555"))
+                .foregroundColor(Theme.textSecondary)
         }
     }
 
@@ -218,7 +218,7 @@ struct SearchResultRow: View {
                         .frame(width: 72, height: 48)
                         .overlay(
                             Image(systemName: "video")
-                                .foregroundColor(Color(hex: "555555"))
+                                .foregroundColor(Theme.textTertiary)
                         )
                 }
 
@@ -235,7 +235,7 @@ struct SearchResultRow: View {
                             .foregroundColor(Color(hex: "8a8a8a"))
 
                         Text("•")
-                            .foregroundColor(Color(hex: "555555"))
+                            .foregroundColor(Theme.textTertiary)
 
                         Text(formatDuration(entry.duration))
                             .font(BlinkFontStyle.footnote.font)
@@ -247,7 +247,7 @@ struct SearchResultRow: View {
 
                 Image(systemName: "chevron.right")
                     .font(BlinkFontStyle.footnote.font)
-                    .foregroundColor(Color(hex: "555555"))
+                    .foregroundColor(Theme.textTertiary)
             }
             .padding(12)
             .background(Color(hex: "141414"))

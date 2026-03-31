@@ -13,6 +13,7 @@ struct PrivacyLockView: View {
     @State private var isAuthenticating: Bool = false
     @State private var biometricTask: Task<Void, Never>?
     @State private var dotsShakeOffset: CGFloat = 0
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     var body: some View {
         ZStack {
@@ -239,6 +240,14 @@ struct PrivacyLockView: View {
     }
 
     private func shakeAnimation() {
+        guard !reduceMotion else {
+            // Provide static flash feedback for users who prefer reduced motion
+            wrongPasscode = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                wrongPasscode = false
+            }
+            return
+        }
         // SwiftUI-native shake: cycle through horizontal offsets
         let values: [CGFloat] = [-10, 10, -8, 8, -5, 5, -3, 3, 0]
         let totalDuration = 0.5

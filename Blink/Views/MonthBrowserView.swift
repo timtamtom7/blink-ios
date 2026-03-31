@@ -143,7 +143,7 @@ struct MonthBrowseCard: View {
                         .foregroundColor(Color(hex: "333333"))
                     Text("No clips")
                         .font(BlinkFontStyle.caption2.font)
-                        .foregroundColor(Color(hex: "555555"))
+                        .foregroundColor(Theme.textSecondary)
                 }
                 .frame(height: 60)
             } else {
@@ -287,7 +287,7 @@ struct JumpToMonthView: View {
                     VStack(spacing: 4) {
                         Text(monthNames[month - 1].prefix(3).uppercased())
                             .font(BlinkFontStyle.subheadline.font.weight(isCurrentMonth ? .bold : .medium))
-                            .foregroundColor(count > 0 ? (isCurrentMonth ? Color(hex: "ff3b30") : .white) : Color(hex: "555555"))
+                            .foregroundColor(count > 0 ? (isCurrentMonth ? Color(hex: "ff3b30") : .white) : Theme.textSecondary)
 
                         if count > 0 {
                             HStack(spacing: 2) {

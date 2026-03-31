@@ -106,6 +106,14 @@ enum Theme {
     /// Monospace body — time displays
     static let fontMonoBody = Font.system(size: 13, weight: .medium, design: .monospaced)
 
+    // MARK: - Button Fonts (Dynamic Type)
+
+    /// Primary button font — uses Dynamic Type headline
+    static let primaryButtonFont: Font = BlinkFontStyle.headline.font
+
+    /// Secondary button font — uses Dynamic Type body
+    static let secondaryButtonFont: Font = BlinkFontStyle.body.font
+
     // MARK: - Spacing
 
     static let spacing2: CGFloat = 2
@@ -219,7 +227,7 @@ struct BlinkPrimaryButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 17, weight: .semibold))
+            .font(Theme.primaryButtonFont)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
             .frame(height: 52)
@@ -239,7 +247,7 @@ struct BlinkPrimaryButtonStyle: ButtonStyle {
 struct BlinkSecondaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.system(size: 17, weight: .semibold))
+            .font(Theme.secondaryButtonFont)
             .foregroundColor(Theme.accent)
             .frame(maxWidth: .infinity)
             .frame(height: 52)

@@ -110,6 +110,7 @@ struct YearInReviewCompilationView: View {
                         }
                         .frame(width: 60, height: 80)
                         .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusSmall))
+                        .accessibilityLabel("Clip thumbnail")
                     }
                 }
             }

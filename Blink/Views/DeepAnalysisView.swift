@@ -243,7 +243,7 @@ struct DeepAnalysisView: View {
 
                 Image(systemName: "chevron.right")
                     .font(BlinkFontStyle.footnote.font)
-                    .foregroundColor(Color(hex: "555555"))
+                    .foregroundColor(Theme.textTertiary)
             }
             .padding(12)
             .background(Color(hex: "141414"))

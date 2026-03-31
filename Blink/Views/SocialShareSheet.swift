@@ -229,7 +229,7 @@ struct SocialShareSheet: View {
                     Text("\(Int(entry.duration))s")
                         .font(BlinkFontStyle.caption.font)
                 }
-                .foregroundColor(Color(hex: "666666"))
+                .foregroundColor(Theme.textSecondary)
             }
 
             Spacer()
@@ -333,7 +333,7 @@ struct ShareOptionRow: View {
 
                 Image(systemName: "chevron.right")
                     .font(BlinkFontStyle.footnote.font)
-                    .foregroundColor(Color(hex: "555555"))
+                    .foregroundColor(Theme.textTertiary)
             }
             .padding(14)
             .background(Color(hex: "141414"))

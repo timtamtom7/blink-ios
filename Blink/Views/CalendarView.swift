@@ -22,6 +22,7 @@ struct CalendarView: View {
     @State private var showPricing = false
     @State private var exportMonth: Int = 0
     @State private var exportYear: Int = 0
+    @State private var exportTrigger: Int = 0
 
     // External bindings for deep link control (optional)
     var showHighlightsBinding: Binding<Bool>?
@@ -244,7 +245,7 @@ struct CalendarView: View {
             }
             Button("Cancel", role: .cancel) {}
         }
-        .task(id: exportMonth) {
+        .task(id: exportTrigger) {
             guard isExporting, exportMonth > 0, exportYear > 0 else { return }
             do {
                 let outputURL = try await ExportService.shared.exportMonthClips(
@@ -434,6 +435,7 @@ struct CalendarView: View {
 
         exportMonth = currentMonth
         exportYear = currentYear
+        exportTrigger += 1
         isExporting = true
         exportProgress = 0
     }

@@ -181,7 +181,7 @@ struct OnThisDayView: View {
 
             Text("Go to AI Highlights to analyze your clips")
                 .font(BlinkFontStyle.subheadline.font)
-                .foregroundColor(Color(hex: "555555"))
+                .foregroundColor(Theme.textSecondary)
         }
         .padding(.vertical, 40)
     }
@@ -411,7 +411,7 @@ struct OnThisDayCard: View {
                     Text(formatDuration(entry.duration))
                         .font(BlinkFontStyle.caption.font)
                 }
-                .foregroundColor(Color(hex: "666666"))
+                .foregroundColor(Theme.textSecondary)
             }
 
             Spacer()

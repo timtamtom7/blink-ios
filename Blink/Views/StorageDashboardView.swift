@@ -13,6 +13,7 @@ struct StorageDashboardView: View {
     @State private var compressionTask: Task<Void, Never>?
     @State private var duplicateDeleteTask: Task<Void, Never>?
     @State private var sheetRefreshTask: Task<Void, Never>?
+    @State private var compressionCandidates: [VideoEntry] = []
 
     var body: some View {
         NavigationStack {
@@ -56,6 +57,12 @@ struct StorageDashboardView: View {
             .toolbarColorScheme(.dark, for: .navigationBar)
             .task {
                 await dashboardService.refresh(entries: videoStore.entries)
+            }
+            .onAppear {
+                compressionCandidates = compressionService.analyzeCompressionCandidates(entries: videoStore.entries)
+            }
+            .onChange(of: videoStore.entries) { _, _ in
+                compressionCandidates = compressionService.analyzeCompressionCandidates(entries: videoStore.entries)
             }
             .refreshable {
                 await dashboardService.refresh(entries: videoStore.entries)
@@ -283,13 +290,12 @@ struct StorageDashboardView: View {
                 }
             }
 
-            let candidates = compressionService.analyzeCompressionCandidates(entries: videoStore.entries)
-            if !candidates.isEmpty {
+            if !compressionCandidates.isEmpty {
                 HStack {
                     Image(systemName: "arrow.down.circle.fill")
                         .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "ff3b30"))
-                    Text("\(candidates.count) clips eligible for compression")
+                    Text("\(compressionCandidates.count) clips eligible for compression")
                         .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
