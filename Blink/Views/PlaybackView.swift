@@ -243,11 +243,11 @@ struct PlaybackView: View {
             } label: {
                 HStack(spacing: 4) {
                     Text(currentEntry.displayTitle)
-                        .font(.system(size: 15, weight: .medium))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(.white)
                         .lineLimit(1)
                     Image(systemName: "pencil")
-                        .font(.system(size: 10))
+                        .font(BlinkFontStyle.caption2.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -257,15 +257,15 @@ struct PlaybackView: View {
                 .foregroundColor(Color(hex: "8a8a8a"))
 
             Text(daysAgoText)
-                .font(.system(size: 12))
+                .font(BlinkFontStyle.footnote.font)
                 .foregroundColor(Color(hex: "666666"))
 
             // Duration
             HStack(spacing: 4) {
                 Image(systemName: "clock")
-                    .font(.system(size: 10))
+                    .font(BlinkFontStyle.caption2.font)
                 Text(formatDuration(currentEntry.duration))
-                    .font(.system(size: 11))
+                    .font(BlinkFontStyle.caption.font)
             }
             .foregroundColor(Color(hex: "666666"))
         }
@@ -345,7 +345,7 @@ struct PlaybackView: View {
     private var speedPicker: some View {
         VStack(alignment: .trailing, spacing: 4) {
             Text("Speed")
-                .font(.system(size: 11, weight: .semibold))
+                .font(BlinkFontStyle.caption.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
                 .padding(.trailing, 4)
                 .padding(.bottom, 2)
@@ -362,7 +362,7 @@ struct PlaybackView: View {
 
                         if playbackSpeed == speed {
                             Image(systemName: "checkmark")
-                                .font(.system(size: 10, weight: .bold))
+                                .font(BlinkFontStyle.caption2.font)
                                 .foregroundColor(Color(hex: "ff3b30"))
                         }
                     }
@@ -456,11 +456,11 @@ struct TitleEditSheet: View {
                 VStack(spacing: 24) {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Clip Title")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(BlinkFontStyle.subheadline.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
 
                         TextField("Add a title…", text: $title)
-                            .font(.system(size: 17))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(.white)
                             .padding(12)
                             .background(Color(hex: "1e1e1e"))
@@ -469,7 +469,7 @@ struct TitleEditSheet: View {
                     }
 
                     Text("Default: \(defaultTitle)")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "555555"))
                         .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -487,7 +487,7 @@ struct TitleEditSheet: View {
                     Button("Cancel") {
                         onCancel()
                     }
-                    .font(.system(size: 16))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                 }
 
@@ -495,7 +495,7 @@ struct TitleEditSheet: View {
                     Button("Save") {
                         onSave(title)
                     }
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                 }
             }

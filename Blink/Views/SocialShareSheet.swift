@@ -74,7 +74,7 @@ struct SocialShareSheet: View {
                         if !socialService.activeLinks(for: entry.id).isEmpty {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Active Links")
-                                    .font(.system(size: 12, weight: .semibold))
+                                    .font(BlinkFontStyle.footnote.font)
                                     .foregroundColor(Color(hex: "8a8a8a"))
                                     .padding(.horizontal, 16)
 
@@ -92,7 +92,7 @@ struct SocialShareSheet: View {
 
                         if showCopied {
                             Text("Link copied to clipboard!")
-                                .font(.system(size: 13))
+                                .font(BlinkFontStyle.subheadline.font)
                                 .foregroundColor(Color(hex: "ff3b30"))
                                 .padding(.top, 8)
                         }
@@ -108,7 +108,39 @@ struct SocialShareSheet: View {
                             .tint(Color(hex: "ff3b30"))
                             .scaleEffect(1.5)
                         Text("Creating link...")
-                            .font(.system(size: 14))
+                            .font(BlinkFontStyle.callout.font)
+                            .foregroundColor(Color(hex: "8a8a8a"))
+                    }
+                    .padding(24)
+                    .background(Color(hex: "1e1e1e"))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
+                }
+
+                if isSubmittingToFeed {
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea()
+                    VStack(spacing: 16) {
+                        ProgressView()
+                            .tint(Color(hex: "ff3b30"))
+                            .scaleEffect(1.5)
+                        Text("Submitting to community...")
+                            .font(BlinkFontStyle.callout.font)
+                            .foregroundColor(Color(hex: "8a8a8a"))
+                    }
+                    .padding(24)
+                    .background(Color(hex: "1e1e1e"))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium))
+                }
+
+                if isLoadingContacts {
+                    Color.black.opacity(0.5)
+                        .ignoresSafeArea()
+                    VStack(spacing: 16) {
+                        ProgressView()
+                            .tint(Color(hex: "ff3b30"))
+                            .scaleEffect(1.5)
+                        Text("Loading contacts...")
+                            .font(BlinkFontStyle.callout.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                     .padding(24)
@@ -126,7 +158,7 @@ struct SocialShareSheet: View {
                     Button("Done") {
                         onDismiss()
                     }
-                    .font(.system(size: 16, weight: .medium))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                 }
             }
@@ -183,19 +215,19 @@ struct SocialShareSheet: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(entry.displayTitle)
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .lineLimit(2)
 
                 Text(entry.formattedDate)
-                    .font(.system(size: 12))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
 
                 HStack(spacing: 4) {
                     Image(systemName: "clock")
-                        .font(.system(size: 10))
+                        .font(BlinkFontStyle.caption2.font)
                     Text("\(Int(entry.duration))s")
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                 }
                 .foregroundColor(Color(hex: "666666"))
             }
@@ -283,16 +315,16 @@ struct ShareOptionRow: View {
                         .fill(iconColor.opacity(0.15))
                         .frame(width: 44, height: 44)
                     Image(systemName: icon)
-                        .font(.system(size: 18))
+                        .font(BlinkFontStyle.title3.font)
                         .foregroundColor(iconColor)
                 }
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                     Text(subtitle)
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                         .lineLimit(2)
                 }
@@ -300,7 +332,7 @@ struct ShareOptionRow: View {
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .medium))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "555555"))
             }
             .padding(14)
@@ -319,17 +351,17 @@ struct ActiveLinkRow: View {
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: "link")
-                .font(.system(size: 14))
+                .font(BlinkFontStyle.callout.font)
                 .foregroundColor(Color(hex: "ff3b30"))
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(link.shareURL.absoluteString)
-                    .font(.system(size: 12))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .lineLimit(1)
 
                 Text("\(link.viewCount)/\(link.maxViews) views • expires \(link.expiresAt, style: .relative)")
-                    .font(.system(size: 11))
+                    .font(BlinkFontStyle.caption.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
 
@@ -339,7 +371,7 @@ struct ActiveLinkRow: View {
                 onCopy()
             } label: {
                 Text("Copy")
-                    .font(.system(size: 12, weight: .medium))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "ff3b30"))
             }
         }
@@ -377,7 +409,7 @@ struct ContactsPickerView: View {
                             .font(.system(size: 48))
                             .foregroundColor(Color(hex: "8a8a8a"))
                         Text("No contacts found")
-                            .font(.system(size: 16))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                 } else {
@@ -401,18 +433,18 @@ struct ContactsPickerView: View {
                                             .frame(width: 44, height: 44)
                                             .overlay(
                                                 Text("\(contact.givenName.prefix(1))\(contact.familyName.prefix(1))")
-                                                    .font(.system(size: 14, weight: .semibold))
+                                                    .font(BlinkFontStyle.body.font)
                                                     .foregroundColor(Color(hex: "f5f5f5"))
                                             )
                                     }
 
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text("\(contact.givenName) \(contact.familyName)")
-                                            .font(.system(size: 15, weight: .medium))
+                                            .font(BlinkFontStyle.body.font)
                                             .foregroundColor(Color(hex: "f5f5f5"))
                                         if let phone = contact.phoneNumbers.first {
                                             Text(phone.value.stringValue)
-                                                .font(.system(size: 12))
+                                                .font(BlinkFontStyle.footnote.font)
                                                 .foregroundColor(Color(hex: "8a8a8a"))
                                         }
                                     }
@@ -435,7 +467,7 @@ struct ContactsPickerView: View {
                             .font(.system(size: 48))
                             .foregroundColor(Color(hex: "ff3b30"))
                         Text("Copied! Send manually")
-                            .font(.system(size: 16, weight: .medium))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(Color(hex: "f5f5f5"))
                     }
                 }

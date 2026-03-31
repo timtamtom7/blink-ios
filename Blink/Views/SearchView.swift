@@ -95,7 +95,7 @@ struct SearchView: View {
                     Button("Done") {
                         dismiss()
                     }
-                    .font(.system(size: 16, weight: .medium))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                 }
 
@@ -116,9 +116,9 @@ struct SearchView: View {
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "line.3.horizontal.decrease.circle")
-                                .font(.system(size: 16))
+                                .font(BlinkFontStyle.body.font)
                             Text(selectedFilter == .all ? "Filter" : selectedFilter.rawValue)
-                                .font(.system(size: 14))
+                                .font(BlinkFontStyle.callout.font)
                         }
                         .foregroundColor(Color(hex: "ff3b30"))
                     }
@@ -149,7 +149,7 @@ struct SearchView: View {
                 .foregroundColor(Color(hex: "8a8a8a"))
 
             Text("Find clips by title or date")
-                .font(.system(size: 14))
+                .font(BlinkFontStyle.callout.font)
                 .foregroundColor(Color(hex: "555555"))
         }
     }
@@ -165,7 +165,7 @@ struct SearchView: View {
                 .foregroundColor(Color(hex: "8a8a8a"))
 
             Text("Try a different search term or filter")
-                .font(.system(size: 14))
+                .font(BlinkFontStyle.callout.font)
                 .foregroundColor(Color(hex: "555555"))
         }
     }
@@ -176,7 +176,7 @@ struct SearchView: View {
                 // Results count
                 HStack {
                     Text("\(filteredEntries.count) clip\(filteredEntries.count == 1 ? "" : "s") found")
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                     Spacer()
                 }
@@ -225,20 +225,20 @@ struct SearchResultRow: View {
                 // Info
                 VStack(alignment: .leading, spacing: 4) {
                     Text(entry.displayTitle)
-                        .font(.system(size: 14, weight: .medium))
+                        .font(BlinkFontStyle.callout.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                         .lineLimit(1)
 
                     HStack(spacing: 6) {
                         Text(entry.formattedDate)
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
 
                         Text("•")
                             .foregroundColor(Color(hex: "555555"))
 
                         Text(formatDuration(entry.duration))
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                 }
@@ -246,7 +246,7 @@ struct SearchResultRow: View {
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .medium))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "555555"))
             }
             .padding(12)

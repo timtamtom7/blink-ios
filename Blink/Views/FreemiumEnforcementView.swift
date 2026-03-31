@@ -22,7 +22,7 @@ struct FreemiumEnforcementView: View {
                         onDismiss()
                     } label: {
                         Image(systemName: "xmark")
-                            .font(.system(size: 12, weight: .semibold))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                             .frame(width: 28, height: 28)
                             .background(Color(hex: "2a2a2a"))
@@ -50,11 +50,11 @@ struct FreemiumEnforcementView: View {
 
                 VStack(spacing: 10) {
                     Text("Daily Limit Reached")
-                        .font(.system(size: 22, weight: .bold))
+                        .font(BlinkFontStyle.title.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
 
                     Text(reason)
-                        .font(.system(size: 15))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
@@ -66,9 +66,9 @@ struct FreemiumEnforcementView: View {
                     } label: {
                         HStack {
                             Image(systemName: "crown.fill")
-                                .font(.system(size: 14))
+                                .font(BlinkFontStyle.callout.font)
                             Text("Upgrade to Memories")
-                                .font(.system(size: 17, weight: .semibold))
+                                .font(BlinkFontStyle.title3.font)
                         }
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -83,14 +83,14 @@ struct FreemiumEnforcementView: View {
                         onDismiss()
                     } label: {
                         Text("Maybe Later")
-                            .font(.system(size: 15))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                     .accessibilityLabel("Maybe Later")
                     .accessibilityHint("Dismisses this screen and continues with the free plan")
 
                     Text("You'll be asked again tomorrow")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "8a8a8a").opacity(0.7))
                 }
                 .padding(.horizontal, 24)
@@ -109,11 +109,11 @@ struct DurationLimitBanner: View {
         VStack(spacing: 8) {
             HStack {
                 Image(systemName: "clock.badge.exclamationmark")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "ff3b30"))
 
                 Text("Free clips are capped at \(Int(maxDuration)) seconds")
-                    .font(.system(size: 13))
+                    .font(BlinkFontStyle.subheadline.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Spacer()
@@ -121,14 +121,14 @@ struct DurationLimitBanner: View {
                 Button("Upgrade") {
                     onUpgrade()
                 }
-                .font(.system(size: 12, weight: .semibold))
+                .font(BlinkFontStyle.footnote.font)
                 .foregroundColor(Color(hex: "ff3b30"))
                 .accessibilityLabel("Upgrade")
                 .accessibilityHint("Opens the subscription plan to upgrade your account")
             }
 
             Text("Upgrade to Memories for up to 60-second clips")
-                .font(.system(size: 11))
+                .font(BlinkFontStyle.caption.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -154,26 +154,26 @@ struct FreePlanNudgeView: View {
                         .frame(width: 40, height: 40)
 
                     Text("\(clipCount)")
-                        .font(.system(size: 15, weight: .bold))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                 }
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Free Plan")
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
 
                     Text(clipCount == 0
                         ? "Record your first clip today"
                         : "1 clip/day • 30s limit • 30-day storage")
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
 
                 Spacer()
 
                 Text("Upgrade")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)

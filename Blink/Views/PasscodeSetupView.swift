@@ -29,11 +29,11 @@ struct PasscodeSetupView: View {
                 // Header
                 VStack(spacing: 8) {
                     Text(step == .confirm ? "Confirm Passcode" : "Create Passcode")
-                        .font(.system(size: 22, weight: .bold))
+                        .font(BlinkFontStyle.title.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
 
                     Text(step == .confirm ? "Enter your passcode again" : "Enter a 6-digit passcode")
-                        .font(.system(size: 15))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
 
@@ -66,7 +66,7 @@ struct PasscodeSetupView: View {
         .overlay {
             if wrongPasscode {
                 Text(step == .confirm ? "Passcodes don't match" : "Try again")
-                    .font(.system(size: 12))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                     .offset(y: 30)
             }
@@ -104,7 +104,7 @@ struct PasscodeSetupView: View {
                 deleteDigit()
             } label: {
                 Image(systemName: "delete.left")
-                    .font(.system(size: 22))
+                    .font(BlinkFontStyle.title.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .frame(width: 72, height: 72)
             }

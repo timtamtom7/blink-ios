@@ -102,12 +102,12 @@ struct TitleInputGraphic: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Clip Title")
-                .font(.system(size: 12, weight: .medium))
+                .font(BlinkFontStyle.footnote.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
 
             HStack {
                 TextField("Add a title…", text: $text)
-                    .font(.system(size: 16))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(.white)
                     .padding(12)
                     .background(Color(hex: "1e1e1e"))
@@ -118,7 +118,7 @@ struct TitleInputGraphic: View {
                     )
 
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 22))
+                    .font(BlinkFontStyle.title.font)
                     .foregroundColor(Color(hex: "ff3b30"))
             }
         }
@@ -138,7 +138,7 @@ struct MonthBrowserGraphic: View {
                 ForEach(Array(months.enumerated()), id: \.offset) { idx, month in
                     VStack(spacing: 4) {
                         Text(month)
-                            .font(.system(size: 12, weight: .semibold))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(idx == 2 ? .white : Color(hex: "8a8a8a"))
 
                         if idx == 2 || idx == 5 {
@@ -152,7 +152,7 @@ struct MonthBrowserGraphic: View {
                             }
                         } else {
                             Text("—")
-                                .font(.system(size: 9))
+                                .font(BlinkFontStyle.caption2.font)
                                 .foregroundColor(Color(hex: "333333"))
                         }
                     }
@@ -184,12 +184,12 @@ struct ExportShareButtonGraphic: View {
                         .frame(width: 52, height: 52)
 
                     Image(systemName: "square.and.arrow.down.fill")
-                        .font(.system(size: 20))
+                        .font(BlinkFontStyle.title2.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                 }
 
                 Text("Save to\nCamera Roll")
-                    .font(.system(size: 10, weight: .medium))
+                    .font(BlinkFontStyle.caption2.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
             }
@@ -203,12 +203,12 @@ struct ExportShareButtonGraphic: View {
                         .frame(width: 52, height: 52)
 
                     Image(systemName: "square.and.arrow.up")
-                        .font(.system(size: 20))
+                        .font(BlinkFontStyle.title2.font)
                         .foregroundColor(.white)
                 }
 
                 Text("Share")
-                    .font(.system(size: 10, weight: .medium))
+                    .font(BlinkFontStyle.caption2.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
             .frame(width: 80)
@@ -221,12 +221,12 @@ struct ExportShareButtonGraphic: View {
                         .frame(width: 52, height: 52)
 
                     Image(systemName: "scissors")
-                        .font(.system(size: 20))
+                        .font(BlinkFontStyle.title2.font)
                         .foregroundColor(.white)
                 }
 
                 Text("Trim")
-                    .font(.system(size: 10, weight: .medium))
+                    .font(BlinkFontStyle.caption2.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
             .frame(width: 80)
@@ -354,7 +354,7 @@ struct ClipCompositionGraphic: View {
                 .frame(width: 36, height: 36)
                 .overlay(
                     Image(systemName: "play.fill")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(.white)
                         .offset(x: 1)
                 )
@@ -423,10 +423,10 @@ struct YearInReviewGraphic: View {
             // Dynamic clip count
             VStack(spacing: 2) {
                 Text("\(clipCount)")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .font(BlinkFontStyle.largeTitle.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
                 Text("clips")
-                    .font(.system(size: 11, weight: .medium))
+                    .font(BlinkFontStyle.caption.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
             .accessibilityLabel("\(clipCount) clips recorded this year")
@@ -529,7 +529,7 @@ struct YearInReviewView: View {
                             .font(.system(size: 64, weight: .bold, design: .rounded))
                             .foregroundColor(Color(hex: "f5f5f5"))
                         Text("of \(totalDaysElapsed) days")
-                            .font(.system(size: 15))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                 }
@@ -540,7 +540,7 @@ struct YearInReviewView: View {
                         .foregroundColor(Color(hex: "f5f5f5"))
 
                     Text(yearInsightText)
-                        .font(.system(size: 15))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
@@ -556,7 +556,7 @@ struct YearInReviewView: View {
                     dismiss()
                 } label: {
                     Text("Done")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(BlinkFontStyle.title3.font)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 52)
@@ -647,7 +647,7 @@ struct macOSAppMockup: View {
                     }
                     Spacer()
                     Text("Blink")
-                        .font(.system(size: 13, weight: .medium))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                     Spacer()
                     Spacer().frame(width: 52)
@@ -663,10 +663,10 @@ struct macOSAppMockup: View {
                         ForEach(["Recordings", "Calendar", "On This Day", "Highlights", "Settings"], id: \.self) { item in
                             HStack(spacing: 8) {
                                 Image(systemName: sidebarIcon(for: item))
-                                    .font(.system(size: 12))
+                                    .font(BlinkFontStyle.footnote.font)
                                     .frame(width: 16)
                                 Text(item)
-                                    .font(.system(size: 13))
+                                    .font(BlinkFontStyle.subheadline.font)
                                 Spacer()
                             }
                             .padding(.horizontal, 12)
@@ -688,16 +688,16 @@ struct macOSAppMockup: View {
                         // Header
                         HStack {
                             Text("2025")
-                                .font(.system(size: 20, weight: .bold))
+                                .font(BlinkFontStyle.title2.font)
                                 .foregroundColor(Color(hex: "f5f5f5"))
                             Spacer()
                             Button {
                             } label: {
                                 HStack(spacing: 4) {
                                     Image(systemName: "square.and.arrow.up")
-                                        .font(.system(size: 12))
+                                        .font(BlinkFontStyle.footnote.font)
                                     Text("Export Year")
-                                        .font(.system(size: 12, weight: .medium))
+                                        .font(BlinkFontStyle.footnote.font)
                                 }
                                 .foregroundColor(Color(hex: "ff3b30"))
                                 .padding(.horizontal, 10)
@@ -725,11 +725,11 @@ struct macOSAppMockup: View {
                                                 Spacer()
                                                 HStack {
                                                     Text("Dec \(1 + i)")
-                                                        .font(.system(size: 10, weight: .medium))
+                                                        .font(BlinkFontStyle.caption2.font)
                                                         .foregroundColor(.white)
                                                     Spacer()
                                                     Text("14s")
-                                                        .font(.system(size: 9))
+                                                        .font(BlinkFontStyle.caption2.font)
                                                         .foregroundColor(.white.opacity(0.7))
                                                 }
                                                 .padding(6)
@@ -808,14 +808,14 @@ struct YearInReviewCompilationMockup: View {
                             .font(.system(size: 48, weight: .bold, design: .rounded))
                             .foregroundColor(Color(hex: "f5f5f5"))
                         Text("clips")
-                            .font(.system(size: 13))
+                            .font(BlinkFontStyle.subheadline.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                 }
 
                 // Year
                 Text("2025")
-                    .font(.system(size: 22, weight: .bold))
+                    .font(BlinkFontStyle.title.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 // Clips strip
@@ -834,7 +834,7 @@ struct YearInReviewCompilationMockup: View {
                 }
 
                 Text("Your year, compiled.")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
             .padding(24)

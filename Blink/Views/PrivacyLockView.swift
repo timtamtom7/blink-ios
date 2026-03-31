@@ -12,6 +12,7 @@ struct PrivacyLockView: View {
     @State private var wrongPasscode: Bool = false
     @State private var isAuthenticating: Bool = false
     @State private var biometricTask: Task<Void, Never>?
+    @State private var dotsShakeOffset: CGFloat = 0
 
     var body: some View {
         ZStack {
@@ -27,11 +28,11 @@ struct PrivacyLockView: View {
                 // Title
                 VStack(spacing: 8) {
                     Text(lockTitle)
-                        .font(.system(size: 22, weight: .bold))
+                        .font(BlinkFontStyle.title.font)
                         .foregroundColor(Theme.textPrimary)
 
                     Text(lockSubtitle)
-                        .font(.system(size: 15))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Theme.textTertiary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
@@ -90,18 +91,11 @@ struct PrivacyLockView: View {
                     .accessibilityLabel("Passcode, \(currentPasscode.count) of 6 digits entered")
             }
         }
-        .background(
-            GeometryReader { _ in
-                Color.clear
-                    .onAppear {
-                        dotsViewHolder = true
-                    }
-            }
-        )
+        .offset(x: dotsShakeOffset)
         .overlay {
             if wrongPasscode {
                 Text("Wrong passcode")
-                    .font(.system(size: 12))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Theme.accent)
                     .offset(y: 30)
             }
@@ -143,7 +137,7 @@ struct PrivacyLockView: View {
                 deleteDigit()
             } label: {
                 Image(systemName: "delete.left")
-                    .font(.system(size: 22))
+                    .font(BlinkFontStyle.title.font)
                     .foregroundColor(Theme.textPrimary)
                     .frame(width: 72, height: 72)
             }
@@ -245,11 +239,19 @@ struct PrivacyLockView: View {
     }
 
     private func shakeAnimation() {
-        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        animation.timingFunction = CAMediaTimingFunction(name: .linear)
-        animation.duration = 0.5
-        animation.values = [-10, 10, -8, 8, -5, 5, -3, 3, 0]
-        // Animate the passcode dots container
+        // SwiftUI-native shake: cycle through horizontal offsets
+        let values: [CGFloat] = [-10, 10, -8, 8, -5, 5, -3, 3, 0]
+        let totalDuration = 0.5
+        let stepDuration = totalDuration / Double(values.count - 1)
+
+        for (i, v) in values.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + stepDuration * Double(i)) {
+                dotsShakeOffset = v
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + totalDuration) {
+            dotsShakeOffset = 0
+        }
     }
 }
 
@@ -264,17 +266,17 @@ struct PrivacyLockButtonGraphic: View {
                     .frame(width: 44, height: 44)
 
                 Image(systemName: "lock.fill")
-                    .font(.system(size: 18))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Theme.accent)
             }
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("App Lock")
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Theme.textPrimary)
 
                 Text("Require passcode to open Blink")
-                    .font(.system(size: 11))
+                    .font(BlinkFontStyle.caption.font)
                     .foregroundColor(Theme.textTertiary)
             }
 
@@ -314,11 +316,11 @@ struct LockClipView: View {
 
             VStack(spacing: 8) {
                 Text(isLocked ? "Clip locked" : "Clip unlocked")
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Theme.textPrimary)
 
                 Text(isLocked ? "This clip is hidden from Year in Review and On This Day." : "This clip appears in your year highlights.")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Theme.textTertiary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
@@ -330,7 +332,7 @@ struct LockClipView: View {
                     Image(systemName: isLocked ? "eye.slash.fill" : "eye.fill")
                         .foregroundColor(Theme.accent)
                     Text(isLocked ? "Hide from highlights" : "Show in highlights")
-                        .font(.system(size: 15))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Theme.textPrimary)
                 }
             }
@@ -341,7 +343,7 @@ struct LockClipView: View {
                 dismiss()
             } label: {
                 Text("Done")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 48)

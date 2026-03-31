@@ -43,7 +43,7 @@ struct AIHighlightsView: View {
                             generateReel()
                         } label: {
                             Image(systemName: "film")
-                                .font(.system(size: 16, weight: .medium))
+                                .font(BlinkFontStyle.body.font)
                                 .foregroundColor(Color(hex: "ff3b30"))
                         }
                     }
@@ -88,11 +88,11 @@ struct AIHighlightsView: View {
 
             VStack(spacing: 6) {
                 Text("Analyzing your clips…")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Finding your most meaningful moments")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
         }
@@ -106,11 +106,11 @@ struct AIHighlightsView: View {
 
             VStack(spacing: 6) {
                 Text("No highlights yet")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Record more clips to discover\nyour most meaningful moments.")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
             }
@@ -121,7 +121,7 @@ struct AIHighlightsView: View {
                 }
             } label: {
                 Text("Analyze Now")
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(.white)
                     .frame(width: 160, height: 44)
                     .background(Color(hex: "ff3b30"))
@@ -161,17 +161,17 @@ struct AIHighlightsView: View {
     private var yearInsightsHeader: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Your Year")
-                .font(.system(size: 20, weight: .bold))
+                .font(BlinkFontStyle.title2.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
 
             let insights = aiService.yearInsights(entries: videoStore.entries)
             ForEach(insights, id: \.self) { insight in
                 HStack(spacing: 6) {
                     Image(systemName: "sparkles")
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                     Text(insight)
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "c0c0c0"))
                 }
             }
@@ -211,7 +211,7 @@ struct AIHighlightsView: View {
                     VStack {
                         HStack {
                             Image(systemName: "star.fill")
-                                .font(.system(size: 12))
+                                .font(BlinkFontStyle.footnote.font)
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 5)
@@ -230,7 +230,7 @@ struct AIHighlightsView: View {
                         .frame(width: 56, height: 56)
                         .overlay(
                             Image(systemName: "play.fill")
-                                .font(.system(size: 20))
+                                .font(BlinkFontStyle.title2.font)
                                 .foregroundColor(Color(hex: "0a0a0a"))
                                 .offset(x: 1)
                         )
@@ -240,24 +240,24 @@ struct AIHighlightsView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 8) {
                         Image(systemName: highlight.insightType.icon)
-                            .font(.system(size: 14))
+                            .font(BlinkFontStyle.callout.font)
                             .foregroundColor(Color(hex: "ff3b30"))
 
                         Text(highlight.insightText)
-                            .font(.system(size: 15, weight: .semibold))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(Color(hex: "f5f5f5"))
                             .lineLimit(2)
                     }
 
                     HStack {
                         Text(highlight.entry.displayTitle)
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
 
                         Spacer()
 
                         Text("Tap to watch")
-                            .font(.system(size: 11))
+                            .font(BlinkFontStyle.caption.font)
                             .foregroundColor(Color(hex: "ff3b30"))
                     }
                 }
@@ -305,16 +305,16 @@ struct AIHighlightsView: View {
                 VStack(alignment: .leading, spacing: 3) {
                     HStack(spacing: 4) {
                         Image(systemName: highlight.insightType.icon)
-                            .font(.system(size: 10))
+                            .font(BlinkFontStyle.caption2.font)
                             .foregroundColor(Color(hex: "ff3b30"))
                         Text(highlight.insightText)
-                            .font(.system(size: 13, weight: .medium))
+                            .font(BlinkFontStyle.subheadline.font)
                             .foregroundColor(Color(hex: "f5f5f5"))
                             .lineLimit(1)
                     }
 
                     Text(highlight.entry.formattedDate)
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
 
@@ -351,11 +351,11 @@ struct AIHighlightsView: View {
 
                     VStack(spacing: 6) {
                         Text("Creating your reel…")
-                            .font(.system(size: 17, weight: .semibold))
+                            .font(BlinkFontStyle.title3.font)
                             .foregroundColor(Color(hex: "f5f5f5"))
 
                         Text("Compiling your best moments")
-                            .font(.system(size: 14))
+                            .font(BlinkFontStyle.callout.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                 }
@@ -413,7 +413,7 @@ struct HighlightReelView: View {
                 onDismiss()
             } label: {
                 Image(systemName: "xmark")
-                    .font(.system(size: 16, weight: .medium))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(.white)
                     .frame(width: 44, height: 44)
             }
@@ -459,7 +459,7 @@ struct HighlightPlaybackView: View {
                         dismiss()
                     } label: {
                         Image(systemName: "xmark")
-                            .font(.system(size: 16, weight: .medium))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(.white)
                             .frame(width: 44, height: 44)
                     }
@@ -469,9 +469,9 @@ struct HighlightPlaybackView: View {
                     // AI insight badge
                     HStack(spacing: 6) {
                         Image(systemName: highlight.insightType.icon)
-                            .font(.system(size: 11))
+                            .font(BlinkFontStyle.caption.font)
                         Text(highlight.insightText)
-                            .font(.system(size: 13, weight: .medium))
+                            .font(BlinkFontStyle.subheadline.font)
                             .lineLimit(1)
                     }
                     .foregroundColor(.white)

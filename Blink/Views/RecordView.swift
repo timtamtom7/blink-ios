@@ -122,7 +122,7 @@ struct RecordView: View {
                                     .tint(Color(hex: "ff3b30"))
                                     .scaleEffect(1.5)
                                 Text("Setting up camera...")
-                                    .font(.system(size: 14))
+                                    .font(BlinkFontStyle.callout.font)
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
                         }
@@ -248,21 +248,21 @@ struct RecordView: View {
                     selectedPlaybackEntry = todayEntry
                 } label: {
                     Text("Last clip: \(todayEntry.formattedDate)")
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
                 .accessibilityLabel("Last clip from \(todayEntry.formattedDate)")
                 .accessibilityHint("Double tap to view this clip")
             } else {
                 Text("No clip recorded today")
-                    .font(.system(size: 13))
+                    .font(BlinkFontStyle.subheadline.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .accessibilityLabel("No clip recorded today")
                     .accessibilityHint("Record your first clip to start your Blink diary")
             }
 
             Text("This year: \(videoStore.clipCountThisYear()) clips")
-                .font(.system(size: 13, weight: .medium))
+                .font(BlinkFontStyle.subheadline.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
                 .accessibilityLabel("\(videoStore.clipCountThisYear()) clips recorded this year")
         }
@@ -295,7 +295,7 @@ struct RecordView: View {
                     .foregroundColor(Color(hex: "ff3b30"))
 
                 Text("Saved")
-                    .font(.system(size: 20, weight: .semibold))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
             }
         }

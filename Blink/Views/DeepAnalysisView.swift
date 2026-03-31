@@ -37,7 +37,7 @@ struct DeepAnalysisView: View {
                             }
                         } label: {
                             Image(systemName: "arrow.clockwise")
-                                .font(.system(size: 16, weight: .medium))
+                                .font(BlinkFontStyle.body.font)
                                 .foregroundColor(Color(hex: "ff3b30"))
                         }
                     }
@@ -76,11 +76,11 @@ struct DeepAnalysisView: View {
 
             VStack(spacing: 6) {
                 Text("Analyzing your memories…")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Discovering patterns in your life")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
         }
@@ -94,11 +94,11 @@ struct DeepAnalysisView: View {
 
             VStack(spacing: 6) {
                 Text("Ready to discover")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Analyze your clips to uncover\npatterns and insights about your life.")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
             }
@@ -109,7 +109,7 @@ struct DeepAnalysisView: View {
                 }
             } label: {
                 Text("Start Analysis")
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(.white)
                     .frame(width: 160, height: 44)
                     .background(Color(hex: "ff3b30"))
@@ -144,7 +144,7 @@ struct DeepAnalysisView: View {
     private var insightsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Life Insights")
-                .font(.system(size: 18, weight: .bold))
+                .font(BlinkFontStyle.title3.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
                 .padding(.horizontal, 16)
 
@@ -163,13 +163,13 @@ struct DeepAnalysisView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Image(systemName: insight.icon)
-                    .font(.system(size: 20))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "ff3b30"))
 
                 Spacer()
 
                 Text(insightTypeLabel(insight.type))
-                    .font(.system(size: 10, weight: .medium))
+                    .font(BlinkFontStyle.caption2.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .padding(.horizontal, 6)
                     .padding(.vertical, 3)
@@ -178,11 +178,11 @@ struct DeepAnalysisView: View {
             }
 
             Text(insight.title)
-                .font(.system(size: 15, weight: .semibold))
+                .font(BlinkFontStyle.body.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
 
             Text(insight.description)
-                .font(.system(size: 12))
+                .font(BlinkFontStyle.footnote.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
                 .lineLimit(3)
         }
@@ -204,7 +204,7 @@ struct DeepAnalysisView: View {
     private var sceneBreakdownSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Scene Breakdown")
-                .font(.system(size: 18, weight: .bold))
+                .font(BlinkFontStyle.title3.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
                 .padding(.horizontal, 16)
 
@@ -227,22 +227,22 @@ struct DeepAnalysisView: View {
         } label: {
             HStack(spacing: 12) {
                 Image(systemName: sceneIcon(scene))
-                    .font(.system(size: 16))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                     .frame(width: 28)
 
                 Text(scene.rawValue)
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Spacer()
 
                 Text("\(count) clips")
-                    .font(.system(size: 13))
+                    .font(BlinkFontStyle.subheadline.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "555555"))
             }
             .padding(12)
@@ -277,7 +277,7 @@ struct DeepAnalysisView: View {
     private var qualitySection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Quality Overview")
-                .font(.system(size: 18, weight: .bold))
+                .font(BlinkFontStyle.title3.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
                 .padding(.horizontal, 16)
 
@@ -296,7 +296,7 @@ struct DeepAnalysisView: View {
         VStack(spacing: 8) {
             HStack {
                 Image(systemName: icon)
-                    .font(.system(size: 18))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(color)
                 Spacer()
             }
@@ -304,10 +304,10 @@ struct DeepAnalysisView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(value)
-                        .font(.system(size: 20, weight: .bold))
+                        .font(BlinkFontStyle.title2.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                     Text(title)
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
                 Spacer()
@@ -322,7 +322,7 @@ struct DeepAnalysisView: View {
     private var faceSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("People")
-                .font(.system(size: 18, weight: .bold))
+                .font(BlinkFontStyle.title3.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
                 .padding(.horizontal, 16)
 
@@ -333,17 +333,17 @@ struct DeepAnalysisView: View {
             VStack(spacing: 8) {
                 HStack {
                     Image(systemName: "person.2.fill")
-                        .font(.system(size: 16))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "ff3b30"))
 
                     Text("Clips with people")
-                        .font(.system(size: 15))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
 
                     Spacer()
 
                     Text("\(faceCount) of \(totalCount)")
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
 
@@ -416,7 +416,7 @@ struct SceneEntriesView: View {
                 .foregroundColor(Color(hex: "333333"))
 
             Text("No clips found")
-                .font(.system(size: 15, weight: .medium))
+                .font(BlinkFontStyle.body.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
         }
     }
@@ -451,7 +451,7 @@ struct SceneEntriesView: View {
             }
 
             Text(entry.formattedDate)
-                .font(.system(size: 11))
+                .font(BlinkFontStyle.caption.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
                 .padding(.vertical, 6)
         }

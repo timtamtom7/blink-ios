@@ -101,7 +101,7 @@ struct OnThisDayView: View {
                 onDismiss()
             } label: {
                 Image(systemName: "xmark")
-                    .font(.system(size: 16, weight: .medium))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .frame(width: 44, height: 44)
             }
@@ -110,11 +110,11 @@ struct OnThisDayView: View {
 
             VStack(spacing: 2) {
                 Text("On This Day")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text(formattedDate)
-                    .font(.system(size: 13))
+                    .font(BlinkFontStyle.subheadline.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
 
@@ -142,11 +142,11 @@ struct OnThisDayView: View {
 
             VStack(spacing: 8) {
                 Text("No memories from this day")
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Clips from today in previous years will appear here.")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
@@ -163,7 +163,7 @@ struct OnThisDayView: View {
                 .foregroundColor(Color(hex: "333333"))
 
             Text("No clips on this date in past years")
-                .font(.system(size: 15))
+                .font(BlinkFontStyle.body.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
         }
         .padding(.vertical, 40)
@@ -176,11 +176,11 @@ struct OnThisDayView: View {
                 .foregroundColor(Color(hex: "333333"))
 
             Text("Analyze clips to discover similar moments")
-                .font(.system(size: 15))
+                .font(BlinkFontStyle.body.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
 
             Text("Go to AI Highlights to analyze your clips")
-                .font(.system(size: 13))
+                .font(BlinkFontStyle.subheadline.font)
                 .foregroundColor(Color(hex: "555555"))
         }
         .padding(.vertical, 40)
@@ -258,17 +258,17 @@ struct SimilarMoodSection: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: sceneIcon)
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "ff3b30"))
 
                 Text("\(sceneType.rawValue) Moments")
-                    .font(.system(size: 15, weight: .bold))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Spacer()
 
                 Text("\(entries.count) clips")
-                    .font(.system(size: 12))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
 
@@ -282,7 +282,7 @@ struct SimilarMoodSection: View {
 
             if entries.count > 3 {
                 Text("+ \(entries.count - 3) more")
-                    .font(.system(size: 13))
+                    .font(BlinkFontStyle.subheadline.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                     .padding(.top, 4)
             }
@@ -333,20 +333,20 @@ struct YearSection: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text(String(year))
-                    .font(.system(size: 15, weight: .bold))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("·")
                     .foregroundColor(Color(hex: "8a8a8a"))
 
                 Text(yearsAgoText)
-                    .font(.system(size: 13))
+                    .font(BlinkFontStyle.subheadline.font)
                     .foregroundColor(Color(hex: "ff3b30"))
 
                 Spacer()
 
                 Text("\(entries.count) clip\(entries.count == 1 ? "" : "s")")
-                    .font(.system(size: 12))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
 
@@ -391,12 +391,12 @@ struct OnThisDayCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 if let title = entry.title, !title.isEmpty {
                     Text(title)
-                        .font(.system(size: 14, weight: .medium))
+                        .font(BlinkFontStyle.callout.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                         .lineLimit(1)
                 } else {
                     Text(entry.defaultTitle)
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                         .lineLimit(1)
                 }
@@ -407,9 +407,9 @@ struct OnThisDayCard: View {
 
                 HStack(spacing: 4) {
                     Image(systemName: "clock")
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                     Text(formatDuration(entry.duration))
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                 }
                 .foregroundColor(Color(hex: "666666"))
             }
@@ -417,7 +417,7 @@ struct OnThisDayCard: View {
             Spacer()
 
             Image(systemName: "play.circle.fill")
-                .font(.system(size: 28))
+                .font(BlinkFontStyle.largeTitle.font)
                 .foregroundColor(Color(hex: "ff3b30"))
         }
         .padding(10)
@@ -453,24 +453,24 @@ struct OnThisDayButtonGraphic: View {
                     .frame(width: 44, height: 44)
 
                 Image(systemName: "clock.arrow.circlepath")
-                    .font(.system(size: 18))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "ff3b30"))
             }
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("On This Day")
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Same date in past years")
-                    .font(.system(size: 11))
+                    .font(BlinkFontStyle.caption.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
 
             Spacer()
 
             Image(systemName: "chevron.right")
-                .font(.system(size: 12, weight: .medium))
+                .font(BlinkFontStyle.footnote.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
         }
         .padding(12)
@@ -491,9 +491,9 @@ struct OnThisDayCalendarBadge: View {
     var body: some View {
         HStack(spacing: 3) {
             Image(systemName: "clock.arrow.circlepath")
-                .font(.system(size: 11))
+                .font(BlinkFontStyle.caption.font)
             Text("\(count)")
-                .font(.system(size: 11, weight: .bold))
+                .font(BlinkFontStyle.caption.font)
         }
         .foregroundColor(Color(hex: "ff3b30"))
         .padding(.horizontal, 6)

@@ -13,11 +13,11 @@ struct CameraPermissionDeniedView: View {
 
             VStack(spacing: 12) {
                 Text("Camera access required")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Blink needs your camera to record daily moments. Without it, there's nothing to Blink.")
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -31,9 +31,9 @@ struct CameraPermissionDeniedView: View {
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "gear")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(BlinkFontStyle.callout.font)
                     Text("Open Settings")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(BlinkFontStyle.title3.font)
                 }
                 .foregroundColor(.white)
                 .frame(width: 200, height: 48)
@@ -61,11 +61,11 @@ struct MicrophonePermissionDeniedView: View {
 
             VStack(spacing: 12) {
                 Text("Microphone access required")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Sound matters. Blink needs your microphone so your voice — not silence — becomes the memory.")
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -79,9 +79,9 @@ struct MicrophonePermissionDeniedView: View {
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "gear")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(BlinkFontStyle.callout.font)
                     Text("Open Settings")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(BlinkFontStyle.title3.font)
                 }
                 .foregroundColor(.white)
                 .frame(width: 200, height: 48)
@@ -117,17 +117,17 @@ struct StorageFullView: View {
                     .rotationEffect(.degrees(-90))
 
                 Image(systemName: "externaldrive.fill")
-                    .font(.system(size: 28))
+                    .font(BlinkFontStyle.largeTitle.font)
                     .foregroundColor(Color(hex: "ff3b30"))
             }
 
             VStack(spacing: 12) {
                 Text("Storage full")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Your device has run out of space. Delete some files or apps to continue recording your moments.")
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -137,10 +137,10 @@ struct StorageFullView: View {
             VStack(spacing: 8) {
                 HStack(spacing: 8) {
                     Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                     Text("Tip: Upgrade to Archive for cloud backup")
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -149,7 +149,7 @@ struct StorageFullView: View {
                 onDismiss()
             } label: {
                 Text("OK")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(.white)
                     .frame(width: 120, height: 44)
                     .background(Color(hex: "333333"))
@@ -179,11 +179,11 @@ struct ClipSaveFailedView: View {
 
             VStack(spacing: 12) {
                 Text("This clip got a bit tangled")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("We couldn't save your moment this time — your storage might be full or an app update got in the way. Want to try again?")
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -196,9 +196,9 @@ struct ClipSaveFailedView: View {
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "arrow.clockwise")
-                            .font(.system(size: 14, weight: .medium))
+                            .font(BlinkFontStyle.callout.font)
                         Text("Try Again")
-                            .font(.system(size: 16, weight: .semibold))
+                            .font(BlinkFontStyle.title3.font)
                     }
                     .foregroundColor(.white)
                     .frame(width: 200, height: 48)
@@ -210,7 +210,7 @@ struct ClipSaveFailedView: View {
                     onDiscard()
                 } label: {
                     Text("Discard clip")
-                        .font(.system(size: 14))
+                        .font(BlinkFontStyle.callout.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -238,11 +238,11 @@ struct TrimSaveFailedView: View {
 
             VStack(spacing: 12) {
                 Text("Trim didn't save")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("We couldn't save your trimmed clip — don't worry, your original is still intact. Try again?")
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -255,9 +255,9 @@ struct TrimSaveFailedView: View {
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "arrow.clockwise")
-                            .font(.system(size: 14, weight: .medium))
+                            .font(BlinkFontStyle.callout.font)
                         Text("Try Again")
-                            .font(.system(size: 16, weight: .semibold))
+                            .font(BlinkFontStyle.title3.font)
                     }
                     .foregroundColor(.white)
                     .frame(width: 200, height: 48)
@@ -269,7 +269,7 @@ struct TrimSaveFailedView: View {
                     onDiscard()
                 } label: {
                     Text("Go back")
-                        .font(.system(size: 14))
+                        .font(BlinkFontStyle.callout.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -302,17 +302,17 @@ struct TrimStorageFullView: View {
                     .rotationEffect(.degrees(-90))
 
                 Image(systemName: "scissors")
-                    .font(.system(size: 28))
+                    .font(BlinkFontStyle.largeTitle.font)
                     .foregroundColor(Color(hex: "ff3b30"))
             }
 
             VStack(spacing: 12) {
                 Text("Storage's running low")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Your device needs a bit more room to save your trimmed clip. Export a few clips to your Camera Roll to free up space.")
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -322,10 +322,10 @@ struct TrimStorageFullView: View {
             VStack(spacing: 8) {
                 HStack(spacing: 8) {
                     Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                     Text("Tip: Export clips to Camera Roll to free space")
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -334,7 +334,7 @@ struct TrimStorageFullView: View {
                 onDismiss()
             } label: {
                 Text("OK")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(.white)
                     .frame(width: 120, height: 44)
                     .background(Color(hex: "333333"))
@@ -364,11 +364,11 @@ struct ExportFailedView: View {
 
             VStack(spacing: 12) {
                 Text("Couldn't save to Camera Roll")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Blink needs permission to save photos to your Camera Roll. Go to Settings > Blink > Photos and select \"All Photos\" or \"Selected.\"")
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -383,9 +383,9 @@ struct ExportFailedView: View {
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "gear")
-                            .font(.system(size: 14, weight: .medium))
+                            .font(BlinkFontStyle.callout.font)
                         Text("Open Settings")
-                            .font(.system(size: 16, weight: .semibold))
+                            .font(BlinkFontStyle.title3.font)
                     }
                     .foregroundColor(.white)
                     .frame(width: 200, height: 48)
@@ -397,7 +397,7 @@ struct ExportFailedView: View {
                     onDismiss()
                 } label: {
                     Text("Cancel")
-                        .font(.system(size: 14))
+                        .font(BlinkFontStyle.callout.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -436,18 +436,18 @@ struct EmptyCalendarView: View {
                     .frame(width: 30, height: 30)
                     .overlay(
                         Image(systemName: "video.fill")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     )
             }
 
             VStack(spacing: 12) {
                 Text("No clips yet")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(BlinkFontStyle.title2.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Your \(String(year)) Blink diary is blank. Every day you don't record is a day you'll never quite remember the same way.")
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -457,7 +457,7 @@ struct EmptyCalendarView: View {
             // Example of what to record
             VStack(alignment: .leading, spacing: 12) {
                 Text("What would you record today?")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 VStack(alignment: .leading, spacing: 8) {
@@ -476,9 +476,9 @@ struct EmptyCalendarView: View {
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "video.badge.plus")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(BlinkFontStyle.callout.font)
                     Text("Record your first moment")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(BlinkFontStyle.title3.font)
                 }
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
@@ -502,12 +502,12 @@ struct ExampleMomentRow: View {
     var body: some View {
         HStack(alignment: .top, spacing: 10) {
             Image(systemName: icon)
-                .font(.system(size: 12))
+                .font(BlinkFontStyle.footnote.font)
                 .foregroundColor(Color(hex: "ff3b30"))
                 .frame(width: 16)
 
             Text(text)
-                .font(.system(size: 12))
+                .font(BlinkFontStyle.footnote.font)
                 .foregroundColor(Color(hex: "c0c0c0"))
                 .italic()
         }

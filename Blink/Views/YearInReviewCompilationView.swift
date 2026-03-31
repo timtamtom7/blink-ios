@@ -51,11 +51,11 @@ struct YearInReviewCompilationView: View {
 
             VStack(spacing: 10) {
                 Text("\(year) in Blink")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(BlinkFontStyle.largeTitle.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("\(entries.count) moments captured")
-                    .font(.system(size: 16))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
 
@@ -70,9 +70,9 @@ struct YearInReviewCompilationView: View {
                 } label: {
                     HStack {
                         Image(systemName: "film")
-                            .font(.system(size: 15))
+                            .font(BlinkFontStyle.body.font)
                         Text("Generate My Reel")
-                            .font(.system(size: 17, weight: .semibold))
+                            .font(BlinkFontStyle.title3.font)
                     }
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -87,7 +87,7 @@ struct YearInReviewCompilationView: View {
                     onDismiss()
                 } label: {
                     Text("Maybe Later")
-                        .font(.system(size: 15))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -142,11 +142,11 @@ struct YearInReviewCompilationView: View {
 
             VStack(spacing: 6) {
                 Text("Creating your reel…")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Selecting the best \(topEntries.count) moments")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
         }
@@ -169,7 +169,7 @@ struct YearInReviewCompilationView: View {
                 onDismiss()
             } label: {
                 Image(systemName: "xmark")
-                    .font(.system(size: 16, weight: .medium))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(.white)
                     .frame(width: 44, height: 44)
             }
@@ -179,11 +179,11 @@ struct YearInReviewCompilationView: View {
         .overlay(alignment: .bottom) {
             VStack(spacing: 8) {
                 Text("\(year) in Blink")
-                    .font(.system(size: 16, weight: .bold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(.white)
 
                 Text("\(entries.count) moments, compiled")
-                    .font(.system(size: 13))
+                    .font(BlinkFontStyle.subheadline.font)
                     .foregroundColor(.white.opacity(0.7))
             }
             .padding(.bottom, 60)
@@ -276,11 +276,11 @@ struct YearProgressCard: View {
         VStack(spacing: 16) {
             HStack {
                 Text("Year Progress")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                 Spacer()
                 Text("\(clipsThisYear)/\(totalDays) days")
-                    .font(.system(size: 12))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "ff3b30"))
             }
 

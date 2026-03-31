@@ -140,7 +140,7 @@ struct CalendarView: View {
                                 showAIHighlights = true
                             } label: {
                                 Image(systemName: "sparkles")
-                                    .font(.system(size: 14, weight: .medium))
+                                    .font(BlinkFontStyle.callout.font)
                                     .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("AI Highlights")
@@ -150,7 +150,7 @@ struct CalendarView: View {
                                 showPublicFeed = true
                             } label: {
                                 Image(systemName: "globe")
-                                    .font(.system(size: 14, weight: .medium))
+                                    .font(BlinkFontStyle.callout.font)
                                     .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("Public feed")
@@ -160,7 +160,7 @@ struct CalendarView: View {
                                 showSearch = true
                             } label: {
                                 Image(systemName: "magnifyingglass")
-                                    .font(.system(size: 14, weight: .medium))
+                                    .font(BlinkFontStyle.callout.font)
                                     .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("Search clips")
@@ -170,7 +170,7 @@ struct CalendarView: View {
                                 showMonthBrowser = true
                             } label: {
                                 Image(systemName: "rectangle.stack")
-                                    .font(.system(size: 14, weight: .medium))
+                                    .font(BlinkFontStyle.callout.font)
                                     .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("Browse by month")
@@ -180,7 +180,7 @@ struct CalendarView: View {
                                 showExportOptions = true
                             } label: {
                                 Image(systemName: "square.and.arrow.up")
-                                    .font(.system(size: 14, weight: .medium))
+                                    .font(BlinkFontStyle.callout.font)
                                     .foregroundColor(Theme.textTertiary)
                             }
                             .accessibilityLabel("Export options")
@@ -280,24 +280,24 @@ struct CalendarView: View {
                         .frame(width: 48, height: 48)
 
                     Image(systemName: "clock.arrow.circlepath")
-                        .font(.system(size: 20))
+                        .font(BlinkFontStyle.title2.font)
                         .foregroundColor(Theme.accent)
                 }
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("On This Day")
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Theme.textPrimary)
 
                     Text("\(videoStore.onThisDayCount) moment\(videoStore.onThisDayCount == 1 ? "" : "s") from this date")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Theme.textTertiary)
                 }
 
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .medium))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Theme.textTertiary)
             }
             .padding(14)
@@ -329,7 +329,7 @@ struct CalendarView: View {
             Spacer()
 
             Text(String(selectedYear))
-                .font(.system(size: 20, weight: .bold))
+                .font(BlinkFontStyle.title2.font)
                 .foregroundColor(Theme.textPrimary)
                 .accessibilityLabel("\(selectedYear)")
 
@@ -368,17 +368,17 @@ struct CalendarView: View {
                     .rotationEffect(.degrees(-90))
 
                 Text("\(Int(Double(clipsThisYear) / Double(daysElapsedThisYear) * 100))%")
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .font(BlinkFontStyle.caption.font)
                     .foregroundColor(Theme.textPrimary)
             }
 
             VStack(alignment: .leading, spacing: 4) {
                 Text("\(clipsThisYear) moments recorded")
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Theme.textPrimary)
 
                 Text("\(daysElapsedThisYear) days into \(selectedYear)")
-                    .font(.system(size: 13))
+                    .font(BlinkFontStyle.subheadline.font)
                     .foregroundColor(Theme.textTertiary)
             }
 
@@ -390,9 +390,9 @@ struct CalendarView: View {
                 } label: {
                     HStack(spacing: 4) {
                         Text("Review")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(BlinkFontStyle.subheadline.font)
                         Image(systemName: "arrow.right")
-                            .font(.system(size: 11, weight: .medium))
+                            .font(BlinkFontStyle.caption.font)
                     }
                     .foregroundColor(Theme.accent)
                     .padding(.horizontal, 12)
@@ -495,14 +495,14 @@ struct MonthCard: View {
         VStack(spacing: 8) {
             HStack {
                 Text(monthName)
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Theme.textPrimary)
 
                 Spacer()
 
                 if clipsThisMonth > 0 {
                     Text("\(clipsThisMonth)")
-                        .font(.system(size: 11, weight: .bold))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Theme.accent)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 2)
@@ -515,7 +515,7 @@ struct MonthCard: View {
             LazyVGrid(columns: columns, spacing: 2) {
                 ForEach(dayLabels, id: \.self) { label in
                     Text(label)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Theme.textTertiary)
                         .frame(height: 12)
                 }
@@ -583,7 +583,7 @@ struct DayCell: View {
                         VStack {
                             Spacer()
                             Text(title)
-                                .font(.system(size: 6, weight: .medium))
+                                .font(BlinkFontStyle.caption2.font)
                                 .foregroundColor(.white)
                                 .lineLimit(1)
                                 .padding(.horizontal, 2)
@@ -601,7 +601,7 @@ struct DayCell: View {
 
                 // Day number overlay
                 Text("\(day)")
-                    .font(.system(size: 9, weight: .medium))
+                    .font(BlinkFontStyle.caption2.font)
                     .foregroundColor(entry != nil ? .white : Theme.textQuaternary)
             }
             .frame(width: 36, height: 36)

@@ -25,7 +25,7 @@ struct StorageDashboardView: View {
                         ProgressView()
                             .tint(Color(hex: "ff3b30"))
                         Text("Analyzing storage…")
-                            .font(.system(size: 14))
+                            .font(BlinkFontStyle.callout.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                 } else if let stats = dashboardService.stats {
@@ -81,7 +81,7 @@ struct StorageDashboardView: View {
         VStack(spacing: 16) {
             VStack(spacing: 4) {
                 Text("Blink has saved you")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
 
                 Text(stats.formattedTotalSaved)
@@ -89,17 +89,17 @@ struct StorageDashboardView: View {
                     .foregroundColor(Color(hex: "ff3b30"))
 
                 Text("in storage")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
 
             HStack(spacing: 24) {
                 VStack(spacing: 4) {
                     Text("\(stats.compressedCount)")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(BlinkFontStyle.title2.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                     Text("Compressed")
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
 
@@ -109,10 +109,10 @@ struct StorageDashboardView: View {
 
                 VStack(spacing: 4) {
                     Text("\(stats.duplicatesRemoved)")
-                        .font(.system(size: 20, weight: .bold))
+                        .font(BlinkFontStyle.title2.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                     Text("Duplicates Removed")
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
 
@@ -122,10 +122,10 @@ struct StorageDashboardView: View {
 
                 VStack(spacing: 4) {
                     Text(stats.formattedDuration)
-                        .font(.system(size: 20, weight: .bold))
+                        .font(BlinkFontStyle.title2.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                     Text("Total Footage")
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -143,7 +143,7 @@ struct StorageDashboardView: View {
     private func storageBreakdownCard(_ stats: StorageDashboardService.StorageStats) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Storage Breakdown")
-                .font(.system(size: 15, weight: .semibold))
+                .font(BlinkFontStyle.body.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
 
             VStack(spacing: 8) {
@@ -169,11 +169,11 @@ struct StorageDashboardView: View {
     private func storageRow(label: String, value: String) -> some View {
         HStack {
             Text(label)
-                .font(.system(size: 13))
+                .font(BlinkFontStyle.subheadline.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
             Spacer()
             Text(value)
-                .font(.system(size: 13, weight: .medium))
+                .font(BlinkFontStyle.subheadline.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
         }
     }
@@ -183,16 +183,16 @@ struct StorageDashboardView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Duplicates")
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
 
                     if deduplicationService.duplicates.isEmpty {
                         Text("No duplicates detected")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     } else {
                         Text("\(deduplicationService.duplicates.count) groups found")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "ff3b30"))
                     }
                 }
@@ -210,7 +210,7 @@ struct StorageDashboardView: View {
                         }
                     } label: {
                         Text("Scan")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(BlinkFontStyle.subheadline.font)
                             .foregroundColor(Color(hex: "ff3b30"))
                     }
                 }
@@ -223,13 +223,13 @@ struct StorageDashboardView: View {
                     } label: {
                         HStack {
                             Text("\(group.entries.count) similar clips")
-                                .font(.system(size: 13))
+                                .font(BlinkFontStyle.subheadline.font)
                                 .foregroundColor(Color(hex: "f5f5f5"))
 
                             Spacer()
 
                             Image(systemName: "chevron.right")
-                                .font(.system(size: 12))
+                                .font(BlinkFontStyle.footnote.font)
                                 .foregroundColor(Color(hex: "8a8a8a"))
                         }
                         .padding(10)
@@ -250,11 +250,11 @@ struct StorageDashboardView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Smart Compression")
-                        .font(.system(size: 15, weight: .semibold))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
 
                     Text("Clips older than 90 days are compressed automatically")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                         .lineLimit(2)
                 }
@@ -266,7 +266,7 @@ struct StorageDashboardView: View {
                         ProgressView()
                             .tint(Color(hex: "ff3b30"))
                         Text("\(Int(compressionService.compressionProgress * 100))%")
-                            .font(.system(size: 10))
+                            .font(BlinkFontStyle.caption2.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                 } else {
@@ -277,7 +277,7 @@ struct StorageDashboardView: View {
                         }
                     } label: {
                         Text("Compress Now")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(BlinkFontStyle.subheadline.font)
                             .foregroundColor(Color(hex: "ff3b30"))
                     }
                 }
@@ -287,19 +287,19 @@ struct StorageDashboardView: View {
             if !candidates.isEmpty {
                 HStack {
                     Image(systemName: "arrow.down.circle.fill")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                     Text("\(candidates.count) clips eligible for compression")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             } else if stats.compressedCount > 0 {
                 HStack {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(.green)
                     Text("All eligible clips are compressed")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -317,11 +317,11 @@ struct StorageDashboardView: View {
                 .foregroundColor(Color(hex: "333333"))
 
             Text("No clips yet")
-                .font(.system(size: 17, weight: .semibold))
+                .font(BlinkFontStyle.title3.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
 
             Text("Record your first clip to see storage stats")
-                .font(.system(size: 14))
+                .font(BlinkFontStyle.callout.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
         }
     }
@@ -344,18 +344,18 @@ struct DuplicateDetailSheet: View {
 
                 VStack(spacing: 16) {
                     Text("Similarity: \(Int(group.similarity * 100))%")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(BlinkFontStyle.callout.font)
                         .foregroundColor(Color(hex: "ff3b30"))
 
                     ForEach(group.entries, id: \.id) { entry in
                         HStack {
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(entry.displayTitle)
-                                    .font(.system(size: 14, weight: .medium))
+                                    .font(BlinkFontStyle.callout.font)
                                     .foregroundColor(Color(hex: "f5f5f5"))
 
                                 Text("\(Int(entry.duration))s")
-                                    .font(.system(size: 12))
+                                    .font(BlinkFontStyle.footnote.font)
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
 
@@ -363,7 +363,7 @@ struct DuplicateDetailSheet: View {
 
                             if entry.id == group.suggested?.id {
                                 Text("Keep")
-                                    .font(.system(size: 12, weight: .medium))
+                                    .font(BlinkFontStyle.footnote.font)
                                     .foregroundColor(.green)
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 5)
@@ -377,7 +377,7 @@ struct DuplicateDetailSheet: View {
                                     }
                                 } label: {
                                     Text("Delete")
-                                        .font(.system(size: 12, weight: .medium))
+                                        .font(BlinkFontStyle.footnote.font)
                                         .foregroundColor(Color(hex: "ff3b30"))
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)

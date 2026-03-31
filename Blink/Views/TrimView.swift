@@ -133,7 +133,7 @@ struct TrimView: View {
                 onCancel()
             } label: {
                 Text("Cancel")
-                    .font(.system(size: 16, weight: .medium))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
             .accessibilityLabel("Cancel trim")
@@ -141,7 +141,7 @@ struct TrimView: View {
             Spacer()
 
             Text("Trim")
-                .font(.system(size: 17, weight: .semibold))
+                .font(BlinkFontStyle.title3.font)
                 .foregroundColor(.white)
 
             Spacer()
@@ -155,7 +155,7 @@ struct TrimView: View {
                         .tint(.white)
                 } else {
                     Text("Save")
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(BlinkFontStyle.title3.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                 }
             }
@@ -265,7 +265,7 @@ struct TrimView: View {
             Spacer()
 
             Text("Selected: \(trimmedDurationText)")
-                .font(.system(size: 12, weight: .medium))
+                .font(BlinkFontStyle.footnote.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
 
             Spacer()
@@ -288,7 +288,7 @@ struct TrimView: View {
                     HapticService.shared.buttonTap()
                 } label: {
                     Image(systemName: "gobackward.5")
-                        .font(.system(size: 22))
+                        .font(BlinkFontStyle.title.font)
                         .foregroundColor(.white)
                 }
                 .accessibilityLabel("Skip back 5 seconds")
@@ -298,7 +298,7 @@ struct TrimView: View {
                     togglePlayback()
                 } label: {
                     Image(systemName: player?.timeControlStatus == .playing ? "pause.fill" : "play.fill")
-                        .font(.system(size: 28))
+                        .font(BlinkFontStyle.largeTitle.font)
                         .foregroundColor(.white)
                 }
                 .accessibilityLabel(player?.timeControlStatus == .playing ? "Pause" : "Play")
@@ -311,7 +311,7 @@ struct TrimView: View {
                     HapticService.shared.buttonTap()
                 } label: {
                     Image(systemName: "goforward.5")
-                        .font(.system(size: 22))
+                        .font(BlinkFontStyle.title.font)
                         .foregroundColor(.white)
                 }
                 .accessibilityLabel("Skip forward 5 seconds")
@@ -325,9 +325,9 @@ struct TrimView: View {
                 } label: {
                     HStack(spacing: 6) {
                         Image(systemName: saveMode == .new ? "checkmark.circle.fill" : "circle")
-                            .font(.system(size: 14))
+                            .font(BlinkFontStyle.callout.font)
                         Text("Save as new clip")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(BlinkFontStyle.subheadline.font)
                     }
                     .foregroundColor(saveMode == .new ? Color(hex: "ff3b30") : Color(hex: "8a8a8a"))
                     .padding(.horizontal, 16)
@@ -343,9 +343,9 @@ struct TrimView: View {
                 } label: {
                     HStack(spacing: 6) {
                         Image(systemName: saveMode == .overwrite ? "checkmark.circle.fill" : "circle")
-                            .font(.system(size: 14))
+                            .font(BlinkFontStyle.callout.font)
                         Text("Replace original")
-                            .font(.system(size: 13, weight: .medium))
+                            .font(BlinkFontStyle.subheadline.font)
                     }
                     .foregroundColor(saveMode == .overwrite ? Color(hex: "ff3b30") : Color(hex: "8a8a8a"))
                     .padding(.horizontal, 16)

@@ -101,7 +101,7 @@ struct PricingView: View {
                         subscribeButton
 
                         Text("Cancel anytime. No commitments.")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                     .padding(.vertical, 24)
@@ -118,7 +118,7 @@ struct PricingView: View {
                         dismiss()
                     } label: {
                         Image(systemName: "xmark")
-                            .font(.system(size: 14, weight: .medium))
+                            .font(BlinkFontStyle.callout.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                 }
@@ -133,11 +133,11 @@ struct PricingView: View {
     private var headerSection: some View {
         VStack(spacing: 12) {
             Text("Your year deserves more")
-                .font(.system(size: 22, weight: .bold))
+                .font(BlinkFontStyle.title.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
 
             Text("Start free. Upgrade when you're ready.")
-                .font(.system(size: 15))
+                .font(BlinkFontStyle.body.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
         }
     }
@@ -149,12 +149,12 @@ struct PricingView: View {
             HStack {
                 if selectedTier == .free {
                     Text("Get Started")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(BlinkFontStyle.title3.font)
                 } else {
                     Text("Subscribe to \(selectedTier.rawValue)")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(BlinkFontStyle.title3.font)
                     Text("— \(selectedTier.price)\(selectedTier.period)")
-                        .font(.system(size: 14))
+                        .font(BlinkFontStyle.callout.font)
                         .foregroundColor(.white.opacity(0.7))
                 }
             }
@@ -195,12 +195,12 @@ struct TierCard: View {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(spacing: 8) {
                             Text(tier.rawValue)
-                                .font(.system(size: 17, weight: .bold))
+                                .font(BlinkFontStyle.title3.font)
                                 .foregroundColor(tier == .free ? Color(hex: "8a8a8a") : Color(hex: "f5f5f5"))
 
                             if tier.isPopular {
                                 Text("POPULAR")
-                                    .font(.system(size: 11, weight: .bold))
+                                    .font(BlinkFontStyle.caption.font)
                                     .foregroundColor(.white)
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 2)
@@ -210,7 +210,7 @@ struct TierCard: View {
                         }
 
                         Text(tier.tagline)
-                            .font(.system(size: 13))
+                            .font(BlinkFontStyle.subheadline.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
 
@@ -218,11 +218,11 @@ struct TierCard: View {
 
                     VStack(alignment: .trailing, spacing: 2) {
                         Text(tier.price)
-                            .font(.system(size: 22, weight: .bold))
+                            .font(BlinkFontStyle.title.font)
                             .foregroundColor(tier == .free ? Color(hex: "8a8a8a") : Color(hex: "f5f5f5"))
                         if tier != .free {
                             Text(tier.period)
-                                .font(.system(size: 11))
+                                .font(BlinkFontStyle.caption.font)
                                 .foregroundColor(Color(hex: "8a8a8a"))
                         }
                     }
@@ -236,11 +236,11 @@ struct TierCard: View {
                     ForEach(tier.features, id: \.self) { feature in
                         HStack(spacing: 10) {
                             Image(systemName: "checkmark")
-                                .font(.system(size: 11, weight: .bold))
+                                .font(BlinkFontStyle.caption.font)
                                 .foregroundColor(tier == .free ? Color(hex: "8a8a8a") : Color(hex: "ff3b30"))
 
                             Text(feature)
-                                .font(.system(size: 13))
+                                .font(BlinkFontStyle.subheadline.font)
                                 .foregroundColor(Color(hex: "c0c0c0"))
                         }
                     }

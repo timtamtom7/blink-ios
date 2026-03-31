@@ -55,7 +55,7 @@ struct OnboardingView: View {
                             }
                         } label: {
                             Text("Back")
-                                .font(.system(size: 15, weight: .medium))
+                                .font(BlinkFontStyle.body.font)
                                 .foregroundColor(Color(hex: "8a8a8a"))
                                 .frame(width: 80, height: 44)
                         }
@@ -73,9 +73,9 @@ struct OnboardingView: View {
                         } label: {
                             HStack(spacing: 6) {
                                 Text("Next")
-                                    .font(.system(size: 15, weight: .semibold))
+                                    .font(BlinkFontStyle.body.font)
                                 Image(systemName: "arrow.right")
-                                    .font(.system(size: 13, weight: .semibold))
+                                    .font(BlinkFontStyle.callout.font)
                             }
                             .foregroundColor(.white)
                             .frame(width: 100, height: 44)
@@ -106,12 +106,12 @@ struct OnboardingScreen1: View {
 
             VStack(spacing: 16) {
                 Text("Your year, one moment")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(BlinkFontStyle.largeTitle.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .multilineTextAlignment(.center)
 
                 Text("One short video. Every single day. At the end of the year, you'll have the only video diary that actually matters — yours.")
-                    .font(.system(size: 16))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -137,12 +137,12 @@ struct OnboardingScreen2: View {
 
             VStack(spacing: 16) {
                 Text("30 seconds of life")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(BlinkFontStyle.largeTitle.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .multilineTextAlignment(.center)
 
                 Text("Talk to the camera. Tell yourself something. A thought, a feeling, a moment. No editing, no filters, no performance. Just you.")
-                    .font(.system(size: 16))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -168,12 +168,12 @@ struct OnboardingScreen3: View {
 
             VStack(spacing: 16) {
                 Text("Your private archive")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(BlinkFontStyle.largeTitle.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .multilineTextAlignment(.center)
 
                 Text("Everything stays on your device. No cloud, no accounts, no algorithms. Your memories are yours alone — until you're ready to look back.")
-                    .font(.system(size: 16))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -208,12 +208,12 @@ struct OnboardingScreen4: View {
 
             VStack(spacing: 16) {
                 Text("Start recording")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(BlinkFontStyle.largeTitle.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
                     .multilineTextAlignment(.center)
 
                 Text("Blink needs your camera and microphone to work. Your videos never leave your device.")
-                    .font(.system(size: 16))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -225,7 +225,7 @@ struct OnboardingScreen4: View {
             if permissionStatus == .denied {
                 VStack(spacing: 12) {
                     Text("Camera access denied")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(BlinkFontStyle.callout.font)
                         .foregroundColor(Color(hex: "ff3b30"))
 
                     Button {
@@ -234,7 +234,7 @@ struct OnboardingScreen4: View {
                         }
                     } label: {
                         Text("Open Settings")
-                            .font(.system(size: 15, weight: .semibold))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(.white)
                             .frame(width: 200, height: 44)
                             .background(Color(hex: "ff3b30"))
@@ -252,7 +252,7 @@ struct OnboardingScreen4: View {
                         onComplete()
                     } label: {
                         Text("Start Your Year")
-                            .font(.system(size: 17, weight: .semibold))
+                            .font(BlinkFontStyle.title3.font)
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .frame(height: 52)
@@ -267,7 +267,7 @@ struct OnboardingScreen4: View {
                     requestPermissions()
                 } label: {
                     Text("Enable Camera")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(BlinkFontStyle.title3.font)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 52)

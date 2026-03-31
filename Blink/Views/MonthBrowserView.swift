@@ -63,7 +63,7 @@ struct MonthBrowserView: View {
                     Button("Done") {
                         dismiss()
                     }
-                    .font(.system(size: 16, weight: .medium))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "ff3b30"))
                 }
             }
@@ -126,7 +126,7 @@ struct MonthBrowseCard: View {
         VStack(spacing: 0) {
             // Month header
             Text(monthAbbr)
-                .font(.system(size: 12, weight: .semibold))
+                .font(BlinkFontStyle.footnote.font)
                 .foregroundColor(clipCount > 0 ? .white : Color(hex: "8a8a8a"))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 10)
@@ -139,10 +139,10 @@ struct MonthBrowseCard: View {
                 // Empty month
                 VStack(spacing: 6) {
                     Image(systemName: "video.slash")
-                        .font(.system(size: 20))
+                        .font(BlinkFontStyle.title2.font)
                         .foregroundColor(Color(hex: "333333"))
                     Text("No clips")
-                        .font(.system(size: 10))
+                        .font(BlinkFontStyle.caption2.font)
                         .foregroundColor(Color(hex: "555555"))
                 }
                 .frame(height: 60)
@@ -164,9 +164,9 @@ struct MonthBrowseCard: View {
                     // Clip count
                     HStack(spacing: 3) {
                         Image(systemName: "video.fill")
-                            .font(.system(size: 11))
+                            .font(BlinkFontStyle.caption.font)
                         Text("\(clipCount)")
-                            .font(.system(size: 11, weight: .bold))
+                            .font(BlinkFontStyle.caption.font)
                     }
                     .foregroundColor(Color(hex: "ff3b30"))
                 }
@@ -243,7 +243,7 @@ struct JumpToMonthView: View {
                     Button("Cancel") {
                         dismiss()
                     }
-                    .font(.system(size: 16))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -295,12 +295,12 @@ struct JumpToMonthView: View {
                                     .fill(Color(hex: "ff3b30"))
                                     .frame(width: 4, height: 4)
                                 Text("\(count)")
-                                    .font(.system(size: 11, weight: .bold))
+                                    .font(BlinkFontStyle.caption.font)
                                     .foregroundColor(Color(hex: "8a8a8a"))
                             }
                         } else {
                             Text("—")
-                                .font(.system(size: 11))
+                                .font(BlinkFontStyle.caption.font)
                                 .foregroundColor(Color(hex: "333333"))
                         }
                     }

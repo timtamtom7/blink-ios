@@ -96,7 +96,7 @@ struct SubscriptionsView: View {
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Choose a plan to get unlimited clips, cloud backup, and advanced AI features.")
-                    .font(.system(size: 15))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
             }
@@ -122,7 +122,7 @@ struct SubscriptionsView: View {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(plan.rawValue)
-                            .font(.system(size: 18, weight: .bold))
+                            .font(BlinkFontStyle.title3.font)
                             .foregroundColor(Color(hex: "f5f5f5"))
 
                         HStack(spacing: 4) {
@@ -130,7 +130,7 @@ struct SubscriptionsView: View {
                                 .font(.system(size: 24, weight: .bold))
                                 .foregroundColor(Color(hex: "ff3b30"))
                             Text(plan.period)
-                                .font(.system(size: 14))
+                                .font(BlinkFontStyle.callout.font)
                                 .foregroundColor(Color(hex: "8a8a8a"))
                         }
                     }
@@ -139,7 +139,7 @@ struct SubscriptionsView: View {
 
                     if isCurrentPlan(plan) {
                         Text("Current")
-                            .font(.system(size: 12, weight: .semibold))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "34c759"))
                             .padding(.horizontal, 10)
                             .padding(.vertical, 6)
@@ -156,11 +156,11 @@ struct SubscriptionsView: View {
                     ForEach(plan.features, id: \.self) { feature in
                         HStack(spacing: 8) {
                             Image(systemName: "checkmark")
-                                .font(.system(size: 12, weight: .bold))
+                                .font(BlinkFontStyle.footnote.font)
                                 .foregroundColor(Color(hex: "34c759"))
 
                             Text(feature)
-                                .font(.system(size: 14))
+                                .font(BlinkFontStyle.callout.font)
                                 .foregroundColor(Color(hex: "c0c0c0"))
                         }
                     }
@@ -186,7 +186,7 @@ struct SubscriptionsView: View {
     private var faqSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("FAQ")
-                .font(.system(size: 18, weight: .bold))
+                .font(BlinkFontStyle.title3.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
 
             VStack(spacing: 0) {
@@ -204,11 +204,11 @@ struct SubscriptionsView: View {
     private func faqRow(question: String, answer: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(question)
-                .font(.system(size: 15, weight: .medium))
+                .font(BlinkFontStyle.body.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
 
             Text(answer)
-                .font(.system(size: 13))
+                .font(BlinkFontStyle.subheadline.font)
                 .foregroundColor(Color(hex: "8a8a8a"))
                 .fixedSize(horizontal: false, vertical: true)
         }

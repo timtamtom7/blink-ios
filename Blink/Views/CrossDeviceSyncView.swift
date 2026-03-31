@@ -36,10 +36,10 @@ struct CrossDeviceSyncView: View {
                                 .font(.system(size: 48))
                                 .foregroundColor(Color(hex: "333333"))
                             Text("Coming Soon")
-                                .font(.system(size: 20, weight: .bold))
+                                .font(BlinkFontStyle.title2.font)
                                 .foregroundColor(Color(hex: "f5f5f5"))
                             Text("Cross-device sync is in development.")
-                                .font(.system(size: 15))
+                                .font(BlinkFontStyle.body.font)
                                 .foregroundColor(Color(hex: "8a8a8a"))
                                 .multilineTextAlignment(.center)
                         }
@@ -63,11 +63,11 @@ struct CrossDeviceSyncView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("iCloud Sync")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(BlinkFontStyle.title3.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
 
                     Text(syncService.lastSyncText)
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
 
@@ -83,7 +83,7 @@ struct CrossDeviceSyncView: View {
                         }
                     } label: {
                         Image(systemName: "arrow.triangle.2.circlepath")
-                            .font(.system(size: 18))
+                            .font(BlinkFontStyle.title3.font)
                             .foregroundColor(Color(hex: "ff3b30"))
                     }
                 }
@@ -105,7 +105,7 @@ struct CrossDeviceSyncView: View {
                     .frame(height: 4)
 
                     Text("Syncing your memories…")
-                        .font(.system(size: 12))
+                        .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                 }
             }
@@ -119,7 +119,7 @@ struct CrossDeviceSyncView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Devices")
-                    .font(.system(size: 18, weight: .bold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Spacer()
@@ -128,7 +128,7 @@ struct CrossDeviceSyncView: View {
                     showAddDevice = true
                 } label: {
                     Image(systemName: "plus")
-                        .font(.system(size: 16, weight: .medium))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                 }
             }
@@ -140,11 +140,11 @@ struct CrossDeviceSyncView: View {
                         .foregroundColor(Color(hex: "333333"))
 
                     Text("No devices connected")
-                        .font(.system(size: 15))
+                        .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
 
                     Text("Sign in with the same Apple ID on other devices to sync your clips.")
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "555555"))
                         .multilineTextAlignment(.center)
                 }
@@ -163,17 +163,17 @@ struct CrossDeviceSyncView: View {
     private func deviceRow(_ device: CrossDeviceSyncService.Device) -> some View {
         HStack(spacing: 12) {
             Image(systemName: deviceIcon(device.type))
-                .font(.system(size: 20))
+                .font(BlinkFontStyle.title2.font)
                 .foregroundColor(device.isConnected ? Color(hex: "34c759") : Color(hex: "8a8a8a"))
                 .frame(width: 32)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(device.name)
-                    .font(.system(size: 15, weight: .medium))
+                    .font(BlinkFontStyle.body.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text(device.isConnected ? "Connected" : "Last seen recently")
-                    .font(.system(size: 12))
+                    .font(BlinkFontStyle.footnote.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
             }
 
@@ -202,7 +202,7 @@ struct CrossDeviceSyncView: View {
     private var syncSettingsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Settings")
-                .font(.system(size: 18, weight: .bold))
+                .font(BlinkFontStyle.title3.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
 
             VStack(spacing: 0) {
@@ -220,12 +220,12 @@ struct CrossDeviceSyncView: View {
     private func syncSettingRow(title: String, icon: String, isOn: Binding<Bool>) -> some View {
         HStack(spacing: 12) {
             Image(systemName: icon)
-                .font(.system(size: 16))
+                .font(BlinkFontStyle.body.font)
                 .foregroundColor(Color(hex: "ff3b30"))
                 .frame(width: 24)
 
             Text(title)
-                .font(.system(size: 15))
+                .font(BlinkFontStyle.body.font)
                 .foregroundColor(Color(hex: "f5f5f5"))
 
             Spacer()

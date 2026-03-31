@@ -34,10 +34,10 @@ struct CommunityView: View {
                                 .font(.system(size: 48))
                                 .foregroundColor(Color(hex: "333333"))
                             Text("Coming Soon")
-                                .font(.system(size: 20, weight: .bold))
+                                .font(BlinkFontStyle.title2.font)
                                 .foregroundColor(Color(hex: "f5f5f5"))
                             Text("The community feed is in development.")
-                                .font(.system(size: 15))
+                                .font(BlinkFontStyle.body.font)
                                 .foregroundColor(Color(hex: "8a8a8a"))
                                 .multilineTextAlignment(.center)
                         }
@@ -121,7 +121,7 @@ struct CommunityView: View {
             }
         } label: {
             Text(label)
-                .font(.system(size: 13, weight: .medium))
+                .font(BlinkFontStyle.subheadline.font)
                 .foregroundColor(selectedCategory == category ? .white : Color(hex: "8a8a8a"))
                 .padding(.horizontal, 14)
                 .padding(.vertical, 7)
@@ -154,16 +154,16 @@ struct CommunityView: View {
                 HStack {
                     HStack(spacing: 6) {
                         Image(systemName: "person.fill.questionmark")
-                            .font(.system(size: 11))
+                            .font(BlinkFontStyle.caption.font)
                         Text(moment.anonymousId)
-                            .font(.system(size: 12, weight: .medium))
+                            .font(BlinkFontStyle.footnote.font)
                     }
                     .foregroundColor(Color(hex: "8a8a8a"))
 
                     Spacer()
 
                     Text(timeAgo(moment.createdAt))
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Color(hex: "AAAAAA"))
                 }
 
@@ -171,32 +171,32 @@ struct CommunityView: View {
                     categoryBadge(moment.category)
 
                     Text(moment.mood)
-                        .font(.system(size: 13, weight: .medium))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
                 }
 
                 HStack(spacing: 16) {
                     HStack(spacing: 4) {
                         Image(systemName: "heart.fill")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                         Text("\(moment.likes)")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                     }
                     .foregroundColor(Color(hex: "ff3b30"))
 
                     HStack(spacing: 4) {
                         Image(systemName: "eye.fill")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                         Text("\(moment.views)")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                     }
                     .foregroundColor(Color(hex: "8a8a8a"))
 
                     HStack(spacing: 4) {
                         Image(systemName: "film.fill")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                         Text("\(moment.clipCount) clips")
-                            .font(.system(size: 12))
+                            .font(BlinkFontStyle.footnote.font)
                     }
                     .foregroundColor(Color(hex: "8a8a8a"))
                 }

@@ -95,7 +95,7 @@ struct SettingsView: View {
                                 Spacer()
 
                                 Image(systemName: "arrow.up.right")
-                                    .font(.system(size: 12, weight: .medium))
+                                    .font(BlinkFontStyle.footnote.font)
                                     .foregroundColor(Color(hex: "ff3b30"))
                             }
                         }
@@ -127,7 +127,7 @@ struct SettingsView: View {
                                     .foregroundColor(Color(hex: "f5f5f5"))
                                 Spacer()
                                 Image(systemName: "arrow.up.right")
-                                    .font(.system(size: 12, weight: .medium))
+                                    .font(BlinkFontStyle.footnote.font)
                                     .foregroundColor(Color(hex: "ff3b30"))
                             }
                         }
@@ -167,11 +167,11 @@ struct SettingsView: View {
                     Section {
                         HStack {
                             Text("iCloud Backup")
-                                .font(.system(size: 13, weight: .semibold))
+                                .font(BlinkFontStyle.callout.font)
                                 .foregroundColor(Color(hex: "8a8a8a"))
                             Spacer()
                             Text("Coming Soon")
-                                .font(.system(size: 11, weight: .medium))
+                                .font(BlinkFontStyle.caption.font)
                                 .foregroundColor(Color(hex: "555555"))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 3)
@@ -186,7 +186,7 @@ struct SettingsView: View {
                                 Label("iCloud not available", systemImage: "icloud.slash")
                                     .foregroundColor(Color(hex: "8a8a8a"))
                                 Text("Sign in to iCloud in Settings to enable backup")
-                                    .font(.system(size: 11))
+                                    .font(BlinkFontStyle.caption.font)
                                     .foregroundColor(Color(hex: "555555"))
                             }
                             .padding(.vertical, 4)
@@ -206,7 +206,7 @@ struct SettingsView: View {
                                 if cloudBackup.isBackingUp {
                                     HStack {
                                         Text("Backing up…")
-                                            .font(.system(size: 13))
+                                            .font(BlinkFontStyle.subheadline.font)
                                             .foregroundColor(Color(hex: "8a8a8a"))
                                         Spacer()
                                         ProgressView()
@@ -216,16 +216,16 @@ struct SettingsView: View {
                                 } else if let lastBackup = cloudBackup.lastBackupDate {
                                     HStack {
                                         Text("Last backup:")
-                                            .font(.system(size: 12))
+                                            .font(BlinkFontStyle.footnote.font)
                                             .foregroundColor(Color(hex: "555555"))
                                         Text(lastBackup, style: .relative)
-                                            .font(.system(size: 12))
+                                            .font(BlinkFontStyle.footnote.font)
                                             .foregroundColor(Color(hex: "8a8a8a"))
                                         Spacer()
                                         Button("Backup Now") {
                                             startBackup()
                                         }
-                                        .font(.system(size: 12, weight: .medium))
+                                        .font(BlinkFontStyle.footnote.font)
                                         .foregroundColor(Color(hex: "ff3b30"))
                                     }
                                 } else {
@@ -234,7 +234,7 @@ struct SettingsView: View {
                                     } label: {
                                         HStack {
                                             Text("Back up now")
-                                                .font(.system(size: 14, weight: .medium))
+                                                .font(BlinkFontStyle.callout.font)
                                             Spacer()
                                             Image(systemName: "arrow.up.circle")
                                                 .foregroundColor(Color(hex: "ff3b30"))
@@ -248,7 +248,7 @@ struct SettingsView: View {
                                 } label: {
                                     HStack {
                                         Text("Restore from iCloud")
-                                            .font(.system(size: 14, weight: .medium))
+                                            .font(BlinkFontStyle.callout.font)
                                         Spacer()
                                         Image(systemName: "arrow.down.circle")
                                             .foregroundColor(Color(hex: "8a8a8a"))
@@ -267,11 +267,11 @@ struct SettingsView: View {
                     Section {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Your videos are stored locally on this device. iCloud backup is optional.")
-                                .font(.system(size: 13))
+                                .font(BlinkFontStyle.subheadline.font)
                                 .foregroundColor(Color(hex: "8a8a8a"))
 
                             Text("No accounts. No sharing. No social.")
-                                .font(.system(size: 13, weight: .medium))
+                                .font(BlinkFontStyle.subheadline.font)
                                 .foregroundColor(Color(hex: "f5f5f5"))
                         }
                         .padding(.vertical, 8)
@@ -386,7 +386,7 @@ struct SettingsView: View {
                         Spacer()
 
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 12, weight: .medium))
+                            .font(BlinkFontStyle.footnote.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
                 }
@@ -467,17 +467,17 @@ struct AboutView: View {
                             .foregroundColor(Color(hex: "f5f5f5"))
 
                         Text("Your year, one moment at a time.")
-                            .font(.system(size: 17))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
 
                     VStack(spacing: 8) {
                         Text("Version 1.0.0")
-                            .font(.system(size: 13))
+                            .font(BlinkFontStyle.subheadline.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
 
                         Text("Made with love")
-                            .font(.system(size: 13))
+                            .font(BlinkFontStyle.subheadline.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                     }
 

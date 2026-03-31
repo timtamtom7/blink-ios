@@ -24,12 +24,12 @@ struct PublicFeedView: View {
                             .font(.system(size: 40))
                             .foregroundColor(Color(hex: "8a8a8a"))
                         Text(error)
-                            .font(.system(size: 15))
+                            .font(BlinkFontStyle.body.font)
                             .foregroundColor(Color(hex: "8a8a8a"))
                         Button("Retry") {
                             loadFeed()
                         }
-                        .font(.system(size: 14, weight: .medium))
+                        .font(BlinkFontStyle.callout.font)
                         .foregroundColor(Color(hex: "ff3b30"))
                     }
                 } else if feedItems.isEmpty {
@@ -63,11 +63,11 @@ struct PublicFeedView: View {
 
             VStack(spacing: 6) {
                 Text("No moments yet today")
-                    .font(.system(size: 17, weight: .semibold))
+                    .font(BlinkFontStyle.title3.font)
                     .foregroundColor(Color(hex: "f5f5f5"))
 
                 Text("Be the first to share a meaningful moment\nwith the Blink community.")
-                    .font(.system(size: 14))
+                    .font(BlinkFontStyle.callout.font)
                     .foregroundColor(Color(hex: "8a8a8a"))
                     .multilineTextAlignment(.center)
             }
@@ -159,7 +159,7 @@ struct FeedCard: View {
                         Spacer()
                         HStack {
                             Text(item.monthYearText)
-                                .font(.system(size: 11, weight: .medium))
+                                .font(BlinkFontStyle.caption.font)
                                 .foregroundColor(.white.opacity(0.8))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
@@ -175,11 +175,11 @@ struct FeedCard: View {
                 // Insight text
                 HStack {
                     Image(systemName: "sparkles")
-                        .font(.system(size: 11))
+                        .font(BlinkFontStyle.caption.font)
                         .foregroundColor(Color(hex: "ff3b30"))
 
                     Text(item.insightText)
-                        .font(.system(size: 13))
+                        .font(BlinkFontStyle.subheadline.font)
                         .foregroundColor(Color(hex: "c0c0c0"))
                         .lineLimit(2)
 
