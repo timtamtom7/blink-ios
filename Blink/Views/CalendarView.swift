@@ -20,7 +20,8 @@ struct CalendarView: View {
     @State private var exportedVideoURL: URL?
     @State private var showExportedAlert = false
     @State private var showPricing = false
-    @State private var exportTask: Task<Void, Never>?
+    @State private var exportMonth: Int = 0
+    @State private var exportYear: Int = 0
 
     // External bindings for deep link control (optional)
     var showHighlightsBinding: Binding<Bool>?
@@ -243,6 +244,26 @@ struct CalendarView: View {
             }
             Button("Cancel", role: .cancel) {}
         }
+        .task(id: exportMonth) {
+            guard isExporting, exportMonth > 0, exportYear > 0 else { return }
+            do {
+                let outputURL = try await ExportService.shared.exportMonthClips(
+                    month: exportMonth,
+                    year: exportYear,
+                    onProgress: { progress in
+                        exportProgress = progress
+                    }
+                )
+                try await ExportService.shared.saveToCameraRoll(url: outputURL)
+                isExporting = false
+                showExportedAlert = true
+                exportedVideoURL = outputURL
+                try? FileManager.default.removeItem(at: outputURL)
+            } catch {
+                isExporting = false
+                exportError = error.localizedDescription
+            }
+        }
         .sheet(isPresented: $showPricing) {
             PricingView()
         }
@@ -411,33 +432,10 @@ struct CalendarView: View {
 
         guard clipsThisYear > 0 else { return }
 
+        exportMonth = currentMonth
+        exportYear = currentYear
         isExporting = true
         exportProgress = 0
-
-        exportTask = Task { @MainActor in
-            do {
-                let outputURL = try await ExportService.shared.exportMonthClips(
-                    month: currentMonth,
-                    year: currentYear,
-                    onProgress: { progress in
-                        exportProgress = progress
-                    }
-                )
-
-                // Save to camera roll
-                try await ExportService.shared.saveToCameraRoll(url: outputURL)
-
-                isExporting = false
-                showExportedAlert = true
-                exportedVideoURL = outputURL
-
-                // Clean up temp file
-                try? FileManager.default.removeItem(at: outputURL)
-            } catch {
-                isExporting = false
-                exportError = error.localizedDescription
-            }
-        }
     }
 }
 

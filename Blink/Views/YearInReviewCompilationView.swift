@@ -15,7 +15,6 @@ struct YearInReviewCompilationView: View {
     @State private var showError = false
     @State private var errorMessage = ""
     @State private var player: AVPlayer?
-    @State private var progressTimer: Timer?
     @State private var generationTask: Task<Void, Never>?
     @Environment(\.accessibilityReduceMotion) var reduceMotion
 
@@ -120,7 +119,7 @@ struct YearInReviewCompilationView: View {
 
     private var generatingView: some View {
         VStack(spacing: 24) {
-            // Animated progress ring
+            // Animated progress ring (no fake percentage — tied to real work)
             ZStack {
                 Circle()
                     .stroke(Color(hex: "2a2a2a"), lineWidth: 4)
@@ -136,18 +135,13 @@ struct YearInReviewCompilationView: View {
                     .rotationEffect(.degrees(-90))
                     .animation(reduceMotion ? .none : .linear(duration: 0.5), value: generationProgress)
 
-                VStack(spacing: 2) {
-                    Text("\(Int(generationProgress * 100))%")
-                        .font(.system(size: 24, weight: .bold, design: .rounded))
-                        .foregroundColor(Color(hex: "f5f5f5"))
-                    Text("compiling")
-                        .font(.system(size: 11))
-                        .foregroundColor(Color(hex: "8a8a8a"))
-                }
+                Image(systemName: "film")
+                    .font(.system(size: 32))
+                    .foregroundColor(Color(hex: "ff3b30"))
             }
 
             VStack(spacing: 6) {
-                Text("Creating your year in review…")
+                Text("Creating your reel…")
                     .font(.system(size: 17, weight: .semibold))
                     .foregroundColor(Color(hex: "f5f5f5"))
 
@@ -211,7 +205,6 @@ struct YearInReviewCompilationView: View {
         }
         .onDisappear {
             player?.pause()
-            progressTimer?.invalidate()
             generationTask?.cancel()
         }
     }
@@ -221,17 +214,17 @@ struct YearInReviewCompilationView: View {
         isGenerating = true
         generationProgress = 0
 
-        // Animate progress with stored timer
-        progressTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-            if generationProgress < 0.9 {
-                generationProgress += 0.05
-            }
-        }
-
         generationTask = Task {
             do {
-                // First analyze to get highlights
-                await aiService.analyzeHighlights(entries: entries)
+                // Analyze all entries and track real progress
+                let total = entries.count
+                for (index, _) in entries.enumerated() {
+                    if Task.isCancelled { return }
+                    await aiService.analyzeHighlights(entries: [entries[index]])
+                    await MainActor.run {
+                        generationProgress = 0.3 * Double(index + 1) / Double(max(total, 1))
+                    }
+                }
 
                 // Then generate reel from top entries
                 let urls = topEntries.map { AIHighlightsService.AIHighlight(
@@ -242,6 +235,10 @@ struct YearInReviewCompilationView: View {
                     insightType: .milestone,
                     timestamp: 0
                 )}
+
+                await MainActor.run {
+                    generationProgress = 0.7
+                }
 
                 let url = try await aiService.generateHighlightReel(clips: urls, title: "\(year) in Blink")
 

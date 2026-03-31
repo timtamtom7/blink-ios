@@ -190,6 +190,7 @@ final class VideoStore: ObservableObject {
         let thumbnailFilename = await ThumbnailGenerator.shared.generateThumbnail(for: outputURL, videoFilename: outputFilename)
 
         let newEntry = VideoEntry(
+            id: saveAsNew ? UUID() : entry.id,  // new UUID for saveAsNew, preserve original ID for overwrite
             date: entry.date,
             filename: outputFilename,
             duration: trimmedDuration,
@@ -200,15 +201,18 @@ final class VideoStore: ObservableObject {
         if saveAsNew {
             entries.append(newEntry)
         } else {
-            // Overwrite: delete old video, keep same entry ID but update fields
-            let oldIndex = entries.firstIndex { $0.id == entry.id }
-            var updatedEntry = entry
-            updatedEntry.thumbnailFilename = thumbnailFilename
+            // Overwrite: update the original entry in-place, preserve its ID
+            guard let oldIndex = entries.firstIndex(where: { $0.id == entry.id }) else {
+                // Entry was deleted concurrently — treat as saveAsNew
+                entries.append(newEntry)
+                try? fileManager.removeItem(at: sourceURL)
+                saveEntries()
+                invalidateOnThisDayCache()
+                return newEntry
+            }
             // Remove old video file
             try? fileManager.removeItem(at: sourceURL)
-            if let idx = oldIndex {
-                entries[idx] = newEntry
-            }
+            entries[oldIndex] = newEntry
         }
 
         saveEntries()
