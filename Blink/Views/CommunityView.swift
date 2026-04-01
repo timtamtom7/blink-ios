@@ -61,7 +61,7 @@ struct CommunityView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
                     ForEach(0..<4, id: \.self) { _ in
-                        RoundedRectangle(cornerRadius: 14)
+                        RoundedRectangle(cornerRadius: Theme.cornerRadiusMedium)
                             .fill(Color(hex: "1e1e1e"))
                             .frame(width: 70, height: 30)
                     }

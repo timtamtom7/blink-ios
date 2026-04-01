@@ -4,8 +4,9 @@ import Vision
 import UIKit
 
 /// Deep AI analysis service for R7: deeper scene understanding, emotion detection, categorization
+@MainActor
 final class DeepAnalysisService: ObservableObject {
-    static let shared = DeepAnalysisService()
+    static let shared: DeepAnalysisService = DeepAnalysisService()
 
     @Published private(set) var isAnalyzing = false
     @Published private(set) var analysisProgress: Double = 0

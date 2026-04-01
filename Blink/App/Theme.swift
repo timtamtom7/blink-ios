@@ -39,14 +39,16 @@ enum Theme {
     /// Separator / divider color
     static let separator = Color(hex: "2a2a2a")
 
-    /// Success / positive
-    static let success = Color(hex: "34c759")
+    // MARK: - Brand Colors
 
-    /// Warning / caution
-    static let warning = Color(hex: "ffcc00")
+    /// Brand gold accent
+    static let brandGold = Color(hex: "FFD700")
 
-    /// Destructive / error
-    static let destructive = Color(hex: "ff3b30")
+    /// Brand coral accent
+    static let brandCoral = Color(hex: "FF6B60")
+
+    /// Brand orange accent
+    static let brandOrange = Color(hex: "FF9500")
 
     // MARK: - Corner Radius Tokens
 
