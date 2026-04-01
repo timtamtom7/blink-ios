@@ -374,13 +374,15 @@ struct TrimView: View {
         }
 
         // Update current time
-        periodicObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.05, preferredTimescale: 600), queue: .main) { time in
-            let secs = time.seconds
-            self.currentTime = secs
+        periodicObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.05, preferredTimescale: 600), queue: .main) { [self] time in
+            Task { @MainActor in
+                let secs = time.seconds
+                self.currentTime = secs
 
-            // Loop within trim range
-            if secs >= self.endTime - 0.1 {
-                self.seekToStart()
+                // Loop within trim range
+                if secs >= self.endTime - 0.1 {
+                    self.seekToStart()
+                }
             }
         }
 

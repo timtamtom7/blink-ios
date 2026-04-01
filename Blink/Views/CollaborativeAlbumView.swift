@@ -92,10 +92,10 @@ struct CollaborativeAlbumRowView: View {
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(album.title).font(.headline)
-                Text("\(album.contributorIDs.count) contributors · \(album.clipIDs.count) clips").font(.caption).foregroundColor(.secondary)
+                Text("\(album.contributorIDs.count) contributors · \(album.clipIDs.count) clips").font(.caption).foregroundColor(Theme.textSecondary)
             }
             Spacer()
-            Image(systemName: album.isActive ? "link" : "link.badge.plus").foregroundColor(.secondary)
+            Image(systemName: album.isActive ? "link" : "link.badge.plus").foregroundColor(Theme.textSecondary)
         }
         .padding(.vertical, 4)
     }
@@ -124,7 +124,7 @@ struct CollaborativeAlbumDetailView: View {
                     .font(.caption)
                 }
                 if let link = currentAlbum?.inviteLink {
-                    Text(link).font(.caption2).foregroundColor(.secondary).lineLimit(1)
+                    Text(link).font(.caption2).foregroundColor(Theme.textTertiary).lineLimit(1)
                 }
             } header: {
                 Text("Share")
@@ -136,11 +136,11 @@ struct CollaborativeAlbumDetailView: View {
                         Image(systemName: "person.circle.fill").foregroundColor(.purple)
                         VStack(alignment: .leading) {
                             Text(contributor.displayName)
-                            Text("\(contributor.contributedClipIDs.count) clips").font(.caption2).foregroundColor(.secondary)
+                            Text("\(contributor.contributedClipIDs.count) clips").font(.caption2).foregroundColor(Theme.textTertiary)
                         }
                         Spacer()
                         if contributor.deviceID == album.creatorID {
-                            Text("Creator").font(.caption2).foregroundColor(.blue)
+                            Text("Creator").font(.caption2).foregroundColor(Theme.accent)
                         }
                     }
                 }
@@ -148,13 +148,13 @@ struct CollaborativeAlbumDetailView: View {
             
             Section("Clips (\(currentAlbum?.clipIDs.count ?? 0))") {
                 if currentAlbum?.clipIDs.isEmpty ?? true {
-                    Text("No clips yet").foregroundColor(.secondary).font(.caption)
+                    Text("No clips yet").foregroundColor(Theme.textTertiary).font(.caption)
                 } else {
                     ForEach(currentAlbum?.clipIDs ?? [], id: \.self) { clipID in
                         HStack {
                             Image(systemName: "video.fill").foregroundColor(.purple)
                             Text(clipID.uuidString.prefix(8))
-                                .font(.caption).foregroundColor(.secondary)
+                                .font(.caption).foregroundColor(Theme.textTertiary)
                         }
                     }
                 }

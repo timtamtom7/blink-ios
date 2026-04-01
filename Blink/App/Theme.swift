@@ -171,14 +171,17 @@ enum HapticFeedback {
 
     @MainActor
     func trigger() {
-        let service = UIImpactFeedbackGenerator(style: impactStyle)
-        service.prepare()
-        service.impactOccurred()
-
-        if let notificationType = notificationType {
+        // Impact-only feedback types
+        switch self {
+        case .light, .medium, .heavy, .delicate:
+            let service = UIImpactFeedbackGenerator(style: impactStyle)
+            service.prepare()
+            service.impactOccurred()
+        // Notification-only feedback types
+        case .success, .warning, .error:
             let notification = UINotificationFeedbackGenerator()
             notification.prepare()
-            notification.notificationOccurred(notificationType)
+            notification.notificationOccurred(notificationType!)
         }
     }
 
@@ -349,8 +352,8 @@ enum BlinkFontStyle {
     case lockIconMedium       // 32pt
     case recLabel             // 12pt, bold, monospaced
     case timerText            // 11pt, medium, monospaced
-    case microBold            // 7pt, bold
-    case micro                 // 8pt
+    case microBold            // 11pt, bold (WCAG AA minimum)
+    case micro                 // 11pt (WCAG AA minimum)
     case badge                 // 10pt, semibold
     case display64BoldRounded  // 64pt, bold, rounded
     case display48BoldRounded // 48pt, bold, rounded
@@ -399,8 +402,8 @@ enum BlinkFontStyle {
         case .lockIconMedium:       return .system(size: 32)
         case .recLabel:             return .system(size: 12, weight: .bold, design: .monospaced)
         case .timerText:            return .system(size: 11, weight: .medium, design: .monospaced)
-        case .microBold:            return .system(size: 7, weight: .bold)
-        case .micro:                return .system(size: 8)
+        case .microBold:            return .system(size: 11, weight: .bold)
+        case .micro:                return .system(size: 11)
         case .badge:                return .system(size: 10, weight: .semibold)
         case .display64BoldRounded: return .system(size: 64, weight: .bold, design: .rounded)
         case .display48BoldRounded: return .system(size: 48, weight: .bold, design: .rounded)

@@ -437,6 +437,7 @@ struct HighlightPlaybackView: View {
     let highlight: AIHighlightsService.AIHighlight
     @Environment(\.dismiss) private var dismiss
     @State private var player: AVPlayer?
+    @State private var loopObserverToken: NSObjectProtocol?
 
     var body: some View {
         ZStack {
@@ -505,6 +506,10 @@ struct HighlightPlaybackView: View {
         }
         .onDisappear {
             player?.pause()
+            if let token = loopObserverToken {
+                NotificationCenter.default.removeObserver(token)
+                loopObserverToken = nil
+            }
         }
     }
 
@@ -520,7 +525,7 @@ struct HighlightPlaybackView: View {
         self.player = player
         player.play()
 
-        NotificationCenter.default.addObserver(
+        loopObserverToken = NotificationCenter.default.addObserver(
             forName: .AVPlayerItemDidPlayToEndTime,
             object: playerItem,
             queue: .main

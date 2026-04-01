@@ -70,11 +70,11 @@ struct CircleRowView: View {
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(circle.name).font(.headline)
-                Text("\(circle.memberIDs.count)/10 members").font(.caption).foregroundColor(.secondary)
+                Text("\(circle.memberIDs.count)/10 members").font(.caption).foregroundColor(Theme.textTertiary)
             }
             Spacer()
             if let album = sharedAlbum {
-                Text("\(album.clipIDs.count) clips").font(.caption2).foregroundColor(.secondary)
+                Text("\(album.clipIDs.count) clips").font(.caption2).foregroundColor(Theme.textTertiary)
             }
         }
         .padding(.vertical, 4)
@@ -95,19 +95,19 @@ struct SharedAlbumView: View {
             if let album = sharedAlbum {
                 Section("On This Day") {
                     if album.onThisDayClipIDs.isEmpty {
-                        Text("No memories from today yet").foregroundColor(.secondary).font(.caption)
+                        Text("No memories from today yet").foregroundColor(Theme.textTertiary).font(.caption)
                     } else {
                         Text("\(album.onThisDayClipIDs.count) On This Day clips")
-                            .font(.caption).foregroundColor(.secondary)
+                            .font(.caption).foregroundColor(Theme.textTertiary)
                     }
                 }
                 
                 Section("Monthly Reel") {
                     if album.monthlyReelClipIDs.isEmpty {
-                        Text("No monthly reel yet").foregroundColor(.secondary).font(.caption)
+                        Text("No monthly reel yet").foregroundColor(Theme.textTertiary).font(.caption)
                     } else {
                         Text("\(album.monthlyReelClipIDs.count) clips for this month")
-                            .font(.caption).foregroundColor(.secondary)
+                            .font(.caption).foregroundColor(Theme.textTertiary)
                     }
                 }
                 

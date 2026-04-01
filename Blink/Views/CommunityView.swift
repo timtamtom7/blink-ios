@@ -24,25 +24,27 @@ struct CommunityView: View {
                     communityContent
                 }
 
-                // Coming Soon overlay — this feature is not yet functional
-                VStack {}
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color(hex: "0a0a0a").opacity(0.85))
-                    .overlay {
-                        VStack(spacing: 16) {
-                            Image(systemName: "person.2.slash")
-                                .font(BlinkFontStyle.displayExtraLarge.font)
-                                .foregroundColor(Color(hex: "333333"))
-                            Text("Coming Soon")
-                                .font(BlinkFontStyle.title2.font)
-                                .foregroundColor(Color(hex: "f5f5f5"))
-                            Text("The community feed is in development.")
-                                .font(BlinkFontStyle.body.font)
-                                .foregroundColor(Color(hex: "8a8a8a"))
-                                .multilineTextAlignment(.center)
+                // Coming Soon overlay — only when content has loaded AND is empty
+                if !communityService.isLoading && filteredMoments.isEmpty {
+                    VStack {}
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color(hex: "0a0a0a").opacity(0.85))
+                        .overlay {
+                            VStack(spacing: 16) {
+                                Image(systemName: "person.2.slash")
+                                    .font(BlinkFontStyle.displayExtraLarge.font)
+                                    .foregroundColor(Color(hex: "333333"))
+                                Text("Coming Soon")
+                                    .font(BlinkFontStyle.title2.font)
+                                    .foregroundColor(Color(hex: "f5f5f5"))
+                                Text("The community feed is in development.")
+                                    .font(BlinkFontStyle.body.font)
+                                    .foregroundColor(Color(hex: "8a8a8a"))
+                                    .multilineTextAlignment(.center)
+                            }
+                            .padding(32)
                         }
-                        .padding(32)
-                    }
+                }
             }
             .navigationTitle("Community")
             .navigationBarTitleDisplayMode(.inline)

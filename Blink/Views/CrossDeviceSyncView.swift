@@ -26,26 +26,27 @@ struct CrossDeviceSyncView: View {
                     .padding(16)
                 }
 
-                // Coming Soon overlay — this feature is not yet functional
-                VStack {}
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color(hex: "0a0a0a").opacity(0.85))
-                    .overlay {
-                        VStack(spacing: 16) {
-                            Image(systemName: "icloud.slash")
-                                .font(BlinkFontStyle.icon48.font)
-                                .foregroundColor(Color(hex: "333333"))
-                            Text("Coming Soon")
-                                .font(BlinkFontStyle.title2.font)
-                                .foregroundColor(Color(hex: "f5f5f5"))
-                            Text("Cross-device sync is in development.")
-                                .font(BlinkFontStyle.body.font)
-                                .foregroundColor(Color(hex: "8a8a8a"))
-                                .multilineTextAlignment(.center)
+                // Coming Soon overlay — only when content has loaded AND is empty
+                if syncService.connectedDevices.isEmpty {
+                    VStack {}
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color(hex: "0a0a0a").opacity(0.85))
+                        .overlay {
+                            VStack(spacing: 16) {
+                                Image(systemName: "icloud.slash")
+                                    .font(BlinkFontStyle.icon48.font)
+                                    .foregroundColor(Color(hex: "333333"))
+                                Text("Coming Soon")
+                                    .font(BlinkFontStyle.title2.font)
+                                    .foregroundColor(Color(hex: "f5f5f5"))
+                                Text("Cross-device sync is in development.")
+                                    .font(BlinkFontStyle.body.font)
+                                    .foregroundColor(Color(hex: "8a8a8a"))
+                                    .multilineTextAlignment(.center)
+                            }
+                            .padding(32)
                         }
-                        .padding(32)
-                    }
-                    .opacity(1)
+                }
             }
             .navigationTitle("Sync")
             .navigationBarTitleDisplayMode(.inline)

@@ -49,11 +49,11 @@ struct FreemiumEnforcementView: View {
                 }
 
                 VStack(spacing: 10) {
-                    Text("Daily Limit Reached")
+                    Text("You've captured today's moment")
                         .font(BlinkFontStyle.title.font)
                         .foregroundColor(Color(hex: "f5f5f5"))
 
-                    Text(reason)
+                    Text("Capture one moment a day, free forever — no credit card needed. Upgrade to unlock unlimited recordings.")
                         .font(BlinkFontStyle.body.font)
                         .foregroundColor(Color(hex: "8a8a8a"))
                         .multilineTextAlignment(.center)
@@ -89,7 +89,7 @@ struct FreemiumEnforcementView: View {
                     .accessibilityLabel("Maybe Later")
                     .accessibilityHint("Dismisses this screen and continues with the free plan")
 
-                    Text("You'll be asked again tomorrow")
+                    Text("Come back tomorrow — free forever")
                         .font(BlinkFontStyle.footnote.font)
                         .foregroundColor(Color(hex: "8a8a8a").opacity(0.7))
                 }

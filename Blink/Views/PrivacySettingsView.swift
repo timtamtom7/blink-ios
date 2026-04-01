@@ -59,7 +59,7 @@ struct SharingHistoryView: View {
     var body: some View {
         List {
             if entries.isEmpty {
-                Text("No sharing history yet").foregroundColor(.secondary).font(.caption)
+                Text("No sharing history yet").foregroundColor(Theme.textTertiary).font(.caption)
             } else {
                 ForEach(entries) { entry in
                     HStack {
@@ -67,12 +67,12 @@ struct SharingHistoryView: View {
                         VStack(alignment: .leading) {
                             Text(entry.viewerID.prefix(12) + "...")
                                 .font(.caption)
-                            Text(entry.shareType).font(.caption2).foregroundColor(.secondary)
+                            Text(entry.shareType).font(.caption2).foregroundColor(Theme.textTertiary)
                         }
                         Spacer()
                         Text(entry.viewedAt, style: .relative)
                             .font(.caption2)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Theme.textTertiary)
                     }
                 }
             }
@@ -120,7 +120,7 @@ struct ClipSharingSheet: View {
                 if settings.target == .closeCircleOnly {
                     Section("Circle") {
                         if service.circles.isEmpty {
-                            Text("No circles yet").foregroundColor(.secondary).font(.caption)
+                            Text("No circles yet").foregroundColor(Theme.textTertiary).font(.caption)
                         } else {
                             ForEach(service.circles) { circle in
                                 HStack {
